@@ -6,8 +6,8 @@ eval "$(sheldon source)"
 
 # alias
 alias ls='lsd'
-alias l='lsd -l'
-alias la='ls -l -a'
+alias l='lsd -l -a'
+alias z-='z -'
 
 ## fzf
 function fzf-select-history() {
@@ -26,3 +26,10 @@ function fzf-select-history-uniq() {
 }
 zle -N  fzf-select-history-uniq
 bindkey '^r' fzf-select-history-uniq
+
+# copy a line Ctrl + CP
+function history-current-pbcopy() {
+  print "$BUFFER" | tr -d "\r\n" | pbcopy
+}
+zle -N history-current-pbcopy
+bindkey '^C^P' history-current-pbcopy

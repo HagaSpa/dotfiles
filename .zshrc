@@ -27,9 +27,9 @@ function fzf-select-history-uniq() {
 zle -N  fzf-select-history-uniq
 bindkey '^r' fzf-select-history-uniq
 
-# copy a line Ctrl + CP
+# copy a line Ctrl + P O
 function history-current-pbcopy() {
   print "$BUFFER" | tr -d "\r\n" | pbcopy
 }
 zle -N history-current-pbcopy
-bindkey '^C^P' history-current-pbcopy
+bindkey '^P^O' history-current-pbcopy

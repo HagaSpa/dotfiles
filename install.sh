@@ -15,5 +15,3 @@ tar -xvf google-cloud-cli-454.0.0-darwin-arm.tar.gz
 z google-cloud-sdk
 yes | ./install.sh
 
-# Hack Nerd Font
-# cp  Hack Regular Nerd Font Complete.ttf ~/Library/Fonts

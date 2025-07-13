@@ -1,35 +1,34 @@
-# eval
+export LANG=es_US.UTF-8
+
+# Completions
+autoload -Uz compinit && compinit
+zstyle ":completion:*:commands" rehash 1
+zstyle ':completion:*' menu select=2
+
+# source
+source ~/.config/zsh/alias.sh
+source ~/.config/zsh/command.sh
+
+HISTSIZE=100000
+SAVEHIST=100000
+LISTMAX=1000
+
+setopt share_history
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+unsetopt beep
+
+# App Config
 eval "$(zoxide init zsh)"
-# eval "$(nodenv init -)"
 eval "$(starship init zsh)"
 eval "$(sheldon source)"
 
-# alias
-alias ls='lsd'
-alias l='lsd -l -a'
-alias z-='z -'
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/hagaspa/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/hagaspa/google-cloud-sdk/path.zsh.inc'; fi
 
-## fzf
-function fzf-select-history() {
-    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle reset-prompt
-}
-zle -N fzf-select-history
-bindkey '^t' fzf-select-history
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/hagaspa/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hagaspa/google-cloud-sdk/completion.zsh.inc'; fi
 
-function fzf-select-history-uniq() {
-    local tac=${commands[tac]:-"tail -r"}
-    BUFFER=$( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | sed 's/ *[0-9]* *//' | eval $tac | awk '!a[$0]++' | fzf +s)
-    CURSOR=$#BUFFER
-    zle clear-screen
-}
-zle -N  fzf-select-history-uniq
-bindkey '^r' fzf-select-history-uniq
-
-# copy a line Ctrl + P O
-function history-current-pbcopy() {
-  print "$BUFFER" | tr -d "\r\n" | pbcopy
-}
-zle -N history-current-pbcopy
-bindkey '^P^O' history-current-pbcopy
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

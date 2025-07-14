@@ -15,3 +15,5 @@ allowed-tools: ["Bash", "Read", "Write", "TodoWrite", "TodoRead"]
 3.リモートへ push してください
 
 4.main ブランチに向けて Pull Request を作成して下さい
+
+5.作成後に Pull Request を web で開いてください

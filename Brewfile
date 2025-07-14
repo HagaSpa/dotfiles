@@ -1,4 +1,3 @@
-tap "homebrew/bundle"
 brew "fzf"
 brew "lsd"
 brew "sheldon"

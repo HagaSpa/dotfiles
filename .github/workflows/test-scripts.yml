@@ -192,7 +192,7 @@ jobs:
         
         # Validate Brewfile syntax by parsing it
         echo "Checking Brewfile syntax..."
-        if grep -E '^(tap|brew|cask|mas)' ./Brewfile > /dev/null; then
+        if grep -E '^(brew|cask|mas)' ./Brewfile > /dev/null; then
           echo "✓ Brewfile contains valid entries"
         else
           echo "✗ Brewfile appears to be empty or invalid"

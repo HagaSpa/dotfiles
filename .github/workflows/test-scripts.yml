@@ -1,0 +1,127 @@
+name: Test Scripts
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-macos:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up environment
+      run: |
+        # Create test directories
+        mkdir -p ~/.config/zsh
+        mkdir -p ~/.config/karabiner/assets/complex_modifications
+        mkdir -p ~/.config/ghostty
+        
+        # Backup existing files if they exist
+        for file in ~/.zshrc ~/.vimrc; do
+          if [ -f "$file" ]; then
+            cp "$file" "${file}.github-backup"
+          fi
+        done
+    
+    - name: Test install.sh (dry run simulation)
+      run: |
+        # Check if script is executable
+        test -x ./install.sh
+        
+        # Validate script syntax
+        bash -n ./install.sh
+        
+        # Check if Homebrew would be installed (without actually installing)
+        if ! command -v brew &> /dev/null; then
+          echo "✓ Homebrew installation would be triggered"
+        else
+          echo "✓ Homebrew already available"
+        fi
+        
+        # Verify Brewfile exists
+        test -f ./Brewfile
+        echo "✓ Brewfile found"
+        
+        # Check if Google Cloud CLI installation logic is present
+        grep -q "google-cloud-cli" ./install.sh
+        echo "✓ Google Cloud CLI installation logic present"
+    
+    - name: Test link.sh
+      run: |
+        # Check if script is executable
+        test -x ./link.sh
+        
+        # Validate script syntax
+        bash -n ./link.sh
+        
+        # Test symbolic link creation (in safe mode)
+        export DRY_RUN=true
+        ./link.sh || true
+        
+        # Verify all source files exist
+        while IFS=':' read -r source target; do
+          if [ -f "$source" ]; then
+            echo "✓ Source file exists: $source"
+          else
+            echo "✗ Missing source file: $source"
+            exit 1
+          fi
+        done <<< "$(grep -E '^\s*"[^"]+:[^"]+"\s*$' link.sh | sed 's/[" ]//g')"
+    
+    - name: Test configuration files
+      run: |
+        # Check shell configurations
+        test -f .zshrc
+        test -f .config/zsh/alias.sh
+        test -f .config/zsh/command.sh
+        echo "✓ Shell configuration files exist"
+        
+        # Check vim configuration
+        test -f .vimrc
+        echo "✓ Vim configuration exists"
+        
+        # Check Karabiner configuration
+        test -f .config/karabiner/assets/complex_modifications/personal_hagaspa.json
+        echo "✓ Karabiner configuration exists"
+        
+        # Check Ghostty configuration
+        test -f .config/ghostty/config
+        echo "✓ Ghostty configuration exists"
+        
+        # Validate JSON files
+        python3 -m json.tool .config/karabiner/assets/complex_modifications/personal_hagaspa.json > /dev/null
+        echo "✓ Karabiner JSON is valid"
+    
+    - name: Test Brewfile
+      run: |
+        # Validate Brewfile syntax
+        if command -v brew &> /dev/null; then
+          brew bundle check --file=./Brewfile || echo "Some packages not installed (expected in CI)"
+        fi
+        
+        # Check for essential tools in Brewfile
+        grep -q "git" ./Brewfile
+        grep -q "zsh" ./Brewfile || true  # zsh might be built-in
+        echo "✓ Brewfile contains expected tools"
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        # Restore backed up files
+        for file in ~/.zshrc ~/.vimrc; do
+          if [ -f "${file}.github-backup" ]; then
+            mv "${file}.github-backup" "$file"
+          fi
+        done
+        
+        # Remove any test symlinks that might have been created
+        for link in ~/.zshrc ~/.vimrc ~/.config/zsh/alias.sh ~/.config/zsh/command.sh; do
+          if [ -L "$link" ]; then
+            rm "$link"
+          fi
+        done

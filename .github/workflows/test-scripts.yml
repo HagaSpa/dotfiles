@@ -30,13 +30,25 @@ jobs:
     
     - name: Test install.sh (dry run simulation)
       run: |
+        set -e  # Exit on any error
+        
+        echo "Starting install.sh validation..."
+        
         # Check if script is executable
-        test -x ./install.sh
-        echo "✓ install.sh is executable"
+        if test -x ./install.sh; then
+          echo "✓ install.sh is executable"
+        else
+          echo "✗ install.sh is not executable"
+          exit 1
+        fi
         
         # Validate script syntax
-        bash -n ./install.sh
-        echo "✓ install.sh syntax is valid"
+        if bash -n ./install.sh; then
+          echo "✓ install.sh syntax is valid"
+        else
+          echo "✗ install.sh has syntax errors"
+          exit 1
+        fi
         
         # Check if Homebrew would be installed (without actually installing)
         if ! command -v brew &> /dev/null; then
@@ -46,30 +58,39 @@ jobs:
         fi
         
         # Verify Brewfile exists in repository
-        test -f ./Brewfile
-        echo "✓ Brewfile found in repository"
+        if test -f ./Brewfile; then
+          echo "✓ Brewfile found in repository"
+        else
+          echo "✗ Brewfile not found"
+          exit 1
+        fi
         
         # Check for potential issues in install.sh
         echo "Checking for potential issues in install.sh:"
         
-        # Check if script changes directory and references relative paths
+        # Check if script changes directory and references relative paths  
         if grep -q "cd \$HOME" ./install.sh && grep -q "\./Brewfile" ./install.sh; then
           echo "⚠️  Warning: Script changes to HOME directory but references ./Brewfile"
           echo "   This may cause 'file not found' errors"
+        else
+          echo "✓ No relative path issues detected"
         fi
         
         # Check if 'z' command is used (zoxide dependency)
         if grep -q "^z " ./install.sh; then
           echo "⚠️  Warning: Script uses 'z' command which requires zoxide to be installed first"
+        else
+          echo "✓ No zoxide dependency issues detected"
         fi
         
         # Check if Google Cloud CLI installation logic is present
         if grep -q "google-cloud-cli" ./install.sh; then
           echo "✓ Google Cloud CLI installation logic present"
+        else
+          echo "ℹ️  Google Cloud CLI installation logic not found (this is okay)"
         fi
         
-        # Verify the script would work by checking key components
-        echo "✓ install.sh validation completed"
+        echo "✓ install.sh validation completed successfully"
     
     - name: Test link.sh
       run: |

@@ -56,3 +56,37 @@ The configuration prioritizes shell productivity with:
 - Custom key bindings (Ctrl+R for history, Ctrl+T for selection)
 - Intelligent completion systems for custom functions
 - History management with deduplication and search capabilities
+
+
+## Pull Request Templates
+### Japanese/English PR Template
+```markdown
+
+## Background / 背景
+
+[English description]
+[日本語の説明]
+
+## Changes / 変更内容
+
+[English changes]
+[日本語の変更内容]
+
+## Impact scope / 影響範囲
+
+[English impact]
+[日本語の影響範囲]
+
+## Testing / 動作確認
+
+- [x] Test item 1 / テスト項目1
+- [x] Test item 2 / テスト項目2
+```
+
+### Conventional Commits
+
+```bash
+<type>[optional scope]: <description>
+```
+type: feat, fix, refactor, ci, perf, docs, chore
+ 

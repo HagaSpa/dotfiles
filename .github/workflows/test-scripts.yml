@@ -99,15 +99,23 @@ jobs:
         ./install-test.sh
         
         # Verify that key tools are available after installation
-        echo "Verifying installed tools..."
+        echo "Verifying installed CLI tools..."
         for tool in fzf gh zoxide lsd bat starship; do
           if command -v "$tool" &> /dev/null; then
-            echo "✓ Tool successfully installed: $tool"
+            echo "✓ CLI tool successfully installed: $tool"
             "$tool" --version 2>/dev/null || echo "  (version check failed, but command exists)"
           else
-            echo "⚠️  Tool not available: $tool"
+            echo "⚠️  CLI tool not available: $tool"
           fi
         done
+        
+        # Verify cask applications (these won't be in PATH but should be installed)
+        echo "Checking cask applications..."
+        if brew list --cask | grep -q ghostty; then
+          echo "✓ Cask application installed: ghostty"
+        else
+          echo "ℹ️  Cask application not installed or not available in CI: ghostty"
+        fi
         
         # Test that brew bundle check now passes
         echo "Testing brew bundle check after installation..."
@@ -192,15 +200,23 @@ jobs:
         fi
         
         # Check for essential tools in Brewfile
-        echo "Checking for essential tools..."
+        echo "Checking for essential CLI tools..."
         essential_tools=("fzf" "gh" "zoxide")
         for tool in "${essential_tools[@]}"; do
           if grep -q "brew \"$tool\"" ./Brewfile; then
-            echo "✓ Found essential tool: $tool"
+            echo "✓ Found essential CLI tool: $tool"
           else
-            echo "⚠️  Essential tool not found in Brewfile: $tool"
+            echo "⚠️  Essential CLI tool not found in Brewfile: $tool"
           fi
         done
+        
+        # Check for cask applications in Brewfile
+        echo "Checking for cask applications..."
+        if grep -q "cask \"ghostty\"" ./Brewfile; then
+          echo "✓ Found cask application: ghostty"
+        else
+          echo "⚠️  Ghostty cask not found in Brewfile"
+        fi
         
         # If brew is available, test bundle validation (but don't fail on missing packages)
         if command -v brew &> /dev/null; then

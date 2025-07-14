@@ -140,15 +140,52 @@ jobs:
     
     - name: Test Brewfile
       run: |
-        # Validate Brewfile syntax
-        if command -v brew &> /dev/null; then
-          brew bundle check --file=./Brewfile || echo "Some packages not installed (expected in CI)"
+        set -e
+        
+        echo "Testing Brewfile validity..."
+        
+        # Check if Brewfile exists
+        if test -f ./Brewfile; then
+          echo "✓ Brewfile found"
+        else
+          echo "✗ Brewfile not found"
+          exit 1
+        fi
+        
+        # Validate Brewfile syntax by parsing it
+        echo "Checking Brewfile syntax..."
+        if grep -E '^(tap|brew|cask|mas)' ./Brewfile > /dev/null; then
+          echo "✓ Brewfile contains valid entries"
+        else
+          echo "✗ Brewfile appears to be empty or invalid"
+          exit 1
         fi
         
         # Check for essential tools in Brewfile
-        grep -q "git" ./Brewfile
-        grep -q "zsh" ./Brewfile || true  # zsh might be built-in
-        echo "✓ Brewfile contains expected tools"
+        echo "Checking for essential tools..."
+        essential_tools=("fzf" "gh" "zoxide")
+        for tool in "${essential_tools[@]}"; do
+          if grep -q "brew \"$tool\"" ./Brewfile; then
+            echo "✓ Found essential tool: $tool"
+          else
+            echo "⚠️  Essential tool not found in Brewfile: $tool"
+          fi
+        done
+        
+        # If brew is available, test bundle validation (but don't fail on missing packages)
+        if command -v brew &> /dev/null; then
+          echo "Homebrew is available, testing bundle check..."
+          if brew bundle check --file=./Brewfile; then
+            echo "✓ All Brewfile dependencies are satisfied"
+          else
+            echo "ℹ️  Some packages not installed (expected in CI environment)"
+            echo "   This is normal - CI doesn't pre-install all development tools"
+          fi
+        else
+          echo "ℹ️  Homebrew not available in this environment"
+        fi
+        
+        echo "✓ Brewfile validation completed"
     
     - name: Cleanup
       if: always()

@@ -51,10 +51,7 @@ jobs:
           
           # Optional: Allow Claude to run specific commands
           allowed_tools: |
-            Bash(git)
-            Bash(gh)
-            Bash(npm)
-            Bash(nvm)
+            Bash
           
           # Optional: Add custom instructions for Claude to customize its behavior for your project
           # custom_instructions: |

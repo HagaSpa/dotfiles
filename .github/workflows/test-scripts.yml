@@ -146,8 +146,8 @@ jobs:
         
         # Verify npm global packages
         echo "Verifying npm global packages..."
-        if command -v claude-code &> /dev/null; then
-          echo "✓ Claude Code successfully installed: $(claude-code --version 2>/dev/null || echo 'command exists')"
+        if command -v claude &> /dev/null; then
+          echo "✓ Claude Code successfully installed: $(claude --version 2>/dev/null || echo 'command exists')"
         else
           echo "⚠️  Claude Code not available"
         fi

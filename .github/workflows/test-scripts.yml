@@ -84,7 +84,25 @@ jobs:
         # install via brew using absolute path to Brewfile
         echo "Installing packages from Brewfile..."
         brew bundle install --file="$SCRIPT_DIR/Brewfile"
-        
+
+        # Install nvm (Node Version Manager)
+        echo "Installing nvm..."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+        # Load nvm for current session
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+        # Install latest LTS version of Node.js
+        echo "Installing latest LTS version of Node.js..."
+        nvm install --lts
+        nvm use --lts
+
+        # Install global npm packages
+        echo "Installing Claude Code and Gemini CLI..."
+        npm install -g @anthropic-ai/claude-code
+        npm install -g @google/gemini-cli       
+
         # Skip Google Cloud CLI installation in CI (it's large and not essential for testing)
         echo "Skipping Google Cloud CLI installation in CI environment"
         echo "✓ install.sh test execution completed"
@@ -108,7 +126,38 @@ jobs:
             echo "⚠️  CLI tool not available: $tool"
           fi
         done
+
+        # Verify Node.js and npm installation
+        echo "Verifying Node.js and npm installation..."
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         
+        if command -v node &> /dev/null; then
+          echo "✓ Node.js successfully installed: $(node --version)"
+        else
+          echo "⚠️  Node.js not available"
+        fi
+        
+        if command -v npm &> /dev/null; then
+          echo "✓ npm successfully installed: $(npm --version)"
+        else
+          echo "⚠️  npm not available"
+        fi
+        
+        # Verify npm global packages
+        echo "Verifying npm global packages..."
+        if command -v claude &> /dev/null; then
+          echo "✓ Claude Code successfully installed: $(claude --version 2>/dev/null || echo 'command exists')"
+        else
+          echo "⚠️  Claude Code not available"
+        fi
+        
+        if command -v gemini &> /dev/null; then
+          echo "✓ Gemini CLI successfully installed: $(gemini --version 2>/dev/null || echo 'command exists')"
+        else
+          echo "⚠️  Gemini CLI not available"
+        fi
+                
         # Verify cask applications (these won't be in PATH but should be installed)
         echo "Checking cask applications..."
         if brew list --cask | grep -q ghostty; then

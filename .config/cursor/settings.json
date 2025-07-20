@@ -1,0 +1,87 @@
+{
+    "editor.fontSize": 14,
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+            "path": "/usr/local/bin/zsh"
+        }
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.inlineSuggest.enabled": true,
+    "workbench.startupEditor": "none",
+    "terminal.integrated.fontFamily": "Hack Nerd Font",
+    "editor.accessibilitySupport": "off",
+    "git.autofetch": true,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "[terraform]": {
+        "editor.tabSize": 2
+    },
+    "files.insertFinalNewline": true,
+    "search.mode": "newEditor",
+    "search.searchEditor.doubleClickBehaviour": "openLocationToSide",
+    "window.openFoldersInNewWindow": "on",
+    "editor.formatOnSave": true,
+    "workbench.settings.applyToAllProfiles": [
+        "editor.formatOnSave"
+    ],
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "workbench.editor.empty.hint": "hidden",
+    "git.openRepositoryInParentFolders": "always",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "window.newWindowDimensions": "fullscreen",
+    "workbench.activityBar.location": "hidden",
+    "accessibility.signals.lineHasError": {
+        "sound": "off"
+    },
+    "accessibility.signals.lineHasFoldedArea": {
+        "sound": "off"
+    },
+    "accessibility.signals.lineHasBreakpoint": {
+        "sound": "off"
+    },
+    "accessibility.signals.lineHasInlineSuggestion": {
+        "sound": "off"
+    },
+    "accessibility.signals.terminalQuickFix": {
+        "sound": "off"
+    },
+    "accessibility.signals.onDebugBreak": {
+        "sound": "off"
+    },
+    "accessibility.signals.noInlayHints": {
+        "sound": "off"
+    },
+    "accessibility.signals.taskCompleted": {
+        "sound": "off"
+    },
+    "accessibility.signals.taskFailed": {
+        "sound": "off"
+    },
+    "accessibility.signals.notebookCellCompleted": {
+        "sound": "off"
+    },
+    "accessibility.signals.notebookCellFailed": {
+        "sound": "off"
+    },
+    "accessibility.signals.diffLineInserted": {
+        "sound": "off"
+    },
+    "accessibility.signals.diffLineDeleted": {
+        "sound": "off"
+    },
+    "accessibility.signals.diffLineModified": {
+        "sound": "off"
+    },
+    "cursor.cpp.disabledLanguages": [
+        "sql",
+        "yaml",
+        "plaintext",
+        "markdown"
+    ],
+    "workbench.colorTheme": "Atom One Dark",
+    "vim.useSystemClipboard": true
+}

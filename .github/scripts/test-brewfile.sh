@@ -37,12 +37,15 @@ done
 
 # Check for cask applications in Brewfile
 echo "Checking for cask applications..."
-if grep -q "cask \"ghostty\"" ./Brewfile; then
-  echo "✓ Found cask application: ghostty"
-else
-  echo "✗ Ghostty cask not found in Brewfile"
-  exit_code=1
-fi
+cask_apps=("ghostty" "cursor")
+for app in "${cask_apps[@]}"; do
+  if grep -q "cask \"$app\"" ./Brewfile; then
+    echo "✓ Found cask application: $app"
+  else
+    echo "✗ Cask application not found in Brewfile: $app"
+    exit_code=1
+  fi
+done
 
 # If brew is available, test bundle validation (but don't fail on missing packages)
 if command -v brew &> /dev/null; then

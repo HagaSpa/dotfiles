@@ -10,6 +10,7 @@ files_and_paths=(
   ".config/zsh/command.sh:~/.config/zsh/command.sh"
   ".config/karabiner/assets/complex_modifications/personal_hagaspa.json:~/.config/karabiner/assets/complex_modifications/personal_hagaspa.json"
   ".config/ghostty/config:~/.config/ghostty/config"
+  ".config/cursor/settings.json:~/Library/Application Support/Cursor/User/settings.json"
   ".zshrc:~/.zshrc"
   ".vimrc:~/.vimrc"
 )

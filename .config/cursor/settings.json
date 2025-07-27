@@ -21,7 +21,6 @@
     "files.insertFinalNewline": true,
     "search.mode": "newEditor",
     "search.searchEditor.doubleClickBehaviour": "openLocationToSide",
-    "window.openFoldersInNewWindow": "on",
     "editor.formatOnSave": true,
     "workbench.settings.applyToAllProfiles": [
         "editor.formatOnSave"
@@ -32,7 +31,6 @@
     "workbench.editor.empty.hint": "hidden",
     "git.openRepositoryInParentFolders": "always",
     "editor.multiCursorModifier": "ctrlCmd",
-    "window.newWindowDimensions": "fullscreen",
     "workbench.activityBar.location": "hidden",
     "accessibility.signals.lineHasError": {
         "sound": "off"

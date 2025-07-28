@@ -27,6 +27,7 @@ cd ~/workspaces/hagaspa/dotfiles
 - **zoxide** - Smart cd command
 - **bat** - Cat clone with syntax highlighting
 - **ghostty** - Terminal emulator
+- **cursor** - AI-powered code editor
 - **Google Cloud CLI** - Cloud development tools
 
 ### Configuration Files
@@ -36,6 +37,8 @@ cd ~/workspaces/hagaspa/dotfiles
 - `.config/zsh/command.sh` - Custom shell commands
 - `.config/ghostty/config` - Ghostty terminal configuration
 - `.config/karabiner/` - Karabiner-Elements key mapping
+- `.config/cursor/settings.json` - Cursor editor settings
+- `.claude/` - Claude Code configuration and custom commands
 
 ## Scripts
 
@@ -50,9 +53,30 @@ Creates symbolic links for configuration files from this repository to their exp
 - macOS (Apple Silicon recommended)
 - Internet connection for downloading dependencies
 
+## Claude Code Integration
+
+This repository includes Claude Code configuration:
+- `.claude/settings.json` - Permission settings for Claude Code
+- `.claude/commands/` - Custom slash commands for common workflows
+- `CLAUDE.md` - Repository-specific instructions for Claude Code
+
+## GitHub Actions
+
+- **test-scripts.yml** - Runs automated tests for installation and configuration scripts
+- **claude.yml** - Claude Code GitHub integration workflow
+- **claude-code-review.yml** - Automated code review with Claude
+
+## Custom Commands
+
+The `.config/zsh/command.sh` includes powerful custom functions:
+- `hagaspa()` - Smart workspace navigation with Git context awareness
+- `gw()` - Git worktree management with automatic organization
+- `fzf-select-history*()` - Enhanced command history search
+
 ## Customization
 
 Feel free to modify the configuration files to suit your preferences:
 - Edit `Brewfile` to add/remove brew packages
 - Customize shell aliases in `.config/zsh/alias.sh`
 - Modify zsh configuration in `.zshrc`
+- Add custom Claude Code commands in `.claude/commands/`

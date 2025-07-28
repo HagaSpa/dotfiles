@@ -3,8 +3,24 @@ name: Test Scripts
 on:
   push:
     branches: [ main ]
+    paths:
+      - ".config/**"
+      - ".github/**"
+      - ".vimrc"
+      - ".zshrc"
+      - "Brewfile"
+      - "install.sh"
+      - "link.sh"
   pull_request:
     branches: [ main ]
+    paths:
+      - ".config/**"
+      - ".github/**"
+      - ".vimrc"
+      - ".zshrc"
+      - "Brewfile"
+      - "install.sh"
+      - "link.sh"
 
 jobs:
   test-macos:

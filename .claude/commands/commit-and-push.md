@@ -1,5 +1,5 @@
 ---
-description: Create a pull request with project template
+description: Commit local changes and push to remote
 allowed-tools: ["Bash", "Read", "Write", "TodoWrite", "TodoRead"]
 ---
 

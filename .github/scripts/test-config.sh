@@ -52,6 +52,14 @@ else
   exit_code=1
 fi
 
+# Check Sheldon configuration
+if test -f .config/sheldon/plugins.toml; then
+  echo "✓ Sheldon plugins.toml exists"
+else
+  echo "✗ Sheldon plugins.toml missing"
+  exit_code=1
+fi
+
 # Validate JSON files
 echo "Validating JSON files..."
 if python3 -m json.tool .config/karabiner/assets/complex_modifications/personal_hagaspa.json > /dev/null 2>&1; then

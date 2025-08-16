@@ -26,114 +26,138 @@ bindkey '^P^O' history-current-pbcopy
 
 
 # ==========================
-# hagaspa completion (hagaspa)
+# Generic workspace navigation function
 # ==========================
-hagaspa() {
+_workspace_navigate() {
+  local org_name="$1"
+  local workspace_path="$2"
+  local target="$3"
+  
   # Set default path
-  REPO="$HOME/workspaces/hagaspa"
+  local REPO="$workspace_path"
 
-  # If inside a Git repo and it's dinii-self-all, override REPO
+  # If inside a Git repo and it's the target organization, override REPO
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    local remote_url dir_name org_name
+    local remote_url dir_name current_org
     remote_url=$(git remote get-url origin 2>/dev/null)
     dir_name=$(dirname "$remote_url")
-    org_name=$(basename "$dir_name")
+    current_org=$(basename "$dir_name")
 
-    if [[ "$org_name" == "HagaSpa" ]]; then
+    if [[ "$current_org" == "$org_name" ]]; then
       REPO="$(git rev-parse --show-toplevel)"
     fi
   fi
 
-  case $1 in
-  "all"|"root"|"") cd "$REPO" ;;
-  *) cd "$REPO/$1" ;;
+  case $target in
+  "all"|"root"|"") 
+    cd "$REPO" 
+    ;;
+  *)
+    # Try exact match first
+    if [[ -d "$REPO/$target" ]]; then
+      cd "$REPO/$target"
+    else
+      # Try prefix match
+      local matches=()
+      for dir in "$REPO"/*; do
+        if [[ -d "$dir" && "$(basename "$dir")" == "$target"* ]]; then
+          matches+=("$dir")
+        fi
+      done
+      
+      if [[ ${#matches[@]} -eq 1 ]]; then
+        local matched_dir="${matches[1]}"
+        echo "[workspace] Moving to: $(basename "$matched_dir")"
+        cd "$matched_dir"
+      elif [[ ${#matches[@]} -gt 1 ]]; then
+        echo "Multiple matches found for '$target':"
+        for match in "${matches[@]}"; do
+          echo "  - $(basename "$match")"
+        done
+        return 1
+      else
+        echo "No directory found matching '$target'"
+        return 1
+      fi
+    fi
+    ;;
   esac
 }
 
 # ==========================
-# hagaspa completion (_hagaspa)
+# Generic workspace completion function
 # ==========================
-_hagaspa() {
+_workspace_complete() {
+  local org_name="$1"
+  local workspace_path="$2"
+  local prefix="${words[CURRENT]}"
+  
   # Set default path
-  local REPO="$HOME/workspaces/hagaspa"
+  local REPO="$workspace_path"
 
-  # If inside a Git repo and it's dinii-self-all, override REPO
+  # If inside a Git repo and it's the target organization, override REPO
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    local remote_url dir_name org_name
+    local remote_url dir_name current_org
     remote_url=$(git remote get-url origin 2>/dev/null)
     dir_name=$(dirname "$remote_url")
-    org_name=$(basename "$dir_name")
+    current_org=$(basename "$dir_name")
 
-    if [[ "$org_name" == "HagaSpa" ]]; then
+    if [[ "$current_org" == "$org_name" ]]; then
       REPO="$(git rev-parse --show-toplevel)"
     fi
   fi
 
-  # Add only actual directories under packages/ as candidates
+  # Add directories that match the prefix
   local dirs=()
   for p in "$REPO/"*/; do
-    [[ -d "$p" ]] && dirs+=("$(basename "$p")")
+    if [[ -d "$p" ]]; then
+      local dirname="$(basename "$p")"
+      # Add if it matches the prefix or if no prefix given
+      if [[ -z "$prefix" || "$dirname" == "$prefix"* ]]; then
+        dirs+=("$dirname")
+      fi
+    fi
   done
 
   compadd "$dirs[@]"
+}
+
+# ==========================
+# hagaspa function
+# ==========================
+hagaspa() {
+  _workspace_navigate "HagaSpa" "$HOME/workspaces/hagaspa" "$1"
+}
+
+_hagaspa() {
+  _workspace_complete "HagaSpa" "$HOME/workspaces/hagaspa"
 }
 
 compdef _hagaspa hagaspa
 
 # ==========================
-# OLTAInc function (OLTAInc)
+# OLTAInc function
 # ==========================
 OLTAInc() {
-  # Set default path
-  REPO="$HOME/workspaces/OLTAInc"
-
-  # If inside a Git repo and it's OLTAInc organization, override REPO
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    local remote_url dir_name org_name
-    remote_url=$(git remote get-url origin 2>/dev/null)
-    dir_name=$(dirname "$remote_url")
-    org_name=$(basename "$dir_name")
-
-    if [[ "$org_name" == "OLTAInc" ]]; then
-      REPO="$(git rev-parse --show-toplevel)"
-    fi
-  fi
-
-  case $1 in
-  "all"|"root"|"") cd "$REPO" ;;
-  *) cd "$REPO/$1" ;;
-  esac
+  _workspace_navigate "OLTAInc" "$HOME/workspaces/OLTAInc" "$1"
 }
 
-# ==========================
-# OLTAInc completion (_OLTAInc)
-# ==========================
 _OLTAInc() {
-  # Set default path
-  local REPO="$HOME/workspaces/OLTAInc"
-
-  # If inside a Git repo and it's OLTAInc organization, override REPO
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    local remote_url dir_name org_name
-    remote_url=$(git remote get-url origin 2>/dev/null)
-    dir_name=$(dirname "$remote_url")
-    org_name=$(basename "$dir_name")
-
-    if [[ "$org_name" == "OLTAInc" ]]; then
-      REPO="$(git rev-parse --show-toplevel)"
-    fi
-  fi
-
-  # Add only actual directories under OLTAInc/ as candidates
-  local dirs=()
-  for p in "$REPO/"*/; do
-    [[ -d "$p" ]] && dirs+=("$(basename "$p")")
-  done
-
-  compadd "$dirs[@]"
+  _workspace_complete "OLTAInc" "$HOME/workspaces/OLTAInc"
 }
 
 compdef _OLTAInc OLTAInc
+
+# Alias for OLTAInc
+olta() {
+  _workspace_navigate "OLTAInc" "$HOME/workspaces/OLTAInc" "$1"
+}
+
+_olta() {
+  _workspace_complete "OLTAInc" "$HOME/workspaces/OLTAInc"
+}
+
+compdef _olta olta
 
 
 

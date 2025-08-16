@@ -37,7 +37,7 @@ hagaspa() {
     local remote_url dir_name org_name
     remote_url=$(git remote get-url origin 2>/dev/null)
     dir_name=$(dirname "$remote_url")
-    org_name=$(basename "dir_name")
+    org_name=$(basename "$dir_name")
 
     if [[ "$org_name" == "HagaSpa" ]]; then
       REPO="$(git rev-parse --show-toplevel)"
@@ -62,7 +62,7 @@ _hagaspa() {
     local remote_url dir_name org_name
     remote_url=$(git remote get-url origin 2>/dev/null)
     dir_name=$(dirname "$remote_url")
-    org_name=$(basename "dir_name")
+    org_name=$(basename "$dir_name")
 
     if [[ "$org_name" == "HagaSpa" ]]; then
       REPO="$(git rev-parse --show-toplevel)"

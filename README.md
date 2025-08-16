@@ -69,9 +69,28 @@ This repository includes Claude Code configuration:
 ## Custom Commands
 
 The `.config/zsh/command.sh` includes powerful custom functions:
-- `hagaspa()` - Smart workspace navigation with Git context awareness
+- `hagaspa()` - Navigate to hagaspa workspace with intelligent path completion based on Git remote
+- `OLTAInc()` - Navigate to OLTAInc workspace with intelligent path completion based on Git remote
+- `olta` - Alias for OLTAInc() function
 - `gw()` - Git worktree management with automatic organization
 - `fzf-select-history*()` - Enhanced command history search
+
+### Workspace Navigation Functions
+
+#### hagaspa() Function
+The `hagaspa()` function provides intelligent workspace navigation for hagaspa repositories:
+- Automatically detects if you're in a HagaSpa Git repository and navigates to the matching workspace
+- Supports path completion with prefix matching (e.g., `hagaspa dot` → `dotfiles` directory)
+- Falls back to the main hagaspa workspace when called without arguments outside a Git repository
+- Workspace structure: `~/workspaces/hagaspa/[repository-name]`
+
+#### OLTAInc() Function and olta Alias
+The `OLTAInc()` function and its alias `olta` provide intelligent workspace navigation for OLTAInc repositories:
+- Automatically detects if you're in an OLTAInc Git repository and navigates to the matching workspace
+- Supports path completion with prefix matching (e.g., `OLTAInc ba` or `olta ba` → `backend` directory)
+- Falls back to the main OLTAInc workspace when called without arguments outside a Git repository
+- Workspace structure: `~/workspaces/OLTAInc/[repository-name]`
+- Both `OLTAInc` and `olta` commands work identically with full tab completion support
 
 ## Customization
 

@@ -37,7 +37,7 @@ hagaspa() {
     local remote_url dir_name org_name
     remote_url=$(git remote get-url origin 2>/dev/null)
     dir_name=$(dirname "$remote_url")
-    org_name=$(basename "dir_name")
+    org_name=$(basename "$dir_name")
 
     if [[ "$org_name" == "HagaSpa" ]]; then
       REPO="$(git rev-parse --show-toplevel)"
@@ -62,7 +62,7 @@ _hagaspa() {
     local remote_url dir_name org_name
     remote_url=$(git remote get-url origin 2>/dev/null)
     dir_name=$(dirname "$remote_url")
-    org_name=$(basename "dir_name")
+    org_name=$(basename "$dir_name")
 
     if [[ "$org_name" == "HagaSpa" ]]; then
       REPO="$(git rev-parse --show-toplevel)"
@@ -79,6 +79,63 @@ _hagaspa() {
 }
 
 compdef _hagaspa hagaspa
+
+# ==========================
+# OLTAInc function (OLTAInc)
+# ==========================
+OLTAInc() {
+  # Set default path
+  REPO="$HOME/workspaces/OLTAInc"
+
+  # If inside a Git repo and it's OLTAInc organization, override REPO
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    local remote_url dir_name org_name
+    remote_url=$(git remote get-url origin 2>/dev/null)
+    dir_name=$(dirname "$remote_url")
+    org_name=$(basename "$dir_name")
+
+    if [[ "$org_name" == "OLTAInc" ]]; then
+      REPO="$(git rev-parse --show-toplevel)"
+    fi
+  fi
+
+  case $1 in
+  "all"|"root"|"") cd "$REPO" ;;
+  *) cd "$REPO/$1" ;;
+  esac
+}
+
+# ==========================
+# OLTAInc completion (_OLTAInc)
+# ==========================
+_OLTAInc() {
+  # Set default path
+  local REPO="$HOME/workspaces/OLTAInc"
+
+  # If inside a Git repo and it's OLTAInc organization, override REPO
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    local remote_url dir_name org_name
+    remote_url=$(git remote get-url origin 2>/dev/null)
+    dir_name=$(dirname "$remote_url")
+    org_name=$(basename "$dir_name")
+
+    if [[ "$org_name" == "OLTAInc" ]]; then
+      REPO="$(git rev-parse --show-toplevel)"
+    fi
+  fi
+
+  # Add only actual directories under OLTAInc/ as candidates
+  local dirs=()
+  for p in "$REPO/"*/; do
+    [[ -d "$p" ]] && dirs+=("$(basename "$p")")
+  done
+
+  compadd "$dirs[@]"
+}
+
+compdef _OLTAInc OLTAInc
+
+
 
 
 # ==========================
@@ -170,5 +227,3 @@ _gw() {
   compadd -Q -- "${worktrees[@]}"
 }
 compdef _gw gw
-
-

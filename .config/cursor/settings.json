@@ -81,5 +81,6 @@
         "markdown"
     ],
     "workbench.colorTheme": "Atom One Dark",
-    "vim.useSystemClipboard": true
+    "vim.useSystemClipboard": true,
+    "extensions.ignoreRecommendations": true
 }

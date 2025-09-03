@@ -82,5 +82,6 @@
     ],
     "workbench.colorTheme": "Atom One Dark",
     "vim.useSystemClipboard": true,
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "window.openFoldersInNewWindow": "on"
 }

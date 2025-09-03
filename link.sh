@@ -12,6 +12,7 @@ files_and_paths=(
   ".config/ghostty/config:~/.config/ghostty/config"
   ".config/cursor/settings.json:~/Library/Application Support/Cursor/User/settings.json"
   ".config/sheldon/plugins.toml:~/.config/sheldon/plugins.toml"
+  ".config/tmux/tmux.conf:~/.tmux.conf"
   ".zshrc:~/.zshrc"
   ".vimrc:~/.vimrc"
 )

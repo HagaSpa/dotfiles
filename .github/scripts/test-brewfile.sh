@@ -25,7 +25,7 @@ fi
 
 # Check for essential tools in Brewfile
 echo "Checking for essential CLI tools..."
-essential_tools=("fzf" "gh" "zoxide")
+essential_tools=("fzf" "gh" "zoxide" "tmux")
 for tool in "${essential_tools[@]}"; do
   if grep -q "brew \"$tool\"" ./Brewfile; then
     echo "✓ Found essential CLI tool: $tool"

@@ -26,6 +26,7 @@ cd ~/workspaces/hagaspa/dotfiles
 - **gh** - GitHub CLI
 - **zoxide** - Smart cd command
 - **bat** - Cat clone with syntax highlighting
+- **tmux** - Terminal multiplexer for managing multiple sessions
 - **ghostty** - Terminal emulator
 - **cursor** - AI-powered code editor
 - **Google Cloud CLI** - Cloud development tools
@@ -36,6 +37,7 @@ cd ~/workspaces/hagaspa/dotfiles
 - `.config/zsh/alias.sh` - Custom shell aliases
 - `.config/zsh/command.sh` - Custom shell commands
 - `.config/ghostty/config` - Ghostty terminal configuration
+- `.config/tmux/tmux.conf` - Tmux configuration with vim key bindings
 - `.config/karabiner/` - Karabiner-Elements key mapping
 - `.config/cursor/settings.json` - Cursor editor settings
 - `.claude/` - Claude Code configuration and custom commands

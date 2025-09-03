@@ -60,6 +60,14 @@ else
   exit_code=1
 fi
 
+# Check tmux configuration
+if test -f .config/tmux/tmux.conf; then
+  echo "✓ tmux configuration exists"
+else
+  echo "✗ tmux configuration missing"
+  exit_code=1
+fi
+
 # Validate JSON files
 echo "Validating JSON files..."
 if python3 -m json.tool .config/karabiner/assets/complex_modifications/personal_hagaspa.json > /dev/null 2>&1; then

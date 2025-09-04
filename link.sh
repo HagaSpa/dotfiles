@@ -13,6 +13,7 @@ files_and_paths=(
   ".config/cursor/settings.json:~/Library/Application Support/Cursor/User/settings.json"
   ".config/sheldon/plugins.toml:~/.config/sheldon/plugins.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"
+  ".codex/config.toml:~/.codex/config.toml"
   ".zshrc:~/.zshrc"
   ".vimrc:~/.vimrc"
 )

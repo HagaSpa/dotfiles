@@ -14,6 +14,9 @@ cd ~/workspaces/hagaspa/dotfiles
 
 # Create symbolic links for configuration files
 ./link.sh
+
+# Configure macOS system settings
+./settings.sh
 ```
 
 ## What's Included
@@ -49,6 +52,11 @@ Installs Homebrew, all brew packages from Brewfile, and Google Cloud CLI.
 
 ### `link.sh`
 Creates symbolic links for configuration files from this repository to their expected locations in your home directory. Existing files are backed up with a `.bak` extension.
+
+### `settings.sh`
+Configures macOS system settings for optimal development experience. Currently includes:
+- Disables press-and-hold for keys in favor of key repeat (allows holding keys to repeat instead of showing accent menu)
+- Requires system restart for changes to take effect
 
 ## Requirements
 

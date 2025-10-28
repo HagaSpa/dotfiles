@@ -1,0 +1,109 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "cmd+i",
+        "command": "composerMode.agent"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\\\r\n"
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+cmd+c",
+        "command": "copyRelativeFilePath",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+o cmd+p",
+        "command": "issue.openGithubPermalink"
+    },
+    {
+        "key": "cmd+p cmd+s",
+        "command": "markdown.showPreviewToSide",
+        "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    },
+    {
+        "key": "cmd+g cmd+a",
+        "command": "git.stageAll",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+f",
+        "command": "git.stage",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+m",
+        "command": "cursor.generateGitCommitMessage"
+    },
+    {
+        "key": "cmd+g cmd+p",
+        "command": "git.push",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+c",
+        "command": "git.commit",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+l",
+        "command": "git.pull",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+s",
+        "command": "git.sync",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+b",
+        "command": "git.checkout",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+u",
+        "command": "git.unstageAll",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+z",
+        "command": "git.undoCommit",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+d",
+        "command": "workbench.view.scm"
+    },
+    {
+        "key": "cmd+g cmd+g",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.scm.focus",
+                "list.focusDown",
+                "list.focusDown",
+                "list.focusDown",
+                "list.focusDown"
+            ]
+        }
+    },
+    {
+        "key": "cmd+g cmd+h",
+        "command": "git.viewHistory"
+    },
+    {
+        "key": "cmd+g cmd+t",
+        "command": "git.stash",
+        "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+g cmd+y",
+        "command": "git.stashPop",
+        "when": "!operationInProgress"
+    }
+]

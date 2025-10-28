@@ -11,6 +11,7 @@ files_and_paths=(
   ".config/karabiner/assets/complex_modifications/personal_hagaspa.json:~/.config/karabiner/assets/complex_modifications/personal_hagaspa.json"
   ".config/ghostty/config:~/.config/ghostty/config"
   ".config/cursor/settings.json:~/Library/Application Support/Cursor/User/settings.json"
+  ".config/cursor/keybindings.json:~/Library/Application Support/Cursor/User/keybindings.json"
   ".config/sheldon/plugins.toml:~/.config/sheldon/plugins.toml"
   ".config/starship/starship.toml:~/.config/starship.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"

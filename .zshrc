@@ -1,4 +1,5 @@
 export LANG=es_US.UTF-8
+export LESSCHARSET=utf-8
 
 # Completions
 autoload -Uz compinit && compinit

@@ -24,6 +24,25 @@ history-current-pbcopy() {
 zle -N history-current-pbcopy
 bindkey '^P^O' history-current-pbcopy
 
+# Fix completion display issues in tmux
+# Tab 1回 の候補選択開始時と、候補確定で入力文字列が重複する問題の修正。
+# 2回目以降の Tab で候補を選択してる最中は重複してしまう。
+# https://github.com/HagaSpa/dotfiles/issues/43
+if [[ -n "$TMUX" ]]; then
+  _fix_completion_display() {
+    # Clear the line using terminal escape sequences
+    printf '\r\033[2K'
+    # Redraw the prompt
+    zle reset-prompt
+    # Perform completion
+    zle expand-or-complete
+    # After completion, ensure clean redisplay
+    zle redisplay
+  }
+  zle -N fix-completion-display _fix_completion_display
+  bindkey '^I' fix-completion-display
+fi
+
 
 # ==========================
 # Generic workspace navigation function
@@ -48,11 +67,9 @@ _workspace_navigate() {
     fi
   fi
 
-  case $target in
-  "all"|"root"|"") 
-    cd "$REPO" 
-    ;;
-  *)
+  if [[ -z "$target" ]]; then
+    cd "$REPO"
+  else
     # Try exact match first
     if [[ -d "$REPO/$target" ]]; then
       cd "$REPO/$target"
@@ -64,7 +81,7 @@ _workspace_navigate() {
           matches+=("$dir")
         fi
       done
-      
+
       if [[ ${#matches[@]} -eq 1 ]]; then
         local matched_dir="${matches[1]}"
         echo "[workspace] Moving to: $(basename "$matched_dir")"
@@ -80,8 +97,7 @@ _workspace_navigate() {
         return 1
       fi
     fi
-    ;;
-  esac
+  fi
 }
 
 # ==========================
@@ -91,7 +107,7 @@ _workspace_complete() {
   local org_name="$1"
   local workspace_path="$2"
   local prefix="${words[CURRENT]}"
-  
+
   # Set default path
   local REPO="$workspace_path"
 
@@ -119,7 +135,7 @@ _workspace_complete() {
     fi
   done
 
-  compadd "$dirs[@]"
+  compadd -Q -- "${dirs[@]}"
 }
 
 # ==========================

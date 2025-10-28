@@ -12,10 +12,12 @@ files_and_paths=(
   ".config/ghostty/config:~/.config/ghostty/config"
   ".config/cursor/settings.json:~/Library/Application Support/Cursor/User/settings.json"
   ".config/sheldon/plugins.toml:~/.config/sheldon/plugins.toml"
+  ".config/starship/starship.toml:~/.config/starship.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"
   ".codex/config.toml:~/.codex/config.toml"
   ".zshrc:~/.zshrc"
   ".vimrc:~/.vimrc"
+  ".gitconfig:~/.gitconfig"
 )
 
 # ログ出力関数

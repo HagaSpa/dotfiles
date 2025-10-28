@@ -1,0 +1,11 @@
+# ~/.config/starship.toml
+
+# プロンプトの表示順序を制御
+format = """$directory$git_branch$git_status$kubernetes$gcloud$all"""
+
+[gcloud]
+format = '[$symbol$active]($style) '
+
+[kubernetes]
+format = '[$context](bright-yellow) '
+disabled = false

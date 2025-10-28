@@ -1,0 +1,14 @@
+[user]
+	name = HagaSpa
+	email = justicesparrow13@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	quotepath = false
+	pager = less -R
+[i18n]
+	commitencoding = utf-8
+	logoutputencoding = utf-8
+[alias]
+	nah = !git reset --hard && git clean -df
+	

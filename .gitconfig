@@ -5,10 +5,11 @@
 	defaultBranch = main
 [core]
 	quotepath = false
-	pager = less -R
+	pager = delta
 [i18n]
 	commitencoding = utf-8
 	logoutputencoding = utf-8
 [alias]
 	nah = !git reset --hard && git clean -df
-	
+[delta]
+	side-by-side = true

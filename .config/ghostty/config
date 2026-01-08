@@ -3,3 +3,5 @@ font-feature = -dlig
 # フォント設定（等幅フォント、日本語対応）
 font-family = SF Mono
 font-size = 13
+
+macos-titlebar-style = hidden

@@ -89,4 +89,13 @@ The configuration prioritizes shell productivity with:
 <type>[optional scope]: <description>
 ```
 type: feat, fix, refactor, ci, perf, docs, chore
+
+## Git Rules
+
+### PR Merge Strategy
+PRをマージする際は必ず **squash and merge** を使用してください。
+
+```bash
+gh pr merge <PR番号> --squash --delete-branch
+```
  

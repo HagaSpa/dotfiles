@@ -1,48 +1,9 @@
-## fzf
-fzf-select-history() {
-   BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
-   CURSOR=$#BUFFER
-   zle reset-prompt
-}
-zle -N fzf-select-history
-bindkey '^t' fzf-select-history
-
-fzf-select-history-uniq() {
-   local tac=${commands[tac]:-"tail -r"}
-   BUFFER=$( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | sed 's/ *[0-9]* *//' | 
-	eval $tac | awk '!a[$0]++' | fzf +s)
-   CURSOR=$#BUFFER
-   zle clear-screen
-}
-zle -N fzf-select-history-uniq
-bindkey '^r' fzf-select-history-uniq
- 
 # copy a line Ctrl + CP
 history-current-pbcopy() {
   print "$BUFFER" | tr -d "\r\n" | pbcopy
 }
 zle -N history-current-pbcopy
 bindkey '^P^O' history-current-pbcopy
-
-# Fix completion display issues in tmux
-# Tab 1回 の候補選択開始時と、候補確定で入力文字列が重複する問題の修正。
-# 2回目以降の Tab で候補を選択してる最中は重複してしまう。
-# https://github.com/HagaSpa/dotfiles/issues/43
-if [[ -n "$TMUX" ]]; then
-  _fix_completion_display() {
-    # Clear the line using terminal escape sequences
-    printf '\r\033[2K'
-    # Redraw the prompt
-    zle reset-prompt
-    # Perform completion
-    zle expand-or-complete
-    # After completion, ensure clean redisplay
-    zle redisplay
-  }
-  zle -N fix-completion-display _fix_completion_display
-  bindkey '^I' fix-completion-display
-fi
-
 
 # ==========================
 # Generic workspace navigation function

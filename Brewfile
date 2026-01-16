@@ -1,3 +1,4 @@
+brew "atuin"
 brew "fzf"
 brew "lsd"
 brew "sheldon"

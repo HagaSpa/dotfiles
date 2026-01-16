@@ -10,19 +10,15 @@ zstyle ':completion:*' menu select=2
 source ~/.config/zsh/alias.sh
 source ~/.config/zsh/command.sh
 
-HISTSIZE=100000
-SAVEHIST=100000
 LISTMAX=1000
 
-setopt share_history
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
 unsetopt beep
 
 # App Config
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(sheldon source)"
+eval "$(atuin init zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

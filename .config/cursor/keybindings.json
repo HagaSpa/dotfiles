@@ -105,5 +105,13 @@
         "key": "cmd+g cmd+y",
         "command": "git.stashPop",
         "when": "!operationInProgress"
+    },
+    {
+        "key": "cmd+p cmd+o",
+        "command": "projectManager.listProjects"
+    },
+    {
+        "key": "alt+cmd+p",
+        "command": "-projectManager.listProjects"
     }
 ]

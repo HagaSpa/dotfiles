@@ -107,7 +107,7 @@
         "when": "!operationInProgress"
     },
     {
-        "key": "cmd+p cmd+o",
+        "key": "shift+alt+p",
         "command": "projectManager.listProjects"
     },
     {

@@ -13,3 +13,5 @@
 	nah = !git reset --hard && git clean -df
 [delta]
 	side-by-side = true
+[includeIf "gitdir:~/workspaces/OLTAInc/"]
+	path = ~/.gitconfig-olta

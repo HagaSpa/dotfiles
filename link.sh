@@ -15,10 +15,10 @@ files_and_paths=(
   ".config/sheldon/plugins.toml:~/.config/sheldon/plugins.toml"
   ".config/starship/starship.toml:~/.config/starship.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"
-  ".codex/config.toml:~/.codex/config.toml"
   ".zshrc:~/.zshrc"
   ".vimrc:~/.vimrc"
   ".gitconfig:~/.gitconfig"
+  ".gitconfig-olta:~/.gitconfig-olta"
 )
 
 # ログ出力関数

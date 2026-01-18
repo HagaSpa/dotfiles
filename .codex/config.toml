@@ -1,7 +1,0 @@
-hide_agent_reasoning = true
-network_access = true
-model = "gpt-5-codex"
-
-[tools]
-web_search = true
-

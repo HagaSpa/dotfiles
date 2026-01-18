@@ -1,13 +1,23 @@
-brew "atuin"
+# Core tools
 brew "fzf"
-brew "lsd"
-brew "sheldon"
-brew "starship"
-brew "gh"
 brew "zoxide"
 brew "bat"
-brew "tmux"
+brew "lsd"
+
+# Shell
+brew "sheldon"
+brew "starship"
+brew "atuin"
+
+# Development
+brew "gh"
 brew "git-delta"
+brew "tmux"
+
+# Runtime management
+brew "mise"
+
+# GUI Apps
 cask "ghostty"
 cask "cursor"
 cask "font-hack-nerd-font"

@@ -8,6 +8,14 @@ echo "Configuring macOS system settings..."
 # This allows holding down a key to repeat it instead of showing accent menu
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Trackpad: Set tracking speed to maximum (0-3, 3 is fastest)
+defaults write -g com.apple.trackpad.scaling -float 3
+
+# Trackpad: Enable tap to click
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
 echo "macOS settings applied. Please restart your system for all changes to take effect."
 echo ""
 echo -e "\033[1;33m⚠️  RESTART REQUIRED\033[0m"

@@ -1,6 +1,7 @@
 [settings]
-idiomatic_version_file_enable_tools = ["node", "python", "go"]
+idiomatic_version_file_enable_tools = ["node", "python", "go", "terraform"]
 
 [tools]
 node = "lts"
 gcloud = "latest"
+terraform = "latest"

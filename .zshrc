@@ -17,3 +17,7 @@ eval "$(starship init zsh)"
 eval "$(sheldon source)"
 eval "$(atuin init zsh)"
 eval "$(mise activate zsh)"
+
+# host-specific config
+local host_config="$HOME/.config/zsh/hosts/$(hostname -s).sh"
+[[ -f "$host_config" ]] && source "$host_config"

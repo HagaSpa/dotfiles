@@ -7,6 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 files_and_paths=(
   ".config/zsh/alias.sh:~/.config/zsh/alias.sh"
+  ".config/zsh/hosts/work.sh:~/.config/zsh/hosts/work.sh"
   ".config/zsh/command.sh:~/.config/zsh/command.sh"
   ".config/karabiner/assets/complex_modifications/personal_hagaspa.json:~/.config/karabiner/assets/complex_modifications/personal_hagaspa.json"
   ".config/ghostty/config:~/.config/ghostty/config"

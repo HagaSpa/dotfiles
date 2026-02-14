@@ -15,3 +15,8 @@
 	side-by-side = true
 [includeIf "gitdir:~/workspaces/OLTAInc/"]
 	path = ~/.gitconfig-olta
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

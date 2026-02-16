@@ -4,4 +4,5 @@ font-feature = -dlig
 font-family = SF Mono
 font-size = 13
 
+macos-option-as-alt = true
 macos-titlebar-style = hidden

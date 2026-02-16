@@ -5,3 +5,4 @@ export LESSCHARSET=utf-8
 
 # Add user-local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

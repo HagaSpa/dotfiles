@@ -78,7 +78,8 @@
         "sql",
         "yaml",
         "plaintext",
-        "markdown"
+        "markdown",
+        "rust"
     ],
     "workbench.colorTheme": "Atom One Dark",
     "vim.useSystemClipboard": true,

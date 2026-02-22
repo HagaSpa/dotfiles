@@ -74,4 +74,12 @@ else
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+# Install yazi plugins
+if command -v ya >/dev/null 2>&1; then
+  log_info "Installing yazi plugins..."
+  ya pkg install
+else
+  log_skip "ya not found, skipping yazi plugin install"
+fi
+
 log_info "Installation complete!"

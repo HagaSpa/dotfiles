@@ -37,6 +37,9 @@ mise install
 - **git-delta** - Syntax-highlighting pager for git
 - **zoxide** - Smart cd command
 - **bat** - Cat clone with syntax highlighting
+- **yazi** - Terminal file manager
+- **fd** - Simple, fast alternative to find
+- **helix** - Post-modern text editor
 - **tmux** - Terminal multiplexer for managing multiple sessions
 - **mise** - Runtime version manager (manages Node.js, gcloud, etc.)
 - **ghostty** - Terminal emulator
@@ -55,13 +58,16 @@ mise install
 - `.config/ghostty/config` - Ghostty terminal configuration
 - `.config/tmux/tmux.conf` - Tmux configuration with vim key bindings
 - `.config/karabiner/` - Karabiner-Elements key mapping
+- `.config/helix/config.toml` - Helix editor configuration
+- `.config/yazi/` - Yazi file manager configuration (with projects plugin)
+- `.config/fd/config` - fd default options
 - `.config/cursor/settings.json` - Cursor editor settings
 - `.claude/` - Claude Code configuration and custom commands
 
 ## Scripts
 
 ### `install.sh`
-Installs Homebrew, all brew packages from Brewfile, runtimes via mise, and Claude Code.
+Installs Homebrew, all brew packages from Brewfile, runtimes via mise, Claude Code, and yazi plugins.
 
 ### `link.sh`
 Creates symbolic links for configuration files from this repository to their expected locations in your home directory. Existing files are backed up with a `.bak` extension.

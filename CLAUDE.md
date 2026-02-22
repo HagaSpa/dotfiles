@@ -25,7 +25,7 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 ## Architecture
 
 ### Core Scripts
-- `install.sh` - Installs: Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug
+- `install.sh` - Installs: Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug → yazi plugins
 - `link.sh` - Declarative symlink management via `files_and_paths` array (source:destination format)
 - `settings.sh` - macOS defaults configuration (key repeat, trackpad settings)
 
@@ -33,7 +33,9 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 - **Shell**: `.zshrc` (main) + `.config/zsh/alias.sh` (aliases) + `.config/zsh/command.sh` (functions)
 - **Runtime**: `.mise.toml` (Node.js LTS, gcloud via mise)
 - **Terminal**: `.config/ghostty/config`
-- **Editor**: `.vimrc` (vim-plug), `.config/cursor/` (Cursor IDE settings)
+- **Editor**: `.vimrc` (vim-plug), `.config/helix/` (Helix), `.config/cursor/` (Cursor IDE settings)
+- **File Manager**: `.config/yazi/` (yazi config + projects plugin)
+- **Search**: `.config/fd/` (fd defaults)
 - **Input**: `.config/karabiner/` (keyboard remapping)
 
 ### Workspace Conventions

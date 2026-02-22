@@ -1,0 +1,7 @@
+[mgr]
+prepend_keymap = [
+	{ on = [ "<C-p>", "s" ], run = "plugin projects -- save",      desc = "Save current project" },
+	{ on = [ "<C-p>", "l" ], run = "plugin projects -- load",      desc = "Load project" },
+	{ on = [ "<C-p>", "p" ], run = "plugin projects -- load_last", desc = "Load last project" },
+	{ on = [ "<C-p>", "d" ], run = "plugin projects -- delete",    desc = "Delete project" },
+]

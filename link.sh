@@ -22,6 +22,11 @@ files_and_paths=(
   ".gitconfig:~/.gitconfig"
   ".gitconfig-olta:~/.gitconfig-olta"
   ".mise.toml:~/.mise.toml"
+  ".config/yazi/init.lua:~/.config/yazi/init.lua"
+  ".config/yazi/keymap.toml:~/.config/yazi/keymap.toml"
+  ".config/yazi/package.toml:~/.config/yazi/package.toml"
+  ".config/fd/config:~/.config/fd/config"
+  ".config/helix/config.toml:~/.config/helix/config.toml"
 )
 
 # ログ出力関数

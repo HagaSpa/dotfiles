@@ -1,5 +1,6 @@
 # Environment variables (loaded for all shell sessions)
 
+export EDITOR="hx"
 export LANG=en_US.UTF-8
 export LESSCHARSET=utf-8
 

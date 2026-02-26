@@ -25,6 +25,7 @@ files_and_paths=(
   ".config/yazi/init.lua:~/.config/yazi/init.lua"
   ".config/yazi/keymap.toml:~/.config/yazi/keymap.toml"
   ".config/yazi/package.toml:~/.config/yazi/package.toml"
+  ".config/yazi/yazi.toml:~/.config/yazi/yazi.toml"
   ".config/fd/config:~/.config/fd/config"
   ".config/helix/config.toml:~/.config/helix/config.toml"
 )

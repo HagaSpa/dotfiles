@@ -3,6 +3,7 @@ theme = "bogster"
 [editor]
 line-number = "absolute"
 mouse = false
+clipboard-provider = "pasteboard"
 
 [editor.cursor-shape]
 insert = "bar"

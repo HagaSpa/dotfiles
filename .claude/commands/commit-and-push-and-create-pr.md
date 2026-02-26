@@ -15,6 +15,7 @@ You are a senior software engineer. You need to commit the current changes and c
 3. Push to the remote repository
 
 4. Create a Pull Request targeting the main branch
+    - PR title must follow the same Conventional Commits format as commit messages (e.g., `feat(zsh): add clear-screen keybind`)
     ```markdown
 
     ## Background / 背景

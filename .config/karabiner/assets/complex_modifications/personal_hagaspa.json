@@ -2,6 +2,49 @@
     "title": "Personal rules @hagaspa",
     "rules": [
         {
+            "description": "Terminal: Ctrl+b sends eisuu then Ctrl+b (tmux prefix bypasses IME)",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.Terminal$",
+                                "^com\\.googlecode\\.iterm2$",
+                                "^org\\.alacritty$",
+                                "^com\\.github\\.wez\\.wezterm$",
+                                "^com\\.mitchellh\\.ghostty$",
+                                "^net\\.kovidgoyal\\.kitty$"
+                            ]
+                        }
+                    ],
+                    "from": {
+                        "key_code": "b",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_control"
+                            ],
+                            "optional": [
+                                "any"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "japanese_eisuu"
+                        },
+                        {
+                            "key_code": "b",
+                            "modifiers": [
+                                "left_control"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "description": "Post left_alt + left_arrow (word back) if left_control + , is pressed",
             "manipulators": [
                 {

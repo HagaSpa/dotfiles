@@ -12,7 +12,8 @@
       "Bash(gh run list:*)",
       "Bash(gh pr view:*)",
       "Bash(chmod:~/workspaces/*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebSearch"
     ],
     "deny": []
   }

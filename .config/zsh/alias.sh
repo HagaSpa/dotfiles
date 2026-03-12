@@ -3,6 +3,7 @@ alias ls='lsd'
 alias l='lsd -l -a'
 
 alias z-='z -'
+alias z..='z ..'
 
 # git aliases
 alias ga='git add'

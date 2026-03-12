@@ -6,6 +6,7 @@ zstyle ':completion:*' menu select=2
 # source
 source ~/.config/zsh/alias.sh
 source ~/.config/zsh/command.sh
+source <(fzf --zsh)
 
 LISTMAX=1000
 

@@ -14,7 +14,7 @@ if [[ -s "$tmp" ]]; then
 		tmux send-keys -t "$CALLER_PANE" ":open $paths"
 		tmux send-keys -t "$CALLER_PANE" Enter
 	else
-		tmux send-keys -t "$CALLER_PANE" "hx $paths"
+		tmux send-keys -t "$CALLER_PANE" "hx \"$paths\""
 		tmux send-keys -t "$CALLER_PANE" Enter
 	fi
 fi

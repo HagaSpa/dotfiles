@@ -68,6 +68,16 @@ else
   exit_code=1
 fi
 
+# Validate tmux configuration syntax
+if command -v tmux > /dev/null 2>&1; then
+  if tmux -f .config/tmux/tmux.conf list-keys > /dev/null 2>&1; then
+    echo "✓ tmux configuration syntax is valid"
+  else
+    echo "✗ tmux configuration syntax error"
+    exit_code=1
+  fi
+fi
+
 # Validate JSON files
 echo "Validating JSON files..."
 if python3 -m json.tool .config/karabiner/assets/complex_modifications/personal_hagaspa.json > /dev/null 2>&1; then

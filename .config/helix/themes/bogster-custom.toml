@@ -1,0 +1,5 @@
+inherits = "bogster"
+
+"ui.virtual.inlay-hint" = { fg = "#707070" }
+"ui.virtual.inlay-hint.type" = { fg = "#707070" }
+"ui.virtual.inlay-hint.parameter" = { fg = "#707070" }

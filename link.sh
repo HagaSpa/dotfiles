@@ -28,6 +28,7 @@ files_and_paths=(
   ".config/yazi/yazi.toml:~/.config/yazi/yazi.toml"
   ".config/fd/config:~/.config/fd/config"
   ".config/helix/config.toml:~/.config/helix/config.toml"
+  ".config/helix/yazi-picker.sh:~/.config/helix/yazi-picker.sh"
   ".config/helix/languages.toml:~/.config/helix/languages.toml"
   ".config/helix/themes/bogster-custom.toml:~/.config/helix/themes/bogster-custom.toml"
 )

@@ -4,6 +4,8 @@ alias l='lsd -l -a'
 
 alias z-='z -'
 alias z..='z ..'
+alias haga="z ~/workspaces/hagaspa"
+alias olta="z ~/workspaces/OLTAInc"
 
 # git aliases
 alias ga='git add'

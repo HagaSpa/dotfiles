@@ -8,3 +8,6 @@ bindkey '^P^O' history-current-pbcopy
 # clear screen Ctrl + G (Ctrl+L is remapped to right_arrow by Karabiner)
 bindkey '^G' clear-screen
 
+# fuzzy find with bat preview
+fp() { fzf --preview 'bat --color=always {}'; }
+

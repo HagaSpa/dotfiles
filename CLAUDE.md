@@ -26,7 +26,7 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 
 ### Core Scripts
 - `install.sh` - Installs: Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug → yazi plugins
-- `link.sh` - Declarative symlink management via `files_and_paths` array (source:destination format)
+- `link.sh` - Declarative symlink management via `entries` array. Source path only = `~/{source}`, `source:destination` for custom paths. `--list` outputs all entries as `source:destination`
 - `settings.sh` - macOS defaults configuration (key repeat, trackpad settings)
 
 ### Configuration Files
@@ -58,6 +58,6 @@ gh pr merge <PR番号> --squash --delete-branch
 
 ### Adding New Dotfiles
 1. Add file to repository
-2. Add entry to `files_and_paths` array in `link.sh` (format: `"source:destination"`)
+2. Add entry to `entries` array in `link.sh` (source path only, or `"source:destination"` if target differs)
 3. Run `./link.sh` to create symlink
  

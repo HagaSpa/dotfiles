@@ -32,7 +32,6 @@ echo "Executing link.sh in test environment..."
 echo "Verifying symbolic links were created..."
 links_created=0
 while IFS=':' read -r source target; do
-  # Expand ~ in target path
   expanded_target=$(eval echo "$target")
   if [ -L "$expanded_target" ]; then
     echo "✓ Symbolic link created: $expanded_target -> $(readlink "$expanded_target")"
@@ -40,7 +39,7 @@ while IFS=':' read -r source target; do
   else
     echo "✗ Symbolic link not created: $expanded_target"
   fi
-done <<< "$(grep -E '^\s*"[^"]+:[^"]+"\s*$' link.sh | sed 's/[" ]//g')"
+done <<< "$(./link.sh --list)"
 
 if [ $links_created -gt 0 ]; then
   echo "✓ Successfully created $links_created symbolic links"
@@ -63,7 +62,7 @@ while IFS=':' read -r source target; do
     echo "✗ Missing source file: $source"
     exit_code=1
   fi
-done <<< "$(grep -E '^\s*"[^"]+:[^"]+"\s*$' link.sh | sed 's/[" ]//g')"
+done <<< "$(./link.sh --list)"
 
 if [ $exit_code -eq 0 ]; then
   echo "✓ link.sh test completed successfully"

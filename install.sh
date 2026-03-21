@@ -74,6 +74,14 @@ else
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+# Install TPM (Tmux Plugin Manager)
+if [ -d "$HOME/.tmux/plugins/tpm" ]; then
+  log_skip "TPM is already installed"
+else
+  log_info "Installing TPM..."
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
 # Install yazi plugins
 if command -v ya >/dev/null 2>&1; then
   log_info "Installing yazi plugins..."

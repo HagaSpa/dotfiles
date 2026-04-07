@@ -10,8 +10,9 @@ alias olta="z ~/workspaces/OLTAInc"
 # git aliases
 alias ga='git add'
 alias ga.='git add .'
-alias gb='git switch -'
-alias gbm='git switch main && git pull'
+alias gb='git switch'
+alias gb-='git switch -'
+alias gbm='git switch $(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed "s@^refs/remotes/origin/@@" || echo main) && git pull'
 alias gbc='git switch -c'
 alias gd='git add -N . && git diff'
 alias gs='git status --short --branch'

@@ -22,6 +22,7 @@ entries=(
   .config/zsh/alias.sh
   .config/zsh/command.sh
   .config/zsh/hosts/work.sh
+  .config/zsh/tasks.sh
   .gitconfig
   .gitconfig-olta
   .mise.toml

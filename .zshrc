@@ -10,6 +10,7 @@ zstyle ':completion:*' matcher-list \
 # source
 source ~/.config/zsh/alias.sh
 source ~/.config/zsh/command.sh
+source ~/.config/zsh/tasks.sh
 source <(fzf --zsh)
 
 LISTMAX=1000

@@ -6,3 +6,7 @@ font-size = 13
 
 macos-option-as-alt = true
 macos-titlebar-style = hidden
+
+# 分割は tmux (Ctrl+b, % / ") で行うため無効化。右 Cmd 単押し→D の誤爆対策も兼ねる
+keybind = cmd+d=unbind
+keybind = cmd+shift+d=unbind

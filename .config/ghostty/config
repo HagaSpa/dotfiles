@@ -10,3 +10,6 @@ macos-titlebar-style = hidden
 # 分割は tmux (Ctrl+b, % / ") で行うため無効化。右 Cmd 単押し→D の誤爆対策も兼ねる
 keybind = cmd+d=unbind
 keybind = cmd+shift+d=unbind
+
+# cmd+w での終了を無効化（誤爆対策）
+keybind = cmd+w=unbind

@@ -5,6 +5,16 @@
         "command": "composerMode.agent"
     },
     {
+        "key": "cmd+e",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+                "workbench.action.acceptSelectedQuickOpenItem"
+            ]
+        }
+    },
+    {
         "key": "cmd+1",
         "command": "workbench.action.focusFirstEditorGroup"
     },

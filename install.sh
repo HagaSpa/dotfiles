@@ -53,6 +53,8 @@ if command -v mise >/dev/null 2>&1; then
   log_info "Installing tools via mise..."
   eval "$(mise activate bash)"
   mise install
+  # Put mise-managed tools (bun, node) on PATH for the remainder of this script
+  eval "$(mise env -s bash)"
 else
   log_skip "mise not found, skipping mise install"
 fi
@@ -88,6 +90,14 @@ if command -v ya >/dev/null 2>&1; then
   ya pkg install
 else
   log_skip "ya not found, skipping yazi plugin install"
+fi
+
+# Build Karabiner config from karabiner.ts source
+if [ -f "$SCRIPT_DIR/.config/karabiner/package.json" ] && command -v bun >/dev/null 2>&1; then
+  log_info "Building Karabiner config..."
+  (cd "$SCRIPT_DIR/.config/karabiner" && bun install --frozen-lockfile && bun run build)
+else
+  log_skip "bun not found or no Karabiner package.json, skipping Karabiner build"
 fi
 
 log_info "Installation complete!"

@@ -1,7 +1,7 @@
 theme = "bogster-custom"
 
 [editor]
-line-number = "absolute"
+line-number = "relative"
 mouse = false
 clipboard-provider = "pasteboard"
 

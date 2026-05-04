@@ -1,5 +1,5 @@
 [settings]
-idiomatic_version_file_enable_tools = ["node", "python", "go", "terraform"]
+idiomatic_version_file_enable_tools = ["node", "python", "go", "terraform", "rust"]
 
 [tools]
 node = "lts"
@@ -7,3 +7,5 @@ bun = "latest"
 gcloud = "latest"
 terraform = "latest"
 biome = "latest"
+rust = "latest"
+rust-analyzer = "latest"

@@ -56,10 +56,10 @@ rm -rf "$TEST_HOME"
 echo "Verifying source files exist..."
 exit_code=0
 while IFS=':' read -r source target; do
-  if [ -f "$source" ]; then
-    echo "✓ Source file exists: $source"
+  if [ -e "$source" ]; then
+    echo "✓ Source exists: $source"
   else
-    echo "✗ Missing source file: $source"
+    echo "✗ Missing source: $source"
     exit_code=1
   fi
 done <<< "$(./link.sh --list)"

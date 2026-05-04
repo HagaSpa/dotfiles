@@ -33,6 +33,8 @@ entries=(
   ".config/cursor/keybindings.json:~/Library/Application Support/Cursor/User/keybindings.json"
   ".config/starship/starship.toml:~/.config/starship.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"
+  ".config/claude/settings.json:~/.claude/settings.json"
+  ".config/claude/commands:~/.claude/commands"
 )
 
 to_pair() {

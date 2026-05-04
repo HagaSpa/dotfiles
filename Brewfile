@@ -18,6 +18,7 @@ brew "helix"
 brew "gh"
 brew "git-delta"
 brew "tmux"
+brew "typescript-language-server"
 
 # Runtime management
 brew "mise"

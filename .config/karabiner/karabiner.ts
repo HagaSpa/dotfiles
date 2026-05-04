@@ -28,12 +28,12 @@ writeToProfile('Default profile', [
     map({
       key_code: 'comma',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },
-    }).to({ key_code: 'left_arrow', modifiers: ['left_alt'] }),
+    }).to({ key_code: 'left_arrow', modifiers: ['left_option'] }),
 
     map({
       key_code: 'period',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },
-    }).to({ key_code: 'right_arrow', modifiers: ['left_alt'] }),
+    }).to({ key_code: 'right_arrow', modifiers: ['left_option'] }),
 
     map({
       key_code: 'w',

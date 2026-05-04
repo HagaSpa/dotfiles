@@ -43,7 +43,13 @@ jobs:
     
     - name: Test configuration files
       run: ./.github/scripts/test-config.sh
-    
+
+    - name: Setup bun
+      uses: oven-sh/setup-bun@v2
+
+    - name: Test karabiner.ts build idempotency
+      run: ./.github/scripts/test-karabiner-build.sh
+
     - name: Test Brewfile
       run: ./.github/scripts/test-brewfile.sh
     

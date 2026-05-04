@@ -3,5 +3,6 @@ idiomatic_version_file_enable_tools = ["node", "python", "go", "terraform"]
 
 [tools]
 node = "lts"
+bun = "latest"
 gcloud = "latest"
 terraform = "latest"

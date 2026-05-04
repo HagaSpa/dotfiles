@@ -6,7 +6,7 @@ echo "Setting up test environment..."
 
 # Create test directories
 mkdir -p ~/.config/zsh
-mkdir -p ~/.config/karabiner/assets/complex_modifications
+mkdir -p ~/.config/karabiner
 mkdir -p ~/.config/ghostty
 
 # Backup existing files if they exist

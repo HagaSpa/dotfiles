@@ -36,11 +36,18 @@ else
   exit_code=1
 fi
 
-# Check Karabiner configuration
-if test -f .config/karabiner/assets/complex_modifications/personal_hagaspa.json; then
-  echo "✓ Karabiner configuration exists"
+# Check Karabiner configuration (karabiner.ts source + generated profile)
+if test -f .config/karabiner/karabiner.ts; then
+  echo "✓ Karabiner TypeScript source exists"
 else
-  echo "✗ Karabiner configuration missing"
+  echo "✗ Karabiner TypeScript source missing"
+  exit_code=1
+fi
+
+if test -f .config/karabiner/karabiner.json; then
+  echo "✓ Karabiner profile exists"
+else
+  echo "✗ Karabiner profile missing"
   exit_code=1
 fi
 
@@ -80,7 +87,7 @@ fi
 
 # Validate JSON files
 echo "Validating JSON files..."
-if python3 -m json.tool .config/karabiner/assets/complex_modifications/personal_hagaspa.json > /dev/null 2>&1; then
+if python3 -m json.tool .config/karabiner/karabiner.json > /dev/null 2>&1; then
   echo "✓ Karabiner JSON is valid"
 else
   echo "✗ Karabiner JSON is invalid"

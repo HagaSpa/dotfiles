@@ -60,4 +60,14 @@ gh pr merge <PR番号> --squash --delete-branch
 1. Add file to repository
 2. Add entry to `entries` array in `link.sh` (source path only, or `"source:destination"` if target differs)
 3. Run `./link.sh` to create symlink
+
+### Adding New Tools (brew vs mise)
+
+Default to Brewfile. Escalate to `.mise.toml` when any of the following applies:
+
+- Per-project version pinning matters (`.tool-version` / `.terraform-version` / `.node-version` 等を尊重したい)
+- Not on Homebrew, or requires a curl/manual installer (avoid bloating `install.sh`)
+- Schema URL or lockfile semantics make version pinning meaningful (e.g. `biome.json`'s `$schema`)
+
+If per-project version variance is already expected, skip brew and put it in mise from the start (don't pay the migration cost later). Run `mise registry | grep <tool>` before proposing a new tool. Prefer mise registry-native backends (aqua / asdf / core) over `npm:` fallbacks. GUI (cask) and stable system CLIs (helix, tmux, gh, fzf, etc.) stay on brew.
  

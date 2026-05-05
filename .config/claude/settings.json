@@ -10,6 +10,7 @@
       "Bash(ls:*)",
       "Bash(ls)",
       "Bash(ls *)",
+      "Bash(ls -t ~/Desktop/*.png 2>/dev/null | head -1)",
       "Bash(head:*)",
       "Bash(tail:*)",
       "Bash(wc:*)",
@@ -25,8 +26,6 @@
       "Bash(tree:*)",
       "Bash(gh:*)",
       "Bash(git:*)",
-      "Glob",
-      "Grep",
       "Read",
       "WebFetch",
       "Bash(find:*)",
@@ -46,6 +45,9 @@
       "mcp__claude_ai_Notion__notion-query-database-view",
       "mcp__claude_ai_Notion__notion-query-meeting-notes",
       "mcp__claude_ai_Notion__notion-search"
+    ],
+    "additionalDirectories": [
+      "~/Desktop"
     ],
     "deny": [
       "Bash(helm upgrade*)",

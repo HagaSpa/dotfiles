@@ -1,5 +1,6 @@
 # Completions
 autoload -Uz compinit && compinit -C
+_comp_options+=(globdots)
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' matcher-list \

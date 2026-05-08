@@ -58,6 +58,20 @@ writeToProfile('Default profile', [
     ),
   ]),
 
+  rule('Home Row Mods (Opt+Shift on ;)').manipulators([
+    map({ key_code: 'semicolon', modifiers: { optional: ['any'] } })
+      .to({
+        key_code: 'right_option',
+        modifiers: ['right_shift'],
+        lazy: true,
+      })
+      .toIfAlone({ key_code: 'semicolon' })
+      .parameters({
+        'basic.to_if_alone_timeout_milliseconds': 200,
+        'basic.to_if_held_down_threshold_milliseconds': 200,
+      }),
+  ]),
+
   rule('Tap CMD to toggle Kana/Eisuu').manipulators([
     withMapper({
       left_command: 'japanese_eisuu',

@@ -16,6 +16,9 @@ source <(fzf --zsh)
 
 LISTMAX=1000
 
+# Opt+delete / Opt+d がパスを 1 セグメントずつ削除するよう "/" を境界に戻す
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
 unsetopt beep
 
 # App Config

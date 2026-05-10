@@ -13,6 +13,7 @@ entries=(
   .config/helix/languages.toml
   .config/helix/themes/bogster-custom.toml
   .config/helix/yazi-picker.sh
+  .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
   .config/sheldon/plugins.toml
   .config/yazi/init.lua

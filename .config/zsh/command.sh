@@ -17,3 +17,8 @@ gbm() {
   : "${branch:=main}"
   git switch "$branch" && git pull
 }
+
+# Home Row Mods cheatsheet. tmux からは prefix + m の popup でも開ける。
+hrm() {
+  bat --style=plain --color=always --paging=always ~/.config/karabiner/HRM.md
+}

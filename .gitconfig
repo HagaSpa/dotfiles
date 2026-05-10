@@ -23,3 +23,5 @@
 	clean = git-lfs clean -- %f
 [push]
 	autoSetupRemote = true
+[fetch]
+	prune = true

@@ -42,7 +42,7 @@ const HRM_PARAMS = {
   'basic.to_if_alone_timeout_milliseconds': 200,
   'basic.to_if_held_down_threshold_milliseconds': 200,
 } as const;
-const HRM_SIMULTANEOUS_MS = 90;
+const HRM_SIMULTANEOUS_MS = 180;
 
 // Letter rolls (e.g. "sa", "si") within HRM_SIMULTANEOUS_MS pass through as literals
 // instead of triggering the modifier — works around Karabiner's lack of QMK-style

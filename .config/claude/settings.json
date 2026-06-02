@@ -46,9 +46,6 @@
       "mcp__claude_ai_Notion__notion-query-meeting-notes",
       "mcp__claude_ai_Notion__notion-search"
     ],
-    "additionalDirectories": [
-      "~/Desktop"
-    ],
     "deny": [
       "Bash(helm upgrade*)",
       "Bash(helm install*)",
@@ -60,7 +57,11 @@
       "Bash(kubectl patch:*)",
       "Bash(kubectl scale:*)",
       "Bash(kubectl rollout:*)"
-    ]
+    ],
+    "additionalDirectories": [
+      "~/Desktop"
+    ],
+    "defaultMode": "auto"
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
@@ -107,6 +108,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
-  "effortLevel": "max",
-  "showThinkingSummary": true
+  "effortLevel": "xhigh",
+  "showThinkingSummary": true,
+  "skipAutoPermissionPrompt": true
 }

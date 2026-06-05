@@ -7,6 +7,8 @@ alias z..='z ..'
 alias haga="z ~/workspaces/hagaspa"
 alias olta="z ~/workspaces/OLTAInc"
 
+alias c="claude"
+
 # git aliases
 alias ga='git add'
 alias ga.='git add .'

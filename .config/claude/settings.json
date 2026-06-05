@@ -108,6 +108,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
+  "effortLevel": "xhigh",
   "showThinkingSummary": true,
   "skipAutoPermissionPrompt": true
 }

@@ -14,7 +14,6 @@
 | 親ディレクトリに移動 | `z..` | zoxide (alias) |
 | hagaspa workspace に移動 | `haga` | alias → `z ~/workspaces/hagaspa` |
 | OLTA workspace に移動 | `olta` | alias → `z ~/workspaces/OLTAInc` |
-| ghq 管理リポジトリを fzf で選んで移動 | `repo` | ghq + fzf (command.sh) |
 | fzf でディレクトリ選んで cd | `Alt+C` | fzf |
 
 ## File Search / ファイル検索
@@ -48,9 +47,9 @@
 | ブランチ切替 | `gb ブランチ名` | `git switch` |
 | 直前のブランチに戻る | `gb-` | `git switch -` |
 | 新ブランチ作成 | `gbc ブランチ名` | `git switch -c` |
-| ブランチを fzf で選んで切替 | `gco` | fzf + `git switch` (command.sh) |
+| リモートのデフォルトブランチに切替えて pull | `gbm` | command.sh (`origin/HEAD` 解決、無ければ `main`) |
 | soft reset | `grs コミット` | `git reset --soft` |
-| 変更を全取消 | `gnah` | `git reset --hard && git clean -df` (command.sh) |
+| 変更を全取消 | `gnah` | alias → `git nah`（.gitconfig: `reset --hard && clean -df`） |
 | PR をブラウザで開く | `vg` | `gh pr view --web` |
 
 ## Tmux / ターミナル多重化
@@ -103,8 +102,12 @@ tmux 内から `Prefix` → `y` でポップアップ起動。Helix で開いて
 |---|---|---|
 | ファイル内容を表示 (シンタックスハイライト付き) | `bat ファイル` | bat |
 | ファイル一覧 (カラー + アイコン) | `ls` / `l` | lsd (alias) |
+| 後方へ単語削除 (カーソル左の単語) | `⌥+Backspace` | zsh: `backward-kill-word` |
+| 前方へ単語削除 (カーソル右の単語) | `⌥+D` | zsh: `kill-word` |
 | 現在のコマンドラインをコピー | `Ctrl+P` → `Ctrl+O` | pbcopy (command.sh) |
 | 画面クリア | `Ctrl+G` | clrscr (command.sh) |
+
+> **`Ctrl+W` は単語削除に使えない**（ハマりやすい点）: Karabiner の Ctrl navigation が `Ctrl+W` → Page Up（`Ctrl+V` → Page Down）に**全アプリで**再マップしているため、シェルに `Ctrl+W` (0x17) は届かない。端末では Page Up = `\e[5~` が zsh で未バインド（`undefined-key`）なので、末尾の `~` だけが残って入力されてしまう。後方単語削除は **`⌥+Backspace`** を使う。`.zshrc` の `WORDCHARS` は `/` を境界に保つよう調整済みで、パスを 1 セグメントずつ消せる（`backward-kill-word` の単語境界に効く）。
 
 ## Keyboard Shortcuts (Karabiner / HRM)
 

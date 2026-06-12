@@ -58,11 +58,12 @@
       "Bash(kubectl scale:*)",
       "Bash(kubectl rollout:*)"
     ],
+    "defaultMode": "auto",
     "additionalDirectories": [
       "~/Desktop"
-    ],
-    "defaultMode": "auto"
+    ]
   },
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "atlassian",
@@ -109,6 +110,6 @@
   },
   "language": "Japanese",
   "effortLevel": "xhigh",
-  "showThinkingSummary": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "showThinkingSummary": true
 }

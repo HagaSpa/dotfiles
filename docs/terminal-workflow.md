@@ -2,6 +2,8 @@
 
 現在導入済みのツールとショートカットで実現できるユースケース一覧。
 
+> キーボード操作（HRM・Ctrl ナビ・tmux prefix）の一次情報源は [`.config/karabiner/HRM.md`](../.config/karabiner/HRM.md)。tmux 内なら `Prefix` → `m` でいつでも表示できる。本ファイルはツール横断の早見表。
+
 ## Directory Navigation / ディレクトリ移動
 
 | ユースケース | コマンド | ツール |
@@ -12,6 +14,7 @@
 | 親ディレクトリに移動 | `z..` | zoxide (alias) |
 | hagaspa workspace に移動 | `haga` | alias → `z ~/workspaces/hagaspa` |
 | OLTA workspace に移動 | `olta` | alias → `z ~/workspaces/OLTAInc` |
+| ghq 管理リポジトリを fzf で選んで移動 | `repo` | ghq + fzf (command.sh) |
 | fzf でディレクトリ選んで cd | `Alt+C` | fzf |
 
 ## File Search / ファイル検索
@@ -30,7 +33,7 @@
 
 ## Git Operations / Git 操作
 
-| ユースケース | コマンド | alias |
+| ユースケース | コマンド | 定義 |
 |---|---|---|
 | ステータス確認 | `gs` | `git status --short --branch` |
 | 差分確認 (未追跡含む) | `gd` | `git add -N . && git diff` |
@@ -40,17 +43,19 @@
 | コミット (エディタ) | `gcm` | `git commit` |
 | 直前のコミットに追加 | `gca` | `git commit --amend --no-edit` |
 | プッシュ | `gp` | `git push` |
+| upstream を設定してプッシュ | `gpu` | `git push -u origin $(現在ブランチ)` |
 | プル | `gpl` | `git pull` |
-| main に切替 + pull | `gbm` | `git switch main && git pull` |
-| 直前のブランチに切替 | `gb` | `git switch -` |
+| ブランチ切替 | `gb ブランチ名` | `git switch` |
+| 直前のブランチに戻る | `gb-` | `git switch -` |
 | 新ブランチ作成 | `gbc ブランチ名` | `git switch -c` |
+| ブランチを fzf で選んで切替 | `gco` | fzf + `git switch` (command.sh) |
 | soft reset | `grs コミット` | `git reset --soft` |
-| 変更を全取消 | `gnah` | `git nah` |
+| 変更を全取消 | `gnah` | `git reset --hard && git clean -df` (command.sh) |
 | PR をブラウザで開く | `vg` | `gh pr view --web` |
 
 ## Tmux / ターミナル多重化
 
-**Prefix: `Ctrl+B`**
+**Prefix: `Ctrl+Space`**（D=Ctrl ホールド + 右親指 Space の bilateral chord。`Ctrl+B` は左手同手チョードで打ちにくいため変更。詳細は [HRM.md](../.config/karabiner/HRM.md)）
 
 | ユースケース | キー | 備考 |
 |---|---|---|
@@ -59,6 +64,7 @@
 | ウィンドウ番号で切替 | `Prefix` → `0-9` | |
 | ペイン移動 (左/下/上/右) | `Prefix` → `h/j/k/l` | vim 風 |
 | yazi をポップアップで開く | `Prefix` → `y` | Helix 連携あり |
+| HRM チートシート表示 | `Prefix` → `m` | HRM.md を bat でポップアップ |
 | セッション一覧 | `Prefix` → `s` | |
 | ウィンドウ一覧 | `Prefix` → `w` | |
 | ペインを水平分割 | `Prefix` → `"` | |
@@ -67,7 +73,7 @@
 | デタッチ | `Prefix` → `d` | |
 
 **tmux-resurrect / continuum:**
-- セッションは自動保存・自動復元される
+- セッションは自動保存・自動復元される（`@continuum-restore 'on'`）
 - 手動保存: `Prefix` → `Ctrl+S`
 - 手動復元: `Prefix` → `Ctrl+R`
 
@@ -97,21 +103,40 @@ tmux 内から `Prefix` → `y` でポップアップ起動。Helix で開いて
 |---|---|---|
 | ファイル内容を表示 (シンタックスハイライト付き) | `bat ファイル` | bat |
 | ファイル一覧 (カラー + アイコン) | `ls` / `l` | lsd (alias) |
-| 現在のコマンドラインをコピー | `Ctrl+P` → `Ctrl+O` | pbcopy (custom) |
-| 画面クリア | `Ctrl+G` | clear-screen |
+| 現在のコマンドラインをコピー | `Ctrl+P` → `Ctrl+O` | pbcopy (command.sh) |
+| 画面クリア | `Ctrl+G` | clrscr (command.sh) |
 
-## Keyboard Shortcuts (Karabiner) / ターミナル内キーボード
+## Keyboard Shortcuts (Karabiner / HRM)
 
-ターミナルアプリ内でのみ有効な Karabiner リマップ:
+ホームロウmod (HRM) とターミナル向けリマップを Karabiner で定義。**詳細・最新は [HRM.md](../.config/karabiner/HRM.md)（tmux 内なら `Prefix` → `m`）が一次情報源**。設定は `.config/karabiner/karabiner.ts` から `karabiner.json` を生成。以下は要約。
+
+### Home Row Mods（キーをホールドして修飾キーにする）
+
+| キー | ホールド → 修飾 | スコープ |
+|---|---|---|
+| F (左人差し) | Shift | 全アプリ |
+| S (左薬指) | Option | 全アプリ |
+| D (左中指) | Control | 全アプリ |
+| J (右人差し) | Shift | Helix / ターミナル / Chrome を除く |
+| ; (右小指) | Opt + Shift | 全アプリ |
+| Cmd (tap) | 英数 (左) / かな (右) | tap で IME 切替、hold で Cmd |
+
+- A (左小指) には HRM を載せない（左手首腱鞘炎対策）／Cmd は物理キーのまま
+
+### Ctrl navigation（D ホールドで Ctrl を作って発火・全アプリ）
+
+| キー | 動作 |
+|---|---|
+| `Ctrl+H/J/K/L` | 矢印キー (左/下/上/右) |
+| `Ctrl+,` / `Ctrl+.` | 単語単位で左/右移動 (Option+←/→) |
+| `Ctrl+W` / `Ctrl+V` | Page Up / Page Down |
+
+### ターミナル限定
 
 | キー | 動作 | 備考 |
 |---|---|---|
-| `Ctrl+H/J/K/L` | 矢印キー (左/下/上/右) | vim 風カーソル移動 |
-| `Ctrl+,` | 単語単位で左移動 | Alt+Left |
-| `Ctrl+.` | 単語単位で右移動 | Alt+Right |
-| `Ctrl+W` | Page Up | |
-| `Ctrl+V` | Page Down | |
-| `Ctrl+B` | IME off → Ctrl+B | tmux prefix の IME 誤入力防止 |
+| `Ctrl+B` | 英数 → `Ctrl+B` | tmux prefix 送出前に IME を抜く（prefix 自体は `Ctrl+Space`） |
+| `Ctrl` 単押し | 短時間ホールド | 端末向け tap-hold 判定 |
 
 ## Helix Editor / エディタ
 
@@ -138,15 +163,16 @@ gbc feat/my-feature   # ブランチ作成
 gd                     # 差分確認
 ga.                    # 全ファイルステージ
 gc "feat: add feature" # コミット
-gp                     # プッシュ
+gpu                    # 初回プッシュ (upstream 設定)。2 回目以降は gp
 # gh pr create ...
 vg                     # PR をブラウザで開く
 ```
 
 ### 作業中にmainの変更を取り込む
 ```
-gbm        # main に切替 + pull
-gb         # 元のブランチに戻る
+gb main    # main に切替
+gpl        # pull
+gb-        # 元のブランチに戻る
 # git rebase main or git merge main
 ```
 

@@ -24,6 +24,13 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60 \
   '{enabled = 0; value = { parameters = (32, 49, 262144); type = "standard"; }; }'
 
+# Japanese IME (Kotoeri): disable predictive candidates and live conversion.
+# Predictive candidates cause heavily-learned words to be mis-committed during
+# fast typing (random kanji/English appearing mid-sentence); live conversion is
+# kept off per preference. Requires logout/login to take effect (esp. macOS Tahoe 26+).
+defaults write com.apple.inputmethod.Kotoeri JIMPrefPredictiveCandidateKey -bool false
+defaults write com.apple.inputmethod.Kotoeri JIMPrefLiveConversionKey -bool false
+
 echo "macOS settings applied. Please restart your system for all changes to take effect."
 echo ""
 echo -e "\033[1;33m⚠️  RESTART REQUIRED\033[0m"

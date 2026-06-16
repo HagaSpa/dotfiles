@@ -20,6 +20,10 @@ brew "git-delta"
 brew "tmux"
 brew "typescript-language-server"
 
+# Kubernetes / YAML
+brew "yq"
+brew "stern"
+
 # Runtime management
 brew "mise"
 

@@ -7,5 +7,22 @@ format = """$directory$git_branch$git_status$kubernetes$gcloud$all"""
 format = '[$symbol$active]($style) '
 
 [kubernetes]
-format = '[$context](bright-yellow) '
+format = '[$context]($style) '
+style = "bright-yellow"
 disabled = false
+
+[[kubernetes.contexts]]
+context_pattern = "prd-.*"
+style = "bold red"
+
+[[kubernetes.contexts]]
+context_pattern = "stg-.*"
+style = "yellow"
+
+[[kubernetes.contexts]]
+context_pattern = "dev.*"
+style = "green"
+
+[[kubernetes.contexts]]
+context_pattern = "kind-.*"
+style = "dimmed green"

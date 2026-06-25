@@ -18,6 +18,8 @@ const ifTerminal = ifApp({ bundle_identifiers: [...TERMINAL_BUNDLE_IDS] });
 const VIM_APP_IDS = [
   ...TERMINAL_BUNDLE_IDS,
   '^com\\.google\\.Chrome$',
+  '^dev\\.zed\\.Zed$',
+  '^com\\.todesktop\\.230313mzl4w4u92$',
 ] as const;
 const unlessVimApp = ifApp({
   bundle_identifiers: [...VIM_APP_IDS],

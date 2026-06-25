@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun run karabiner.ts",
-    "watch": "bun run --watch karabiner.ts"
+    "build": "bun run karabiner.ts && bun run reload",
+    "watch": "bun run --watch karabiner.ts",
+    "reload": "if [ -x \"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli\" ]; then \"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli\" --select-profile 'Default profile'; fi"
   },
   "dependencies": {
     "karabiner.ts": "^1.36.0"

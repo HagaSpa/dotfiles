@@ -9,7 +9,7 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 | F (left index)  | Shift           | All apps                              |
 | S (left ring)   | Option          | All apps                              |
 | D (left middle) | Control         | All apps                              |
-| J (right index) | Shift           | All except Helix / Terminal / Chrome  |
+| J (right index) | Shift           | All except Terminal / Chrome / Zed / Cursor |
 | ; (right pinky) | Opt + Shift     | All apps                              |
 
 - A pinky には HRM を載せない (左手首腱鞘炎対策)

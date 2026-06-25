@@ -20,6 +20,7 @@ entries=(
   .config/yazi/keymap.toml
   .config/yazi/package.toml
   .config/yazi/yazi.toml
+  .config/zed/settings.json
   .config/zsh/alias.sh
   .config/zsh/command.sh
   .config/zsh/hosts/work.sh

@@ -13,6 +13,7 @@ brew "atuin"
 
 # Editor
 brew "helix"
+brew "neovim"
 
 # Development
 brew "gh"

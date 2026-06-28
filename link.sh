@@ -15,6 +15,7 @@ entries=(
   .config/helix/yazi-picker.sh
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
+  .config/nvim/init.lua
   .config/sheldon/plugins.toml
   .config/yazi/init.lua
   .config/yazi/keymap.toml

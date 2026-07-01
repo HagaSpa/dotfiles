@@ -24,5 +24,20 @@
     "mode": "dark",
     "light": "Gruvbox Light",
     "dark": "Ayu Mirage"
+  },
+  "lsp": {
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "schemas": {
+            "kubernetes": [
+              "base/**/*.yaml",
+              "overlays/**/*.yaml",
+              "clusters/**/*.yaml"
+            ]
+          }
+        }
+      }
+    }
   }
 }

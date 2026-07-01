@@ -89,3 +89,42 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.fn.winrestview(save)
   end,
 })
+
+-- ===== LSP =====
+-- yaml-language-server (Kubernetes schema scoped to bons8i-style kustomize layout)
+vim.lsp.config('yamlls', {
+  cmd = { 'yaml-language-server', '--stdio' },
+  filetypes = { 'yaml' },
+  root_markers = { '.git' },
+  settings = {
+    yaml = {
+      schemas = {
+        kubernetes = {
+          'base/**/*.yaml',
+          'overlays/**/*.yaml',
+          'clusters/**/*.yaml',
+        },
+      },
+      validate = true,
+      completion = true,
+      hover = true,
+    },
+  },
+})
+vim.lsp.enable('yamlls')
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = augroup,
+  callback = function(args)
+    local buf = args.buf
+    local opts = { buffer = buf }
+    map('n', 'K', vim.lsp.buf.hover, opts)
+    map('n', 'gd', vim.lsp.buf.definition, opts)
+    map('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    map('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    map('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
+    map('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
+    map('n', '<leader>d', vim.diagnostic.open_float, opts)
+    vim.lsp.completion.enable(true, args.data.client_id, buf, { autotrigger = true })
+  end,
+})

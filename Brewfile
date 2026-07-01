@@ -24,6 +24,7 @@ brew "typescript-language-server"
 # Kubernetes / YAML
 brew "yq"
 brew "stern"
+brew "yaml-language-server"
 
 # Runtime management
 brew "mise"

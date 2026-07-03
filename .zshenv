@@ -6,7 +6,7 @@ export LANG=en_US.UTF-8
 export LESSCHARSET=utf-8
 
 # Claude Code
-export CLAUDE_CODE_EFFORT_LEVEL=max
+# export CLAUDE_CODE_EFFORT_LEVEL=max
 
 # Add user-local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"

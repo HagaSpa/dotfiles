@@ -30,28 +30,6 @@
 2. `Ctrl+T` でファイルを検索 → `hx` で開く
    - 例: `hx ` → `Ctrl+T` → ファイル選択 → Enter
 
-## Git Operations / Git 操作
-
-| ユースケース | コマンド | 定義 |
-|---|---|---|
-| ステータス確認 | `gs` | `git status --short --branch` |
-| 差分確認 (未追跡含む) | `gd` | `git add -N . && git diff` |
-| ログ確認 | `gl` | `git log --graph --decorate --oneline` |
-| ファイルを追加 | `ga ファイル` / `ga.` | `git add` / `git add .` |
-| コミット (インライン) | `gc "message"` | `git commit -m` |
-| コミット (エディタ) | `gcm` | `git commit` |
-| 直前のコミットに追加 | `gca` | `git commit --amend --no-edit` |
-| プッシュ | `gp` | `git push` |
-| upstream を設定してプッシュ | `gpu` | `git push -u origin $(現在ブランチ)` |
-| プル | `gpl` | `git pull` |
-| ブランチ切替 | `gb ブランチ名` | `git switch` |
-| 直前のブランチに戻る | `gb-` | `git switch -` |
-| 新ブランチ作成 | `gbc ブランチ名` | `git switch -c` |
-| リモートのデフォルトブランチに切替えて pull | `gbm` | command.sh (`origin/HEAD` 解決、無ければ `main`) |
-| soft reset | `grs コミット` | `git reset --soft` |
-| 変更を全取消 | `gnah` | alias → `git nah`（.gitconfig: `reset --hard && clean -df`） |
-| PR をブラウザで開く | `vg` | `gh pr view --web` |
-
 ## Tmux / ターミナル多重化
 
 **Prefix: `Ctrl+Space`**（D=Ctrl ホールド + 右親指 Space の bilateral chord。`Ctrl+B` は左手同手チョードで打ちにくいため変更。詳細は [HRM.md](../.config/karabiner/HRM.md)）
@@ -102,6 +80,8 @@ tmux 内から `Prefix` → `y` でポップアップ起動。Helix で開いて
 |---|---|---|
 | ファイル内容を表示 (シンタックスハイライト付き) | `bat ファイル` | bat |
 | ファイル一覧 (カラー + アイコン) | `ls` / `l` | lsd (alias) |
+| 後方へ単語移動 (カーソルを左の単語へ) | `⌥+←` | ghostty `esc:b` → zsh `backward-word`。`Ctrl+,` でも可 (Karabiner) |
+| 前方へ単語移動 (カーソルを右の単語へ) | `⌥+→` | ghostty `esc:f` → zsh `forward-word`。`Ctrl+.` でも可 (Karabiner) |
 | 後方へ単語削除 (カーソル左の単語) | `⌥+Backspace` | zsh: `backward-kill-word` |
 | 前方へ単語削除 (カーソル右の単語) | `⌥+D` | zsh: `kill-word` |
 | 現在のコマンドラインをコピー | `Ctrl+P` → `Ctrl+O` | pbcopy (command.sh) |
@@ -157,26 +137,6 @@ tmux 内から `Prefix` → `y` でポップアップ起動。Helix で開いて
 ```
 zi          # fzf でプロジェクト選択 → cd
 hx Ctrl+T   # fzf でファイル選択 → Helix で開く
-```
-
-### コードを書いて PR を出す
-```
-gbc feat/my-feature   # ブランチ作成
-# ... 編集 ...
-gd                     # 差分確認
-ga.                    # 全ファイルステージ
-gc "feat: add feature" # コミット
-gpu                    # 初回プッシュ (upstream 設定)。2 回目以降は gp
-# gh pr create ...
-vg                     # PR をブラウザで開く
-```
-
-### 作業中にmainの変更を取り込む
-```
-gb main    # main に切替
-gpl        # pull
-gb-        # 元のブランチに戻る
-# git rebase main or git merge main
 ```
 
 ### tmux で複数プロジェクトを並行作業

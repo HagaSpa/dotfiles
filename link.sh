@@ -36,6 +36,7 @@ entries=(
   ".config/cursor/keybindings.json:~/Library/Application Support/Cursor/User/keybindings.json"
   ".config/starship/starship.toml:~/.config/starship.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"
+  "docs/terminal-workflow.md:~/.config/tmux/terminal-workflow.md"
   ".config/claude/settings.json:~/.claude/settings.json"
   ".config/claude/commands:~/.claude/commands"
 )

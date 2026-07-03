@@ -20,6 +20,7 @@ brew "gh"
 brew "git-delta"
 brew "tmux"
 brew "typescript-language-server"
+brew "crit"
 
 # Kubernetes / YAML
 brew "yq"

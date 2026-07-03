@@ -106,7 +106,16 @@
     "playwright@claude-plugins-official": true,
     "atlassian@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "crit@crit": true
+  },
+  "extraKnownMarketplaces": {
+    "crit": {
+      "source": {
+        "source": "github",
+        "repo": "tomasz-tomczyk/crit"
+      }
+    }
   },
   "language": "Japanese",
   "effortLevel": "high",

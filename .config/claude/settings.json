@@ -63,7 +63,7 @@
       "~/Desktop"
     ]
   },
-  "model": "claude-opus-4-7",
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "atlassian",
@@ -109,8 +109,8 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
+  "tui": "fullscreen",
   "skipAutoPermissionPrompt": true,
-  "showThinkingSummary": true,
-  "tui": "fullscreen"
+  "showThinkingSummary": true
 }

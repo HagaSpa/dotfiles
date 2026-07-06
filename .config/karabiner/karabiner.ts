@@ -125,11 +125,13 @@ writeToProfile('Default profile', [
     ),
   ]),
 
-  rule('Home Row Mods (Opt+Shift on ;)').manipulators([
+  // Shift を含めると macOS の中国語変換サービス (⌃⌥⇧⌘C / ⌃⌥⇧⌘V) と衝突するため
+  // ⌘⌥⌃ に留める。Cmd を含むことが Secure Input 固着時のホットキー生存条件。
+  rule('Home Row Mods (Cmd+Opt+Ctrl on ;)').manipulators([
     map({ key_code: 'semicolon', modifiers: { optional: ['any'] } })
       .to({
-        key_code: 'right_option',
-        modifiers: ['right_shift'],
+        key_code: 'right_command',
+        modifiers: ['right_control', 'right_option'],
         lazy: true,
       })
       .toIfAlone({ key_code: 'semicolon' })

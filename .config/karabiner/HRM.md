@@ -10,7 +10,7 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 | S (left ring)   | Option          | All apps                              |
 | D (left middle) | Control         | All apps                              |
 | J (right index) | Shift           | All except Terminal / Chrome / Zed / Cursor |
-| ; (right pinky) | Opt + Shift     | All apps                              |
+| ; (right pinky) | ⌘⌥⌃ (Raycast 用) | All apps                              |
 
 - A pinky には HRM を載せない (左手首腱鞘炎対策)
 - Cmd は物理キーのまま (HRM 化しない)

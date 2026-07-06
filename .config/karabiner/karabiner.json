@@ -249,7 +249,7 @@
             ]
           },
           {
-            "description": "Home Row Mods (Opt+Shift on ;)",
+            "description": "Home Row Mods (Cmd+Opt+Ctrl on ;)",
             "manipulators": [
               {
                 "type": "basic",
@@ -263,9 +263,10 @@
                 },
                 "to": [
                   {
-                    "key_code": "right_option",
+                    "key_code": "right_command",
                     "modifiers": [
-                      "right_shift"
+                      "right_control",
+                      "right_option"
                     ],
                     "lazy": true
                   }

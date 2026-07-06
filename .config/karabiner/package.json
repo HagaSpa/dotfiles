@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun run karabiner.ts && bun run reload && bun run sync",
+    "build": "bun run karabiner.ts && bun run sync && bun run reload",
     "sync": "cmp -s ~/.config/karabiner/karabiner.json ./karabiner.json || cp ~/.config/karabiner/karabiner.json ./karabiner.json",
     "watch": "bun run --watch karabiner.ts",
     "reload": "if [ -x \"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli\" ]; then \"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli\" --select-profile 'Default profile'; fi"

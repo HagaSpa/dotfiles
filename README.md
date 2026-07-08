@@ -27,55 +27,80 @@ mise install
 
 ## What's Included
 
-### Tools & Applications
+### Tools & Applications (via Brewfile)
 - **fzf** - Command-line fuzzy finder
+- **zoxide** - Smart cd command
+- **bat** - Cat clone with syntax highlighting
 - **lsd** - Modern replacement for ls
+- **yazi** - Terminal file manager
+- **fd** - Simple, fast alternative to find
 - **sheldon** - Fast zsh plugin manager
 - **starship** - Cross-shell prompt
 - **atuin** - Shell history management
+- **helix** - Post-modern text editor
+- **neovim** - Vim-based editor (minimal config)
 - **gh** - GitHub CLI
 - **git-delta** - Syntax-highlighting pager for git
-- **zoxide** - Smart cd command
-- **bat** - Cat clone with syntax highlighting
-- **yazi** - Terminal file manager
-- **fd** - Simple, fast alternative to find
-- **helix** - Post-modern text editor
-- **tmux** - Terminal multiplexer for managing multiple sessions
-- **mise** - Runtime version manager (manages Node.js, gcloud, etc.)
+- **tmux** - Terminal multiplexer
+- **crit** - Code review tool
+- **typescript-language-server** / **yaml-language-server** - LSP servers
+- **yq** / **stern** - Kubernetes / YAML tooling
 - **ghostty** - Terminal emulator
-- **cursor** - AI-powered code editor
+- **cursor** - Code editor
+- **zed** - Code editor
 
-### Runtime Management (via mise)
-- **Node.js** - LTS version
-- **Google Cloud CLI** - Cloud development tools
+### Runtimes & Tools (via mise)
+- **Node.js** (LTS) / **Bun**
+- **Google Cloud CLI**
+- **Terraform**
+- **Biome**
+- **Rust** / **rust-analyzer**
 
 ### Configuration Files
-- `.zshrc` - Zsh shell configuration
+- `.zshrc` / `.zshenv` - Zsh shell configuration
+- `.config/zsh/` - Aliases, custom functions, tasks, host-specific settings
 - `.vimrc` - Vim editor configuration
+- `.config/nvim/init.lua` - Neovim configuration
 - `.mise.toml` - mise runtime configuration
-- `.config/zsh/alias.sh` - Custom shell aliases
-- `.config/zsh/command.sh` - Custom shell commands
+- `.gitconfig` / `.gitconfig-olta` - Git configuration (personal / work)
 - `.config/ghostty/config` - Ghostty terminal configuration
 - `.config/tmux/tmux.conf` - Tmux configuration with vim key bindings
-- `.config/karabiner/` - Karabiner-Elements key mapping
-- `.config/helix/config.toml` - Helix editor configuration
+- `.config/karabiner/` - Karabiner-Elements key mapping, built from TypeScript (`karabiner.ts`)
+- `.config/helix/` - Helix editor configuration
 - `.config/yazi/` - Yazi file manager configuration (with projects plugin)
 - `.config/fd/config` - fd default options
-- `.config/cursor/settings.json` - Cursor editor settings
-- `.claude/` - Claude Code configuration and custom commands
+- `.config/sheldon/plugins.toml` - Zsh plugin definitions
+- `.config/starship/starship.toml` - Prompt configuration
+- `.config/cursor/` - Cursor editor settings and keybindings
+- `.config/zed/settings.json` - Zed editor settings
+- `.config/claude/` - Claude Code configuration (`~/.claude` settings and custom commands)
+
+### Docs
+The `docs/` directory keeps decision records and troubleshooting notes (e.g. terminal workflow cheatsheet, cmux vs tmux, Karabiner vs Nix, secure input hotkey outage postmortem).
 
 ## Scripts
 
 ### `install.sh`
-Installs Homebrew, all brew packages from Brewfile, runtimes via mise, Claude Code, and yazi plugins.
+Installs Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug → TPM (Tmux Plugin Manager) → yazi plugins → Karabiner config build (via bun).
 
 ### `link.sh`
-Creates symbolic links for configuration files from this repository to their expected locations in your home directory. Existing files are backed up with a `.bak` extension.
+Creates symbolic links for configuration files from this repository to their expected locations. Existing files are backed up with a `.bak` extension. Run `./link.sh --list` to print all entries as `source:destination`.
 
 ### `settings.sh`
-Configures macOS system settings for optimal development experience. Currently includes:
-- Disables press-and-hold for keys in favor of key repeat (allows holding keys to repeat instead of showing accent menu)
-- Requires system restart for changes to take effect
+Configures macOS system settings (requires restart):
+- Disables press-and-hold in favor of key repeat
+- Trackpad: maximum tracking speed, tap to click
+- Frees up Ctrl+Space for the tmux prefix (disables input source switching)
+- Japanese IME (Kotoeri): disables predictive candidates and live conversion
+
+## Karabiner Configuration
+
+`karabiner.json` is generated from `karabiner.ts` using [karabiner.ts](https://github.com/evan-liu/karabiner.ts):
+
+```bash
+cd .config/karabiner
+bun run build   # generate karabiner.json, sync back to repo, reload profile
+```
 
 ## Requirements
 
@@ -83,8 +108,6 @@ Configures macOS system settings for optimal development experience. Currently i
 - Internet connection for downloading dependencies
 
 ## Post-Installation
-
-After running the installation scripts, you may need to:
 
 1. **Restart your shell** or run `source ~/.zshrc` to apply changes
 2. **Trust mise configuration** if you haven't already:
@@ -99,27 +122,22 @@ After running the installation scripts, you may need to:
 
 ## Claude Code Integration
 
-This repository includes Claude Code configuration:
-- `.claude/settings.json` - Permission settings for Claude Code
-- `.claude/commands/` - Custom slash commands for common workflows
+- `.config/claude/settings.json` - Claude Code settings (symlinked to `~/.claude/settings.json`)
+- `.config/claude/commands/` - Custom slash commands (symlinked to `~/.claude/commands`)
 - `CLAUDE.md` - Repository-specific instructions for Claude Code
+
+Note: `.claude/` at the repository root is reserved for this repository's own Claude Code project settings.
 
 ## GitHub Actions
 
-- **test-scripts.yml** - Runs automated tests for installation and configuration scripts
+- **test-scripts.yml** - Runs automated tests for installation and configuration scripts (including Karabiner build verification)
 - **claude.yml** - Claude Code GitHub integration workflow
 - **claude-code-review.yml** - Automated code review with Claude
 
-## Custom Commands
-
-The `.config/zsh/command.sh` includes powerful custom functions:
-- `fzf-select-history*()` - Enhanced command history search
-
 ## Customization
 
-Feel free to modify the configuration files to suit your preferences:
 - Edit `Brewfile` to add/remove brew packages
 - Edit `.mise.toml` to change runtime versions
 - Customize shell aliases in `.config/zsh/alias.sh`
 - Modify zsh configuration in `.zshrc`
-- Add custom Claude Code commands in `.claude/commands/`
+- Add custom Claude Code commands in `.config/claude/commands/`

@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Setup Commands
 
 ```bash
-./install.sh   # Install Homebrew, brew packages, mise, Claude Code, vim-plug
+./install.sh   # Install Homebrew, brew packages, mise, Claude Code, vim-plug, TPM, yazi plugins, Karabiner build
 ./link.sh      # Create symlinks from repo to system locations (backs up existing)
 ./settings.sh  # Configure macOS system settings (requires restart)
 ```
@@ -15,28 +15,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Tests run automatically via GitHub Actions on PRs and pushes to main. To run locally:
 
 ```bash
-./.github/scripts/test-install.sh   # Test install script
-./.github/scripts/test-link.sh      # Test symlink creation
-./.github/scripts/test-config.sh    # Validate config file syntax
-./.github/scripts/test-brewfile.sh  # Validate Brewfile syntax
-./.github/scripts/test-settings.sh  # Test macOS settings script
+./.github/scripts/test-install.sh          # Test install script
+./.github/scripts/test-link.sh             # Test symlink creation
+./.github/scripts/test-config.sh           # Validate config file syntax
+./.github/scripts/test-brewfile.sh         # Validate Brewfile syntax
+./.github/scripts/test-settings.sh         # Test macOS settings script
+./.github/scripts/test-karabiner-build.sh  # Verify karabiner.ts build output matches karabiner.json
 ```
 
 ## Architecture
 
 ### Core Scripts
-- `install.sh` - Installs: Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug → TPM → yazi plugins
+- `install.sh` - Installs: Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug → TPM → yazi plugins → Karabiner config build (bun)
 - `link.sh` - Declarative symlink management via `entries` array. Source path only = `~/{source}`, `source:destination` for custom paths. `--list` outputs all entries as `source:destination`
-- `settings.sh` - macOS defaults configuration (key repeat, trackpad settings)
+- `settings.sh` - macOS defaults configuration (key repeat, trackpad, Ctrl+Space free-up for tmux prefix, Kotoeri predictive candidates off)
 
 ### Configuration Files
-- **Shell**: `.zshrc` (main) + `.config/zsh/alias.sh` (aliases) + `.config/zsh/command.sh` (functions)
-- **Runtime**: `.mise.toml` (Node.js LTS, gcloud via mise)
-- **Terminal**: `.config/ghostty/config`
-- **Editor**: `.vimrc` (vim-plug), `.config/helix/` (Helix), `.config/cursor/` (Cursor IDE settings)
+- **Shell**: `.zshrc` / `.zshenv` (main) + `.config/zsh/` (alias.sh, command.sh, tasks.sh, hosts/)
+- **Runtime**: `.mise.toml` (Node.js LTS, bun, gcloud, terraform, biome, rust + rust-analyzer)
+- **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf)
+- **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`)
+- **Editor**: `.vimrc` (vim-plug), `.config/nvim/init.lua` (Neovim), `.config/helix/` (Helix), `.config/cursor/` (Cursor settings + keybindings), `.config/zed/settings.json` (Zed)
+- **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)
-- **Input**: `.config/karabiner/` (keyboard remapping)
+- **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below)
+- **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
+
+### Karabiner (TypeScript build)
+`karabiner.json` is generated from `karabiner.ts` using the karabiner.ts library. Never edit `karabiner.json` directly — edit `karabiner.ts` and build:
+
+```bash
+cd .config/karabiner && bun run build  # generate → sync repo copy → reload profile
+```
+
+`build` regenerates the config, copies `~/.config/karabiner/karabiner.json` back into the repo (Karabiner's atomic writes break symlinks), and reloads the profile via `karabiner_cli`.
+
+### Docs
+`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, raycast-dotfiles, secure-input-hotkey-outage). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
 
 ### Workspace Conventions
 Custom shell functions assume this structure:
@@ -61,6 +77,10 @@ gh pr merge <PR番号> --squash --delete-branch
 2. Add entry to `entries` array in `link.sh` (source path only, or `"source:destination"` if target differs)
 3. Run `./link.sh` to create symlink
 
+### Claude Code Paths
+- `.config/claude/` - files managed under `~/.claude` (settings, commands)
+- `.claude/` (repo root) - reserved for this repository's own Claude Code project settings; do not put `~/.claude` targets here
+
 ### Adding New Tools (brew vs mise)
 
 Default to Brewfile. Escalate to `.mise.toml` when any of the following applies:
@@ -70,4 +90,3 @@ Default to Brewfile. Escalate to `.mise.toml` when any of the following applies:
 - Schema URL or lockfile semantics make version pinning meaningful (e.g. `biome.json`'s `$schema`)
 
 If per-project version variance is already expected, skip brew and put it in mise from the start (don't pay the migration cost later). Run `mise registry | grep <tool>` before proposing a new tool. Prefer mise registry-native backends (aqua / asdf / core) over `npm:` fallbacks. GUI (cask) and stable system CLIs (helix, tmux, gh, fzf, etc.) stay on brew.
- 

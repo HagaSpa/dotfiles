@@ -26,9 +26,11 @@ fi
 #   MISE_DISABLE_TOOLS         - skip heavy runtimes (gcloud, terraform, rust)
 #   MISE_TRUSTED_CONFIG_PATHS  - trust the repo .mise.toml non-interactively
 
-# On a real machine Karabiner-Elements (cask) creates this directory;
-# the cask is skipped in CI so create it for the Karabiner build step.
+# On a real machine Karabiner-Elements creates ~/.config/karabiner/karabiner.json
+# on first launch, and karabiner.ts writeToProfile requires it to exist. The cask
+# is skipped in CI, so seed it with the repo copy for the Karabiner build step.
 mkdir -p ~/.config/karabiner
+cp .config/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 
 echo "Executing install.sh..."
 ./install.sh

@@ -103,6 +103,9 @@ jobs:
       # Heavy runtimes add minutes without exercising extra install.sh logic
       MISE_DISABLE_TOOLS: "gcloud,terraform,rust,rust-analyzer"
       MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
+      # mise hits the GitHub Releases API (aqua backend); unauthenticated
+      # requests share a 60/hr per-IP limit across hosted runners and flake
+      GITHUB_TOKEN: ${{ github.token }}
 
     steps:
     - name: Checkout repository

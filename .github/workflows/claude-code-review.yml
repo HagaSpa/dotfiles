@@ -38,6 +38,9 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           model: "claude-sonnet-4-6"
 
+          # Allow bot-created PRs (e.g. Renovate) to trigger the review
+          allowed_bots: "renovate"
+
           # Direct prompt for automated review (no @claude mention needed)
           direct_prompt: |
             Please review this pull request and provide feedback on:

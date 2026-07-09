@@ -6,6 +6,7 @@ on:
     paths:
       - ".config/**"
       - ".github/**"
+      - ".mise.toml"
       - ".vimrc"
       - ".zshrc"
       - "Brewfile"
@@ -17,6 +18,7 @@ on:
     paths:
       - ".config/**"
       - ".github/**"
+      - ".mise.toml"
       - ".vimrc"
       - ".zshrc"
       - "Brewfile"
@@ -24,23 +26,51 @@ on:
       - "link.sh"
       - "settings.sh"
 
+# Cancel superseded runs on the same PR; never cancel main pushes
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  test-macos:
-    runs-on: macos-latest
-    
+  # Detect whether install-related files changed, so the slow
+  # install test only runs when it can actually catch something
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      install: ${{ steps.filter.outputs.install }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
-      
+
+    - name: Detect changed paths
+      id: filter
+      uses: dorny/paths-filter@v3
+      with:
+        filters: |
+          install:
+            - 'install.sh'
+            - 'Brewfile'
+            - '.mise.toml'
+            - '.github/workflows/test-scripts.yml'
+            - '.github/scripts/test-install.sh'
+
+  # Fast checks (~30s): symlinks, config syntax, karabiner build, settings
+  test-macos:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v7
+
     - name: Set up environment
       run: ./.github/scripts/setup-environment.sh
-    
-    - name: Test install.sh (actual execution)
-      run: ./.github/scripts/test-install.sh
-    
+
     - name: Test link.sh
       run: ./.github/scripts/test-link.sh
-    
+
     - name: Test configuration files
       run: ./.github/scripts/test-config.sh
 
@@ -52,10 +82,31 @@ jobs:
 
     - name: Test Brewfile
       run: ./.github/scripts/test-brewfile.sh
-    
+
     - name: Test settings.sh
       run: ./.github/scripts/test-settings.sh
-    
+
     - name: Cleanup
       if: always()
       run: ./.github/scripts/cleanup-environment.sh
+
+  # Full install test: runs the real install.sh, tailored for CI via env vars only
+  test-install:
+    needs: changes
+    if: needs.changes.outputs.install == 'true'
+    runs-on: macos-latest
+    env:
+      # GUI casks are large downloads and nothing in CI verifies them
+      HOMEBREW_BUNDLE_CASK_SKIP: "ghostty cursor zed font-hack-nerd-font"
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      # Heavy runtimes add minutes without exercising extra install.sh logic
+      MISE_DISABLE_TOOLS: "gcloud,terraform,rust,rust-analyzer"
+      MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v7
+
+    - name: Test install.sh (actual execution)
+      run: ./.github/scripts/test-install.sh

@@ -21,7 +21,9 @@ else
 fi
 
 # CI tailoring is injected via environment variables set in the workflow,
-# so the real install.sh runs unmodified:
+# so the real install.sh runs unmodified. These are native interfaces of
+# brew bundle (man brew) and mise (settings overridable as MISE_* env vars),
+# not something implemented in this repo:
 #   HOMEBREW_BUNDLE_CASK_SKIP  - skip GUI casks (large downloads, nothing to verify in CI)
 #   MISE_DISABLE_TOOLS         - skip heavy runtimes (gcloud, terraform, rust)
 #   MISE_TRUSTED_CONFIG_PATHS  - trust the repo .mise.toml non-interactively

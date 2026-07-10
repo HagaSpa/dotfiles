@@ -23,3 +23,7 @@ background-opacity-cells = true
 
 # Cmd+Shift+T で透過⇄不透明をトグル（macOS のみ実装）
 keybind = cmd+shift+t=toggle_background_opacity
+
+# Shift+Enter を ESC+CR (Meta+Enter) として送る。Claude Code が改行と解釈する。
+# バイト列なので tmux を素通し、tmux 内の Claude Code でも改行できる
+keybind = shift+enter=text:\x1b\r

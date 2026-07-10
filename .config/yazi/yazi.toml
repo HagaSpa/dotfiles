@@ -6,7 +6,7 @@ show_hidden = true
 #
 # 変更点: フォールバックルール (url = "*") に "edit" を追加
 # MIME タイプが特定できないファイル (空ファイル, 短いファイル等) を
-# macOS の open (= Cursor) ではなく $EDITOR (= hx) で開くようにする
+# macOS の open (= Cursor) ではなく $EDITOR (= nvim) で開くようにする
 [open]
 rules = [
 	{ url = "*/", use = [ "edit", "open", "reveal" ] },

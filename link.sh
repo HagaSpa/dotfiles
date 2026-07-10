@@ -12,11 +12,11 @@ entries=(
   .config/helix/config.toml
   .config/helix/languages.toml
   .config/helix/themes/bogster-custom.toml
-  .config/helix/yazi-picker.sh
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
   .config/nvim/init.lua
   .config/sheldon/plugins.toml
+  .config/tmux/yazi-picker.sh
   .config/yazi/init.lua
   .config/yazi/keymap.toml
   .config/yazi/package.toml

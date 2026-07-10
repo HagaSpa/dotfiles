@@ -1,3 +1,7 @@
+# EDITOR=nvim だと zsh が vi モードを推測するため、emacs キーバインドを明示する。
+# 個別の bindkey を上書きしないよう、必ずファイル先頭に置くこと。
+bindkey -e
+
 # copy a line Ctrl + CP
 history-current-pbcopy() {
   print "$BUFFER" | tr -d "\r\n" | pbcopy

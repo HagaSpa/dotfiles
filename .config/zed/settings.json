@@ -13,6 +13,7 @@
     "trust_all_worktrees": true
   },
   "vim_mode": true,
+  "relative_line_numbers": "enabled",
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",

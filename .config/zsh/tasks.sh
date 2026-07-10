@@ -75,7 +75,7 @@ _tasks_list_open() {
   done
 }
 
-# tt: task agenda - fzf で未完了タスク閲覧、Enter で Helix 起動
+# tt: task agenda - fzf で未完了タスク閲覧、Enter で $EDITOR (nvim) 起動
 # NOTE: zsh では `path` が `PATH` と tied な特殊変数なのでローカルでも使わない
 tt() {
   emulate -L zsh
@@ -98,7 +98,7 @@ tt() {
   local rest="${selected#*:}"
   local line_num="${rest%%:*}"
 
-  ${EDITOR:-hx} "$file:$line_num"
+  ${EDITOR:-nvim} "+$line_num" "$file"
 }
 
 # td: task done - fzf で選択して `- [x] ... ✅ today` に変換

@@ -6,7 +6,7 @@
 [core]
 	quotepath = false
 	pager = delta
-	editor = hx
+	editor = nvim
 [i18n]
 	commitencoding = utf-8
 	logoutputencoding = utf-8

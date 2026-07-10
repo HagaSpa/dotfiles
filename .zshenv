@@ -1,7 +1,7 @@
 # Environment variables (loaded for all shell sessions)
 
 # EDITOR
-export EDITOR="hx"
+export EDITOR="nvim"
 export LANG=en_US.UTF-8
 export LESSCHARSET=utf-8
 

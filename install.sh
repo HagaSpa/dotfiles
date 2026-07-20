@@ -50,56 +50,19 @@ fi
 log_info "Installing packages from Brewfile..."
 brew bundle --file="$SCRIPT_DIR/Brewfile"
 
-# Activate mise and install tools
+# Everything past this point runs as mise tasks (see mise-tasks/).
+# This script only bootstraps what mise itself needs: Homebrew and Brewfile
+# packages (which include mise), plus the mise-managed runtimes.
 if command -v mise >/dev/null 2>&1; then
   log_info "Installing tools via mise..."
   eval "$(mise activate bash)"
+  mise trust "$SCRIPT_DIR/.mise.toml" >/dev/null
   mise install
-  # Put mise-managed tools (bun, node) on PATH for the remainder of this script
-  eval "$(mise env -s bash)"
-else
-  log_skip "mise not found, skipping mise install"
-fi
 
-# Install Claude Code via native installer
-if command -v claude >/dev/null 2>&1; then
-  log_skip "Claude Code is already installed"
+  log_info "Running setup tasks via mise (claude, vim-plug, tpm, yazi-plugins, karabiner)..."
+  (cd "$SCRIPT_DIR" && mise run setup)
 else
-  log_info "Installing Claude Code..."
-  curl -fsSL https://claude.ai/install.sh | bash
-fi
-
-# Install vim-plug for vim plugin management
-if [ -f "$HOME/.vim/autoload/plug.vim" ]; then
-  log_skip "vim-plug is already installed"
-else
-  log_info "Installing vim-plug..."
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
-
-# Install TPM (Tmux Plugin Manager)
-if [ -d "$HOME/.tmux/plugins/tpm" ]; then
-  log_skip "TPM is already installed"
-else
-  log_info "Installing TPM..."
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
-# Install yazi plugins
-if command -v ya >/dev/null 2>&1; then
-  log_info "Installing yazi plugins..."
-  ya pkg install
-else
-  log_skip "ya not found, skipping yazi plugin install"
-fi
-
-# Build Karabiner config from karabiner.ts source
-if [ -f "$SCRIPT_DIR/.config/karabiner/package.json" ] && command -v bun >/dev/null 2>&1; then
-  log_info "Building Karabiner config..."
-  (cd "$SCRIPT_DIR/.config/karabiner" && bun install --frozen-lockfile && bun run build)
-else
-  log_skip "bun not found or no Karabiner package.json, skipping Karabiner build"
+  log_skip "mise not found, skipping mise install and setup tasks"
 fi
 
 log_info "Installation complete!"

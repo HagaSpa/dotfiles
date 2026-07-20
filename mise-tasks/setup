@@ -1,0 +1,6 @@
+#!/bin/bash
+#MISE description="Run all post-bootstrap setup tasks (parallel where independent)"
+#MISE depends=["claude", "vim-plug", "tpm", "yazi-plugins", "karabiner"]
+set -euo pipefail
+
+echo "Setup complete!"

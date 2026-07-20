@@ -37,16 +37,28 @@ jobs:
   # The job installs its own pinned tools; nothing is required locally.
   lint:
     runs-on: ubuntu-latest
-    env:
-      BASH_SCRIPTS: install.sh link.sh settings.sh .config/tmux/yazi-picker.sh
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
 
-    - name: shellcheck
+    # Route each tracked *.sh to the right checker by shebang: sh/bash go to
+    # shellcheck + shfmt; the rest (zsh configs sourced from .zshrc, which
+    # have no sh/bash shebang) get zsh -n, since shellcheck cannot parse zsh.
+    # New scripts are picked up automatically without editing this list.
+    - name: Collect shell scripts by dialect
       run: |
-        # shellcheck disable=SC2086 # BASH_SCRIPTS is a space-separated list
-        shellcheck $BASH_SCRIPTS .github/scripts/*.sh
+        git ls-files '*.sh' | sort > /tmp/all-scripts.txt
+        while IFS= read -r f; do
+          if head -n1 "$f" | grep -Eq '^#!.*/(env )?(ba)?sh( |$)'; then echo "$f"; fi
+        done < /tmp/all-scripts.txt > /tmp/bash-scripts.txt
+        comm -13 /tmp/bash-scripts.txt /tmp/all-scripts.txt > /tmp/zsh-scripts.txt
+        printf '.zshrc\n.zshenv\n' >> /tmp/zsh-scripts.txt
+        echo "== sh/bash (shellcheck + shfmt):"; cat /tmp/bash-scripts.txt
+        echo "== zsh (zsh -n):"; cat /tmp/zsh-scripts.txt
+        test -s /tmp/bash-scripts.txt
+
+    - name: shellcheck
+      run: xargs shellcheck < /tmp/bash-scripts.txt
 
     - name: shfmt (format check)
       env:
@@ -54,8 +66,7 @@ jobs:
       run: |
         curl -sSfL -o /tmp/shfmt "https://github.com/mvdan/sh/releases/download/${SHFMT_VERSION}/shfmt_${SHFMT_VERSION}_linux_amd64"
         chmod +x /tmp/shfmt
-        # shellcheck disable=SC2086 # BASH_SCRIPTS is a space-separated list
-        /tmp/shfmt -i 2 -d $BASH_SCRIPTS .github/scripts/*.sh
+        xargs /tmp/shfmt -i 2 -d < /tmp/bash-scripts.txt
 
     - name: actionlint
       env:
@@ -68,10 +79,10 @@ jobs:
       run: |
         sudo apt-get update -qq
         sudo apt-get install -y -qq zsh
-        for f in .zshrc .zshenv .config/zsh/*.sh .config/zsh/hosts/*.sh; do
+        while IFS= read -r f; do
           zsh -n "$f"
           echo "ok: $f"
-        done
+        done < /tmp/zsh-scripts.txt
 
   # Detect whether install-related files changed, so the slow
   # install test only runs when it can actually catch something

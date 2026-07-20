@@ -23,13 +23,14 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 ./.github/scripts/test-karabiner-build.sh  # Verify karabiner.ts build output matches karabiner.json
 ```
 
-Lint runs in the CI `lint` job, which installs its own pinned tools (not in the Brewfile). To reproduce locally, `brew install shellcheck shfmt actionlint` ad hoc and run:
+Lint runs in the CI `lint` job, which installs its own pinned tools (not in the Brewfile). Targets are discovered by shebang: tracked `*.sh` with a sh/bash shebang go to shellcheck + shfmt; the rest (zsh configs, which shellcheck cannot parse) plus `.zshrc` / `.zshenv` get `zsh -n`. To reproduce locally, `brew install shellcheck shfmt actionlint` ad hoc and run:
 
 ```bash
-shellcheck install.sh link.sh settings.sh .config/tmux/yazi-picker.sh .github/scripts/*.sh
-shfmt -i 2 -d install.sh link.sh settings.sh .config/tmux/yazi-picker.sh .github/scripts/*.sh  # -w to format
+git ls-files '*.sh' | while read -r f; do head -n1 "$f" | grep -Eq '^#!.*/(env )?(ba)?sh( |$)' && echo "$f"; done > /tmp/targets
+xargs shellcheck < /tmp/targets
+xargs shfmt -i 2 -d < /tmp/targets   # -w to format
 actionlint
-zsh -n <file>   # zsh configs (.zshrc / .zshenv / .config/zsh/**/*.sh); shellcheck does not support zsh
+zsh -n <file>   # zsh configs and .zshrc / .zshenv
 ```
 
 ## Architecture

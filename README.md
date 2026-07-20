@@ -37,7 +37,6 @@ mise install
 - **sheldon** - Fast zsh plugin manager
 - **starship** - Cross-shell prompt
 - **atuin** - Shell history management
-- **helix** - Post-modern text editor
 - **neovim** - Vim-based editor (minimal config)
 - **gh** - GitHub CLI
 - **git-delta** - Syntax-highlighting pager for git
@@ -46,7 +45,6 @@ mise install
 - **typescript-language-server** / **yaml-language-server** - LSP servers
 - **yq** / **stern** - Kubernetes / YAML tooling
 - **ghostty** - Terminal emulator
-- **cursor** - Code editor
 - **zed** - Code editor
 
 ### Runtimes & Tools (via mise)
@@ -66,12 +64,10 @@ mise install
 - `.config/ghostty/config` - Ghostty terminal configuration
 - `.config/tmux/tmux.conf` - Tmux configuration with vim key bindings
 - `.config/karabiner/` - Karabiner-Elements key mapping, built from TypeScript (`karabiner.ts`)
-- `.config/helix/` - Helix editor configuration
 - `.config/yazi/` - Yazi file manager configuration (with projects plugin)
 - `.config/fd/config` - fd default options
 - `.config/sheldon/plugins.toml` - Zsh plugin definitions
 - `.config/starship/starship.toml` - Prompt configuration
-- `.config/cursor/` - Cursor editor settings and keybindings
 - `.config/zed/settings.json` - Zed editor settings
 - `.config/claude/` - Claude Code configuration (`~/.claude` settings and custom commands)
 

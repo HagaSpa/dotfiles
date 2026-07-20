@@ -11,7 +11,7 @@ import { TERMINAL_BUNDLE_IDS } from './apps.ts';
 const ifTerminal = ifApp({ bundle_identifiers: [...TERMINAL_BUNDLE_IDS] });
 
 // vim hjkl key repeat conflicts fundamentally with hold-for-modifier. Only the
-// right-index J needs disabling in vim apps (Helix/Vimium hold j to scroll); F
+// right-index J needs disabling in vim apps (vim/Vimium hold j to scroll); F
 // (Shift) and S (Opt) on the left hand stay active everywhere — F via bilateral
 // chord still gives Shift+right-letter (the original wrist pain point) inside
 // vim apps too.
@@ -19,7 +19,6 @@ const VIM_APP_IDS = [
   ...TERMINAL_BUNDLE_IDS,
   '^com\\.google\\.Chrome$',
   '^dev\\.zed\\.Zed$',
-  '^com\\.todesktop\\.230313mzl4w4u92$',
 ] as const;
 const unlessVimApp = ifApp({
   bundle_identifiers: [...VIM_APP_IDS],

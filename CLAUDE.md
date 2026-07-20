@@ -35,7 +35,7 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 - **Runtime**: `.mise.toml` (Node.js LTS, bun, gcloud, terraform, biome, rust + rust-analyzer)
 - **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf)
 - **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`)
-- **Editor**: `.vimrc` (vim-plug), `.config/nvim/init.lua` (Neovim), `.config/helix/` (Helix), `.config/cursor/` (Cursor settings + keybindings), `.config/zed/settings.json` (Zed)
+- **Editor**: `.vimrc` (vim-plug), `.config/nvim/init.lua` (Neovim), `.config/zed/settings.json` (Zed)
 - **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)
@@ -89,4 +89,4 @@ Default to Brewfile. Escalate to `.mise.toml` when any of the following applies:
 - Not on Homebrew, or requires a curl/manual installer (avoid bloating `install.sh`)
 - Schema URL or lockfile semantics make version pinning meaningful (e.g. `biome.json`'s `$schema`)
 
-If per-project version variance is already expected, skip brew and put it in mise from the start (don't pay the migration cost later). Run `mise registry | grep <tool>` before proposing a new tool. Prefer mise registry-native backends (aqua / asdf / core) over `npm:` fallbacks. GUI (cask) and stable system CLIs (helix, tmux, gh, fzf, etc.) stay on brew.
+If per-project version variance is already expected, skip brew and put it in mise from the start (don't pay the migration cost later). Run `mise registry | grep <tool>` before proposing a new tool. Prefer mise registry-native backends (aqua / asdf / core) over `npm:` fallbacks. GUI (cask) and stable system CLIs (neovim, tmux, gh, fzf, etc.) stay on brew.

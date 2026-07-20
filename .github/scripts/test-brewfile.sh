@@ -37,7 +37,7 @@ done
 
 # Check for cask applications in Brewfile
 echo "Checking for cask applications..."
-cask_apps=("ghostty" "cursor")
+cask_apps=("ghostty" "zed")
 for app in "${cask_apps[@]}"; do
   if grep -q "cask \"$app\"" ./Brewfile; then
     echo "✓ Found cask application: $app"

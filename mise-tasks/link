@@ -1,0 +1,5 @@
+#!/bin/bash
+#MISE description="Create symlinks for all dotfiles (wraps link.sh)"
+set -euo pipefail
+
+./link.sh

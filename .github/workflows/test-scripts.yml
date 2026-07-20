@@ -43,13 +43,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v7
 
-    # Route each tracked *.sh to the right checker by shebang: sh/bash go to
-    # shellcheck + shfmt; the rest (zsh configs sourced from .zshrc, which
-    # have no sh/bash shebang) get zsh -n, since shellcheck cannot parse zsh.
-    # New scripts are picked up automatically without editing this list.
+    # Route each tracked *.sh (and mise file task) to the right checker by
+    # shebang: sh/bash go to shellcheck + shfmt; the rest (zsh configs sourced
+    # from .zshrc, which have no sh/bash shebang) get zsh -n, since shellcheck
+    # cannot parse zsh. New scripts are picked up automatically.
     - name: Collect shell scripts by dialect
       run: |
-        git ls-files '*.sh' | sort > /tmp/all-scripts.txt
+        git ls-files '*.sh' 'mise-tasks/*' | sort > /tmp/all-scripts.txt
         while IFS= read -r f; do
           if head -n1 "$f" | grep -Eq '^#!.*/(env )?(ba)?sh( |$)'; then echo "$f"; fi
         done < /tmp/all-scripts.txt > /tmp/bash-scripts.txt

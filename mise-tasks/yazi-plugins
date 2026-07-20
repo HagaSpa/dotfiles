@@ -1,0 +1,9 @@
+#!/bin/bash
+#MISE description="Install yazi plugins via ya pkg"
+set -euo pipefail
+
+if ! command -v ya >/dev/null 2>&1; then
+  echo "ya not found, skipping yazi plugin install"
+  exit 0
+fi
+ya pkg install

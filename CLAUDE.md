@@ -5,10 +5,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Setup Commands
 
 ```bash
-./install.sh   # Install Homebrew, brew packages, mise, Claude Code, vim-plug, TPM, yazi plugins, Karabiner build
+./install.sh   # Bootstrap (Homebrew + Brewfile + mise runtimes), then runs `mise run setup`
 ./link.sh      # Create symlinks from repo to system locations (backs up existing)
 ./settings.sh  # Configure macOS system settings (requires restart)
 ```
+
+Individual setup steps are mise file tasks under `mise-tasks/` (repo-scoped; they do not leak into other projects' `mise tasks` because they are file tasks, not entries in the global `.mise.toml`):
+
+```bash
+mise tasks            # list tasks
+mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tasks run in parallel
+mise run karabiner    # full re-run of one step incl. deps (bun install + build)
+```
+
+Note: `mise run karabiner` is for setup-style runs (installs bun deps first). For day-to-day karabiner.ts edits, `cd .config/karabiner && bun run build` remains the primary flow (see Karabiner section).
 
 ## Testing
 
@@ -23,7 +33,7 @@ bats tests                          # fast tests: link / config / Brewfile / set
 Lint runs in the CI `lint` job, which installs its own pinned tools (not in the Brewfile). Targets are discovered by shebang: tracked `*.sh` with a sh/bash shebang go to shellcheck + shfmt; the rest (zsh configs, which shellcheck cannot parse) plus `.zshrc` / `.zshenv` get `zsh -n`. To reproduce locally, `brew install shellcheck shfmt actionlint` ad hoc and run:
 
 ```bash
-git ls-files '*.sh' | while read -r f; do head -n1 "$f" | grep -Eq '^#!.*/(env )?(ba)?sh( |$)' && echo "$f"; done > /tmp/targets
+git ls-files '*.sh' 'mise-tasks/*' | while read -r f; do head -n1 "$f" | grep -Eq '^#!.*/(env )?(ba)?sh( |$)' && echo "$f"; done > /tmp/targets
 xargs shellcheck < /tmp/targets
 xargs shfmt -i 2 -d < /tmp/targets   # -w to format
 actionlint
@@ -33,7 +43,8 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 ## Architecture
 
 ### Core Scripts
-- `install.sh` - Installs: Homebrew → Brewfile packages → mise runtimes → Claude Code → vim-plug → TPM → yazi plugins → Karabiner config build (bun)
+- `install.sh` - Bootstrap only: Homebrew → Brewfile packages (installs mise) → mise runtimes → delegates the rest to `mise run setup`
+- `mise-tasks/` - mise file tasks (plain bash scripts, name = task name): `setup` fans out to `claude` / `tpm` / `yazi-plugins` / `karabiner` via the dependency DAG; `link` / `settings` wrap the scripts below. Keep tasks OUT of `.mise.toml` — it is symlinked to `~/.mise.toml` (global), so tasks there would appear in every project
 - `link.sh` - Declarative symlink management via `entries` array. Source path only = `~/{source}`, `source:destination` for custom paths. `--list` outputs all entries as `source:destination`
 - `settings.sh` - macOS defaults configuration (key repeat, trackpad, Ctrl+Space free-up for tmux prefix, Kotoeri predictive candidates off)
 

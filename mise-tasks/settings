@@ -1,0 +1,5 @@
+#!/bin/bash
+#MISE description="Apply macOS system settings (wraps settings.sh, requires restart)"
+set -euo pipefail
+
+./settings.sh

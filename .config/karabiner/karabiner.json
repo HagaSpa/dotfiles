@@ -48,7 +48,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "b",
+                  "key_code": "spacebar",
                   "modifiers": {
                     "mandatory": [
                       "left_control"
@@ -63,7 +63,7 @@
                     "key_code": "japanese_eisuu"
                   },
                   {
-                    "key_code": "b",
+                    "key_code": "spacebar",
                     "modifiers": [
                       "left_control"
                     ]

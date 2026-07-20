@@ -2,6 +2,8 @@
 
 このリポジトリの OS レベル設定（Karabiner Elements + `settings.sh`）を Nix に置き換えられるかを検討した結果。**結論: 当面 Nix を導入する必要はない。**
 
+> **2026-07 追記**: brew 自体の Nix 移行まで含めて再検討し、再度見送った。→ [brew-vs-nix.md](brew-vs-nix.md)
+
 ## 背景
 
 - macOS 設定は `settings.sh` の `defaults write` 3 項目のみ

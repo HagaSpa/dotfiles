@@ -9,9 +9,9 @@
     "reload": "if [ -x \"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli\" ]; then \"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli\" --select-profile 'Default profile'; fi"
   },
   "dependencies": {
-    "karabiner.ts": "^1.36.0"
+    "karabiner.ts": "1.38.0"
   },
   "devDependencies": {
-    "typescript": "^7.0.0"
+    "typescript": "7.0.2"
   }
 }

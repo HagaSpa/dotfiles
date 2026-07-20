@@ -53,7 +53,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **Runtime**: `.mise.toml` (Node.js LTS, bun, gcloud, terraform, biome, rust + rust-analyzer)
 - **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf)
 - **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`)
-- **Editor**: `.vimrc` (vim-plug), `.config/nvim/init.lua` (Neovim), `.config/zed/settings.json` (Zed)
+- **Editor**: `.config/nvim/init.lua` (Neovim), `.config/zed/settings.json` (Zed)
 - **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)

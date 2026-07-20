@@ -11,10 +11,6 @@ setup() {
   [ -f .config/zsh/command.sh ]
 }
 
-@test "vim configuration exists" {
-  [ -f .vimrc ]
-}
-
 @test "karabiner source and generated profile exist" {
   [ -f .config/karabiner/karabiner.ts ]
   [ -f .config/karabiner/karabiner.json ]

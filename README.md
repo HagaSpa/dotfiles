@@ -57,7 +57,6 @@ mise install
 ### Configuration Files
 - `.zshrc` / `.zshenv` - Zsh shell configuration
 - `.config/zsh/` - Aliases, custom functions, host-specific settings
-- `.vimrc` - Vim editor configuration
 - `.config/nvim/init.lua` - Neovim configuration
 - `.mise.toml` - mise runtime configuration
 - `.gitconfig` / `.gitconfig-olta` - Git configuration (personal / work)

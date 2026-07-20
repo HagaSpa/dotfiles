@@ -21,6 +21,11 @@ brew "tmux"
 brew "typescript-language-server"
 brew "crit"
 
+# Shell lint (used by CI lint job; keep versions roughly in sync)
+brew "shellcheck"
+brew "shfmt"
+brew "actionlint"
+
 # Kubernetes / YAML
 brew "yq"
 brew "stern"

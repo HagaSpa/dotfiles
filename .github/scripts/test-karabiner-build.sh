@@ -4,7 +4,7 @@ set -e
 
 echo "Testing karabiner.ts build idempotency..."
 
-if ! command -v bun > /dev/null 2>&1; then
+if ! command -v bun >/dev/null 2>&1; then
   echo "✗ bun not available — workflow must install it before this step"
   exit 1
 fi

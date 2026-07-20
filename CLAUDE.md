@@ -23,6 +23,15 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 ./.github/scripts/test-karabiner-build.sh  # Verify karabiner.ts build output matches karabiner.json
 ```
 
+Lint (run by the CI `lint` job; tools come from the Brewfile):
+
+```bash
+shellcheck install.sh link.sh settings.sh .config/tmux/yazi-picker.sh .github/scripts/*.sh
+shfmt -i 2 -d install.sh link.sh settings.sh .config/tmux/yazi-picker.sh .github/scripts/*.sh  # -w to format
+actionlint
+zsh -n <file>   # zsh configs (.zshrc / .zshenv / .config/zsh/**/*.sh); shellcheck does not support zsh
+```
+
 ## Architecture
 
 ### Core Scripts

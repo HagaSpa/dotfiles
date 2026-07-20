@@ -73,6 +73,6 @@ if [[ "${1:-}" == "--list" ]]; then
 fi
 
 for entry in "${entries[@]}"; do
-  IFS=":" read -r src dst <<< "$(to_pair "$entry")"
+  IFS=":" read -r src dst <<<"$(to_pair "$entry")"
   link "$src" "$dst"
 done

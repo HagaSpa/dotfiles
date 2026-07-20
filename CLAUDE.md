@@ -15,12 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Tests run automatically via GitHub Actions on PRs and pushes to main. To run locally:
 
 ```bash
-./.github/scripts/test-install.sh          # Test install script
-./.github/scripts/test-link.sh             # Test symlink creation
-./.github/scripts/test-config.sh           # Validate config file syntax
-./.github/scripts/test-brewfile.sh         # Validate Brewfile syntax
-./.github/scripts/test-settings.sh         # Test macOS settings script
-./.github/scripts/test-karabiner-build.sh  # Verify karabiner.ts build output matches karabiner.json
+bats tests                          # fast tests: link / config / Brewfile / settings / karabiner build
+                                    # (brew install bats-core; settings.bats re-applies your macOS settings)
+./.github/scripts/test-install.sh   # install.sh integration test (actual execution, slow)
 ```
 
 Lint runs in the CI `lint` job, which installs its own pinned tools (not in the Brewfile). Targets are discovered by shebang: tracked `*.sh` with a sh/bash shebang go to shellcheck + shfmt; the rest (zsh configs, which shellcheck cannot parse) plus `.zshrc` / `.zshenv` get `zsh -n`. To reproduce locally, `brew install shellcheck shfmt actionlint` ad hoc and run:

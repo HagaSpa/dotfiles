@@ -10,6 +10,7 @@ on:
       - ".vimrc"
       - ".zshrc"
       - "Brewfile"
+      - "tests/**"
       - "install.sh"
       - "link.sh"
       - "settings.sh"
@@ -22,6 +23,7 @@ on:
       - ".vimrc"
       - ".zshrc"
       - "Brewfile"
+      - "tests/**"
       - "install.sh"
       - "link.sh"
       - "settings.sh"
@@ -109,7 +111,9 @@ jobs:
             - '.github/workflows/test-scripts.yml'
             - '.github/scripts/test-install.sh'
 
-  # Fast checks (~30s): symlinks, config syntax, karabiner build, settings
+  # Fast checks (~30s): symlinks, config syntax, karabiner build, settings.
+  # All fast tests live in tests/*.bats (bats-core); only the slow install
+  # test below remains a plain script.
   test-macos:
     runs-on: macos-latest
 
@@ -120,23 +124,14 @@ jobs:
     - name: Set up environment
       run: ./.github/scripts/setup-environment.sh
 
-    - name: Test link.sh
-      run: ./.github/scripts/test-link.sh
-
-    - name: Test configuration files
-      run: ./.github/scripts/test-config.sh
-
     - name: Setup bun
       uses: oven-sh/setup-bun@v2
 
-    - name: Test karabiner.ts build idempotency
-      run: ./.github/scripts/test-karabiner-build.sh
+    - name: Install bats-core
+      run: brew install bats-core
 
-    - name: Test Brewfile
-      run: ./.github/scripts/test-brewfile.sh
-
-    - name: Test settings.sh
-      run: ./.github/scripts/test-settings.sh
+    - name: Run bats tests
+      run: bats tests
 
     - name: Cleanup
       if: always()

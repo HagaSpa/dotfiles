@@ -1,0 +1,49 @@
+name: Brew Outdated Report
+
+# Weekly check of Brewfile.lock.json against the latest versions on
+# formulae.brew.sh. Needs only curl + jq, so no Homebrew and no macOS runner.
+# When something is outdated, a single report issue is created (or updated
+# in place on subsequent runs).
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Monday 09:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v7
+
+    - name: Compare Brewfile.lock.json with formulae.brew.sh
+      run: ./.github/scripts/brew-outdated-report.sh | tee /tmp/report.md
+
+    - name: Create or update report issue
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        if [ ! -s /tmp/report.md ]; then
+          echo "All Brewfile entries are up to date."
+          exit 0
+        fi
+        {
+          echo "Brewfile.lock.json と formulae.brew.sh 最新版の差分（毎週月曜 09:00 JST に自動更新）。"
+          echo
+          cat /tmp/report.md
+          echo
+          echo "更新手順: \`brew upgrade\`（cask は \`brew upgrade --cask <name>\`）を実行後、\`./.github/scripts/update-brew-lock.sh\` で lockfile を再生成してコミット。"
+        } >/tmp/body.md
+        title="chore: brew outdated report"
+        num=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+        if [ -n "$num" ]; then
+          gh issue edit "$num" --body-file /tmp/body.md
+          echo "Updated issue #$num"
+        else
+          gh issue create --title "$title" --body-file /tmp/body.md
+        fi

@@ -88,6 +88,16 @@ gh pr merge <PR番号> --squash --delete-branch
 - `.config/claude/` - files managed under `~/.claude` (settings, commands)
 - `.claude/` (repo root) - reserved for this repository's own Claude Code project settings; do not put `~/.claude` targets here
 
+### Brewfile Lockfile
+
+`Brewfile.lock.json` records the installed version of every Brewfile entry (Homebrew >= 6 dropped native `brew bundle` lockfile support, so this repo maintains its own). After `brew upgrade` or editing the Brewfile, regenerate and commit it:
+
+```bash
+./.github/scripts/update-brew-lock.sh
+```
+
+The weekly `brew-outdated.yml` workflow compares the lockfile against formulae.brew.sh and files/updates a report issue when something is outdated.
+
 ### Adding New Tools (brew vs mise)
 
 Default to Brewfile. Escalate to `.mise.toml` when any of the following applies:

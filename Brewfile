@@ -12,7 +12,6 @@ brew "starship"
 brew "atuin"
 
 # Editor
-brew "helix"
 brew "neovim"
 
 # Development
@@ -32,6 +31,5 @@ brew "mise"
 
 # GUI Apps
 cask "ghostty"
-cask "cursor"
 cask "zed"
 cask "font-hack-nerd-font"

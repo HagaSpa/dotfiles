@@ -97,7 +97,7 @@ jobs:
     runs-on: macos-latest
     env:
       # GUI casks are large downloads and nothing in CI verifies them
-      HOMEBREW_BUNDLE_CASK_SKIP: "ghostty cursor zed font-hack-nerd-font"
+      HOMEBREW_BUNDLE_CASK_SKIP: "ghostty zed font-hack-nerd-font"
       HOMEBREW_NO_AUTO_UPDATE: "1"
       HOMEBREW_NO_INSTALL_CLEANUP: "1"
       # Heavy runtimes add minutes without exercising extra install.sh logic

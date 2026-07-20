@@ -18,7 +18,7 @@ keybind = cmd+w=unbind
 # Web ドキュメントを背面に置きながら参照するとき用。トグル先の値なので 1 未満必須。
 background-opacity = 0.55
 
-# 明示的な背景色を持つセル（helix の ui.background 等）にも opacity を適用
+# 明示的な背景色を持つセル（TUI アプリの背景等）にも opacity を適用
 background-opacity-cells = true
 
 # Cmd+Shift+T で透過⇄不透明をトグル（macOS のみ実装）

@@ -9,9 +9,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 entries=(
   .config/fd/config
   .config/ghostty/config
-  .config/helix/config.toml
-  .config/helix/languages.toml
-  .config/helix/themes/bogster-custom.toml
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
   .config/nvim/init.lua
@@ -32,8 +29,6 @@ entries=(
   .vimrc
   .zshenv
   .zshrc
-  ".config/cursor/settings.json:~/Library/Application Support/Cursor/User/settings.json"
-  ".config/cursor/keybindings.json:~/Library/Application Support/Cursor/User/keybindings.json"
   ".config/starship/starship.toml:~/.config/starship.toml"
   ".config/tmux/tmux.conf:~/.tmux.conf"
   "docs/terminal-workflow.md:~/.config/tmux/terminal-workflow.md"

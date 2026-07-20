@@ -38,7 +38,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - `settings.sh` - macOS defaults configuration (key repeat, trackpad, Ctrl+Space free-up for tmux prefix, Kotoeri predictive candidates off)
 
 ### Configuration Files
-- **Shell**: `.zshrc` / `.zshenv` (main) + `.config/zsh/` (alias.sh, command.sh, tasks.sh, hosts/)
+- **Shell**: `.zshrc` / `.zshenv` (main) + `.config/zsh/` (alias.sh, command.sh, hosts/)
 - **Runtime**: `.mise.toml` (Node.js LTS, bun, gcloud, terraform, biome, rust + rust-analyzer)
 - **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf)
 - **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`)

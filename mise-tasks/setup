@@ -1,6 +1,9 @@
 #!/bin/bash
 #MISE description="Run all post-bootstrap setup tasks (parallel where independent)"
-#MISE depends=["claude", "vim-plug", "tpm", "yazi-plugins", "karabiner"]
+# depends is a dependency SET, not an ordered list: these tasks have no
+# dependencies on each other, so mise runs them in parallel (order not
+# guaranteed). Add depends between tasks if ordering ever matters.
+#MISE depends=["claude", "tpm", "yazi-plugins", "karabiner"]
 set -euo pipefail
 
 echo "Setup complete!"

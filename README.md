@@ -77,7 +77,7 @@ The `docs/` directory keeps decision records and troubleshooting notes (e.g. ter
 ## Scripts
 
 ### `install.sh`
-Bootstrap: installs Homebrew → Brewfile packages (including mise) → mise runtimes, then delegates the remaining steps to `mise run setup` (Claude Code, vim-plug, TPM, yazi plugins, Karabiner build — defined as mise file tasks under `mise-tasks/`, independent tasks run in parallel). Run `mise tasks` to list them or `mise run <task>` to re-run a single step.
+Bootstrap: installs Homebrew → Brewfile packages (including mise) → mise runtimes, then delegates the remaining steps to `mise run setup` (Claude Code, TPM, yazi plugins, Karabiner build — defined as mise file tasks under `mise-tasks/`, independent tasks run in parallel). Run `mise tasks` to list them or `mise run <task>` to re-run a single step.
 
 ### `link.sh`
 Creates symbolic links for configuration files from this repository to their expected locations. Existing files are backed up with a `.bak` extension. Run `./link.sh --list` to print all entries as `source:destination`.

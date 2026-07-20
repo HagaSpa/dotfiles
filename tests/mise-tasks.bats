@@ -21,7 +21,7 @@ setup() {
 
   run mise tasks ls
   [ "$status" -eq 0 ]
-  for task in setup claude vim-plug tpm yazi-plugins karabiner link settings; do
+  for task in setup claude tpm yazi-plugins karabiner link settings; do
     grep -q "^$task " <<<"$output" || {
       echo "task not discovered: $task"
       false

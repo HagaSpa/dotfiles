@@ -14,9 +14,11 @@ Individual setup steps are mise file tasks under `mise-tasks/` (repo-scoped; the
 
 ```bash
 mise tasks            # list tasks
-mise run setup        # claude / vim-plug / tpm / yazi-plugins / karabiner, independent tasks run in parallel
-mise run karabiner    # re-run a single step
+mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tasks run in parallel
+mise run karabiner    # full re-run of one step incl. deps (bun install + build)
 ```
+
+Note: `mise run karabiner` is for setup-style runs (installs bun deps first). For day-to-day karabiner.ts edits, `cd .config/karabiner && bun run build` remains the primary flow (see Karabiner section).
 
 ## Testing
 
@@ -42,7 +44,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 
 ### Core Scripts
 - `install.sh` - Bootstrap only: Homebrew → Brewfile packages (installs mise) → mise runtimes → delegates the rest to `mise run setup`
-- `mise-tasks/` - mise file tasks (plain bash scripts, name = task name): `setup` fans out to `claude` / `vim-plug` / `tpm` / `yazi-plugins` / `karabiner` via the dependency DAG; `link` / `settings` wrap the scripts below. Keep tasks OUT of `.mise.toml` — it is symlinked to `~/.mise.toml` (global), so tasks there would appear in every project
+- `mise-tasks/` - mise file tasks (plain bash scripts, name = task name): `setup` fans out to `claude` / `tpm` / `yazi-plugins` / `karabiner` via the dependency DAG; `link` / `settings` wrap the scripts below. Keep tasks OUT of `.mise.toml` — it is symlinked to `~/.mise.toml` (global), so tasks there would appear in every project
 - `link.sh` - Declarative symlink management via `entries` array. Source path only = `~/{source}`, `source:destination` for custom paths. `--list` outputs all entries as `source:destination`
 - `settings.sh` - macOS defaults configuration (key repeat, trackpad, Ctrl+Space free-up for tmux prefix, Kotoeri predictive candidates off)
 

@@ -59,7 +59,7 @@ if command -v mise >/dev/null 2>&1; then
   mise trust "$SCRIPT_DIR/.mise.toml" >/dev/null
   mise install
 
-  log_info "Running setup tasks via mise (claude, vim-plug, tpm, yazi-plugins, karabiner)..."
+  log_info "Running setup tasks via mise (claude, tpm, yazi-plugins, karabiner)..."
   (cd "$SCRIPT_DIR" && mise run setup)
 else
   log_skip "mise not found, skipping mise install and setup tasks"

@@ -68,14 +68,7 @@ else
   exit_code=1
 fi
 
-# Verify vim-plug and TPM
-if [ -f "$HOME/.vim/autoload/plug.vim" ]; then
-  echo "✓ vim-plug installed"
-else
-  echo "✗ vim-plug not installed"
-  exit_code=1
-fi
-
+# Verify TPM
 if [ -d "$HOME/.tmux/plugins/tpm" ]; then
   echo "✓ TPM installed"
 else

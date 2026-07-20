@@ -118,18 +118,8 @@ tmux 内から `Prefix` → `y` でポップアップ起動。Helix で開いて
 
 | キー | 動作 | 備考 |
 |---|---|---|
-| `Ctrl+B` | 英数 → `Ctrl+B` | tmux prefix 送出前に IME を抜く（prefix 自体は `Ctrl+Space`） |
+| `Ctrl+Space` | 英数 → `Ctrl+Space` | tmux prefix の送出と同時に IME を抜く |
 | `Ctrl` 単押し | 短時間ホールド | 端末向け tap-hold 判定 |
-
-## Helix Editor / エディタ
-
-| ユースケース | キー | 備考 |
-|---|---|---|
-| 行を上に移動 | `Alt+Up` | |
-| 行を下に移動 | `Alt+Down` | |
-| Inlay hints 切替 | `Space` → `I` | |
-| ファイルピッカー | `Space` → `f` | 隠しファイルも表示 |
-| バッファピッカー | `Space` → `b` | 開いているファイル一覧 |
 
 ## Typical Workflows / よくある作業フロー
 

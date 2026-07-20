@@ -72,7 +72,7 @@ mise install
 - `.config/claude/` - Claude Code configuration (`~/.claude` settings and custom commands)
 
 ### Docs
-The `docs/` directory keeps decision records and troubleshooting notes (e.g. terminal workflow cheatsheet, cmux vs tmux, Karabiner vs Nix, brew vs Nix, secure input hotkey outage postmortem).
+The `docs/` directory keeps decision records and troubleshooting notes (e.g. terminal workflow cheatsheet, cmux vs tmux, Karabiner vs Nix, brew vs Nix, secure input hotkey outage postmortem) and the tooling roadmap.
 
 ## Scripts
 

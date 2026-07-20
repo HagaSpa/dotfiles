@@ -52,7 +52,7 @@ cd .config/karabiner && bun run build  # generate → sync repo copy → reload 
 `build` regenerates the config, copies `~/.config/karabiner/karabiner.json` back into the repo (Karabiner's atomic writes break symlinks), and reloads the profile via `karabiner_cli`.
 
 ### Docs
-`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, raycast-dotfiles, secure-input-hotkey-outage). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
+`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, raycast-dotfiles, secure-input-hotkey-outage) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
 
 ### Workspace Conventions
 Custom shell functions assume this structure:

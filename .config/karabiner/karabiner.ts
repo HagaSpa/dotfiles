@@ -83,11 +83,11 @@ writeToProfile('Default profile', [
       .parameters({ 'basic.to_if_alone_timeout_milliseconds': 300 }),
 
     map({
-      key_code: 'b',
+      key_code: 'spacebar',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },
     })
       .to({ key_code: 'japanese_eisuu' })
-      .to({ key_code: 'b', modifiers: ['left_control'] }),
+      .to({ key_code: 'spacebar', modifiers: ['left_control'] }),
   ]),
 
   rule('Ctrl navigation (hjkl / word / page)').manipulators([

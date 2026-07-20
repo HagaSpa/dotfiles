@@ -22,7 +22,8 @@ fi
 
 # Test symbolic link creation (actual execution)
 echo "Creating temporary HOME for testing..."
-export TEST_HOME=$(mktemp -d)
+TEST_HOME=$(mktemp -d)
+export TEST_HOME
 export HOME="$TEST_HOME"
 echo "Using temporary HOME: $TEST_HOME"
 
@@ -39,7 +40,7 @@ while IFS=':' read -r source target; do
   else
     echo "✗ Symbolic link not created: $expanded_target"
   fi
-done <<< "$(./link.sh --list)"
+done <<<"$(./link.sh --list)"
 
 if [ $links_created -gt 0 ]; then
   echo "✓ Successfully created $links_created symbolic links"
@@ -62,7 +63,7 @@ while IFS=':' read -r source target; do
     echo "✗ Missing source: $source"
     exit_code=1
   fi
-done <<< "$(./link.sh --list)"
+done <<<"$(./link.sh --list)"
 
 if [ $exit_code -eq 0 ]; then
   echo "✓ link.sh test completed successfully"

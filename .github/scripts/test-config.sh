@@ -76,8 +76,8 @@ else
 fi
 
 # Validate tmux configuration syntax
-if command -v tmux > /dev/null 2>&1; then
-  if tmux -f .config/tmux/tmux.conf list-keys > /dev/null 2>&1; then
+if command -v tmux >/dev/null 2>&1; then
+  if tmux -f .config/tmux/tmux.conf list-keys >/dev/null 2>&1; then
     echo "✓ tmux configuration syntax is valid"
   else
     echo "✗ tmux configuration syntax error"
@@ -87,7 +87,7 @@ fi
 
 # Validate JSON files
 echo "Validating JSON files..."
-if python3 -m json.tool .config/karabiner/karabiner.json > /dev/null 2>&1; then
+if python3 -m json.tool .config/karabiner/karabiner.json >/dev/null 2>&1; then
   echo "✓ Karabiner JSON is valid"
 else
   echo "✗ Karabiner JSON is invalid"

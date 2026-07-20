@@ -41,7 +41,7 @@ echo "Executing install.sh..."
 echo "Verifying installed CLI tools..."
 exit_code=0
 for tool in fzf gh zoxide lsd bat starship sheldon tmux mise; do
-  if command -v "$tool" &> /dev/null; then
+  if command -v "$tool" &>/dev/null; then
     echo "✓ CLI tool successfully installed: $tool"
   else
     echo "✗ CLI tool not available: $tool"
@@ -52,7 +52,7 @@ done
 # Verify mise-managed runtimes (gcloud/terraform/rust are disabled in CI)
 echo "Verifying mise-managed runtimes..."
 for tool in node bun; do
-  if mise which "$tool" &> /dev/null; then
+  if mise which "$tool" &>/dev/null; then
     echo "✓ mise runtime installed: $tool ($(mise which "$tool"))"
   else
     echo "✗ mise runtime not available: $tool"
@@ -61,7 +61,7 @@ for tool in node bun; do
 done
 
 # Verify Claude Code (native installer puts the binary in ~/.local/bin)
-if [ -x "$HOME/.local/bin/claude" ] || command -v claude &> /dev/null; then
+if [ -x "$HOME/.local/bin/claude" ] || command -v claude &>/dev/null; then
   echo "✓ Claude Code successfully installed"
 else
   echo "✗ Claude Code not available"

@@ -36,7 +36,9 @@ if [ -f "$HOME/.zprofile" ] && grep -q '/opt/homebrew/bin/brew shellenv' "$HOME/
   log_skip "Homebrew shellenv already in .zprofile"
 else
   log_info "Adding Homebrew shellenv to .zprofile..."
-  (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> "$HOME/.zprofile"
+  # Leading \n keeps a blank separator line before the appended entry.
+  # shellcheck disable=SC2016 # the literal string (unexpanded) is what .zprofile needs
+  printf '\n%s\n' 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>"$HOME/.zprofile"
 fi
 
 # Source brew environment if it exists

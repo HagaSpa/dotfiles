@@ -16,7 +16,7 @@ fi
 
 # Validate Brewfile syntax by parsing it
 echo "Checking Brewfile syntax..."
-if grep -E '^(brew|cask|mas)' ./Brewfile > /dev/null; then
+if grep -E '^(brew|cask|mas)' ./Brewfile >/dev/null; then
   echo "✓ Brewfile contains valid entries"
 else
   echo "✗ Brewfile appears to be empty or invalid"
@@ -48,7 +48,7 @@ for app in "${cask_apps[@]}"; do
 done
 
 # If brew is available, test bundle validation (but don't fail on missing packages)
-if command -v brew &> /dev/null; then
+if command -v brew &>/dev/null; then
   echo "Homebrew is available, testing bundle check..."
   if brew bundle check --file=./Brewfile; then
     echo "✓ All Brewfile dependencies are satisfied"

@@ -23,7 +23,7 @@ Tests run automatically via GitHub Actions on PRs and pushes to main. To run loc
 ./.github/scripts/test-karabiner-build.sh  # Verify karabiner.ts build output matches karabiner.json
 ```
 
-Lint (run by the CI `lint` job; tools come from the Brewfile):
+Lint runs in the CI `lint` job, which installs its own pinned tools (not in the Brewfile). To reproduce locally, `brew install shellcheck shfmt actionlint` ad hoc and run:
 
 ```bash
 shellcheck install.sh link.sh settings.sh .config/tmux/yazi-picker.sh .github/scripts/*.sh

@@ -34,7 +34,7 @@ concurrency:
 jobs:
   # Static analysis: shellcheck / shfmt for bash, actionlint for workflows,
   # zsh -n for zsh configs (shellcheck does not support zsh).
-  # Versions are pinned to match the Brewfile-installed tools used locally.
+  # The job installs its own pinned tools; nothing is required locally.
   lint:
     runs-on: ubuntu-latest
     env:

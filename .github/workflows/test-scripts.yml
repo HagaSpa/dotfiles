@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@v7.0.0
 
     # Route each tracked *.sh (and mise file task) to the right checker by
     # shebang: sh/bash go to shellcheck + shfmt; the rest (zsh configs sourced
@@ -95,11 +95,11 @@ jobs:
       install: ${{ steps.filter.outputs.install }}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@v7.0.0
 
     - name: Detect changed paths
       id: filter
-      uses: dorny/paths-filter@v4
+      uses: dorny/paths-filter@v4.0.2
       with:
         filters: |
           install:
@@ -117,13 +117,13 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@v7.0.0
 
     - name: Set up environment
       run: ./.github/scripts/setup-environment.sh
 
     - name: Setup bun
-      uses: oven-sh/setup-bun@v2
+      uses: oven-sh/setup-bun@v2.2.0
 
     - name: Install bats-core
       run: brew install bats-core
@@ -154,7 +154,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@v7.0.0
 
     - name: Test install.sh (actual execution)
       run: ./.github/scripts/test-install.sh

@@ -3,15 +3,13 @@
 echo "Cleaning up test environment..."
 
 # Restore backed up files
-for file in ~/.zshrc ~/.vimrc; do
-  if [ -f "${file}.github-backup" ]; then
-    mv "${file}.github-backup" "$file"
-    echo "✓ Restored $file"
-  fi
-done
+if [ -f ~/.zshrc.github-backup ]; then
+  mv ~/.zshrc.github-backup ~/.zshrc
+  echo "✓ Restored ~/.zshrc"
+fi
 
 # Remove any test symlinks that might have been created
-for link in ~/.zshrc ~/.vimrc ~/.config/zsh/alias.sh ~/.config/zsh/command.sh; do
+for link in ~/.zshrc ~/.config/zsh/alias.sh ~/.config/zsh/command.sh; do
   if [ -L "$link" ]; then
     rm "$link"
     echo "✓ Removed test symlink: $link"

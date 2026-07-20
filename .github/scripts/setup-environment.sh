@@ -10,11 +10,9 @@ mkdir -p ~/.config/karabiner
 mkdir -p ~/.config/ghostty
 
 # Backup existing files if they exist
-for file in ~/.zshrc ~/.vimrc; do
-  if [ -f "$file" ]; then
-    cp "$file" "${file}.github-backup"
-    echo "✓ Backed up $file"
-  fi
-done
+if [ -f ~/.zshrc ]; then
+  cp ~/.zshrc ~/.zshrc.github-backup
+  echo "✓ Backed up ~/.zshrc"
+fi
 
 echo "✓ Test environment setup completed"

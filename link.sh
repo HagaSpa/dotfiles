@@ -25,7 +25,6 @@ entries=(
   .gitconfig
   .gitconfig-olta
   .mise.toml
-  .vimrc
   .zshenv
   .zshrc
   ".config/starship/starship.toml:~/.config/starship.toml"

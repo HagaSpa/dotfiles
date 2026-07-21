@@ -18,6 +18,7 @@ entries=(
   .config/yazi/keymap.toml
   .config/yazi/package.toml
   .config/yazi/yazi.toml
+  .config/zed/keymap.json
   .config/zed/settings.json
   .config/zsh/alias.sh
   .config/zsh/command.sh

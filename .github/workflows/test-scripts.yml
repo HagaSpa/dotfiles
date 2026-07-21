@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7.0.0
+      uses: actions/checkout@v7.0.1
 
     # Route each tracked *.sh (and mise file task) to the right checker by
     # shebang: sh/bash go to shellcheck + shfmt; the rest (zsh configs sourced
@@ -95,7 +95,7 @@ jobs:
       install: ${{ steps.filter.outputs.install }}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7.0.0
+      uses: actions/checkout@v7.0.1
 
     - name: Detect changed paths
       id: filter
@@ -117,7 +117,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7.0.0
+      uses: actions/checkout@v7.0.1
 
     - name: Set up environment
       run: ./.github/scripts/setup-environment.sh
@@ -154,7 +154,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7.0.0
+      uses: actions/checkout@v7.0.1
 
     - name: Test install.sh (actual execution)
       run: ./.github/scripts/test-install.sh

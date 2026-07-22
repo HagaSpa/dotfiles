@@ -40,5 +40,10 @@
         }
       }
     }
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
   }
 }

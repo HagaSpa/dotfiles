@@ -1,4 +1,5 @@
--- Minimal neovim config. No plugin manager, built-ins only.
+-- Neovim config. Plugins managed by lazy.nvim.
+-- Minimal starter: lazy.nvim + neovim-project + telescope + treesitter + mason.
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -38,10 +39,98 @@ opt.timeoutlen = 400
 opt.clipboard = 'unnamedplus'
 opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 
--- Built-in fuzzy file find via :find
+-- Built-in fuzzy file find via :find (kept as a fallback alongside telescope)
 opt.path:append('**')
 opt.wildmode = 'longest:full,full'
 opt.wildignore:append({ '*/node_modules/*', '*/.git/*', '*/dist/*', '*/build/*' })
+
+-- ===== Bootstrap lazy.nvim =====
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    'git', 'clone', '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- init.lua is symlinked from the dotfiles repo; resolve it so the lockfile is
+-- written directly into the repo dir (no symlink -> atomic writes stay safe).
+local repo_config = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.stdpath('config') .. '/init.lua'), ':h')
+
+require('lazy').setup({
+  -- Fuzzy finder ------------------------------------------------------------
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = 'master',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
+    config = function()
+      local telescope = require('telescope')
+      telescope.setup({})
+      telescope.load_extension('fzf')
+    end,
+  },
+
+  -- Project management (Zed-like: pick a dir -> swap session) ---------------
+  {
+    'coffebar/neovim-project',
+    lazy = false,
+    priority = 100,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'Shatur/neovim-session-manager',
+    },
+    init = function()
+      -- needed so buffers/layout are stored per project
+      vim.opt.sessionoptions:append('globals')
+    end,
+    opts = {
+      -- Match the workspace conventions from CLAUDE.md
+      projects = {
+        '~/workspaces/*/*',
+        '~/worktrees/*/*/*',
+      },
+      picker = { type = 'telescope' },
+      -- Launch into the cwd, not the last project (predictable, Zed-like)
+      last_session_on_startup = false,
+    },
+  },
+
+  -- Treesitter (main branch; required for Neovim 0.11+ / 0.12) --------------
+  {
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    build = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter').install({
+        'lua', 'vim', 'vimdoc', 'bash', 'yaml', 'json',
+        'markdown', 'markdown_inline', 'terraform', 'dockerfile',
+      })
+      -- Highlighting is a built-in feature enabled per filetype.
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'lua', 'vim', 'help', 'sh', 'bash', 'yaml',
+          'json', 'markdown', 'terraform', 'dockerfile' },
+        callback = function() pcall(vim.treesitter.start) end,
+      })
+    end,
+  },
+
+  -- LSP server installer (binaries only; LSP itself stays native below) ------
+  { 'mason-org/mason.nvim', opts = {} },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    dependencies = { 'mason-org/mason.nvim' },
+    opts = { ensure_installed = { 'yaml-language-server' } },
+  },
+}, {
+  -- lazy.nvim options
+  lockfile = repo_config .. '/lazy-lock.json',
+  change_detection = { notify = false },
+})
 
 -- ===== Keymaps =====
 local map = vim.keymap.set
@@ -63,10 +152,21 @@ map('n', 'N', 'Nzzzv')
 -- Paste without yanking replaced text
 map('x', '<leader>p', '"_dP')
 
--- File / buffer navigation (built-in)
+-- File explorer (built-in netrw)
 map('n', '<leader>e', '<cmd>Explore<CR>')
-map('n', '<leader>f', ':find ')
-map('n', '<leader>b', ':buffer ')
+
+-- Telescope
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'Find files' })
+map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = 'Live grep' })
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'Buffers' })
+map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = 'Help tags' })
+map('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = 'Diagnostics' })
+
+-- Projects (Zed cmd+opt+o equivalent)
+map('n', '<leader>fp', '<cmd>NeovimProjectDiscover<CR>', { desc = 'Discover projects' })
+map('n', '<leader>fP', '<cmd>NeovimProjectHistory<CR>', { desc = 'Recent projects' })
+
+-- Buffer cycling
 map('n', '[b', '<cmd>bprevious<CR>')
 map('n', ']b', '<cmd>bnext<CR>')
 
@@ -90,8 +190,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
--- ===== LSP =====
--- yaml-language-server (Kubernetes schema scoped to bons8i-style kustomize layout)
+-- ===== LSP (native, nvim 0.11+) =====
+-- yaml-language-server binary is installed by mason (its bin dir is on PATH).
+-- Kubernetes schema scoped to bons8i-style kustomize layout.
 vim.lsp.config('yamlls', {
   cmd = { 'yaml-language-server', '--stdio' },
   filetypes = { 'yaml' },

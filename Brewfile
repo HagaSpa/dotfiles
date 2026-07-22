@@ -13,6 +13,7 @@ brew "atuin"
 
 # Editor
 brew "neovim"
+brew "tree-sitter-cli" # nvim-treesitter (main branch) compiles parsers with this
 
 # Development
 brew "gh"

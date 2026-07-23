@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal dotfiles configuration for macOS development environment.
+This is my personal configuration for macos.
 
 ## Quick Start
 

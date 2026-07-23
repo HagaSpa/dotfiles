@@ -59,6 +59,15 @@ vim.opt.rtp:prepend(lazypath)
 local repo_config = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.stdpath('config') .. '/init.lua'), ':h')
 
 require('lazy').setup({
+  -- Colorscheme (kanagawa; muted wabi-sabi palette) -------------------------
+  {
+    'rebelot/kanagawa.nvim',
+    priority = 1000, -- load before everything so early UI is themed
+    config = function()
+      vim.cmd.colorscheme('kanagawa')
+    end,
+  },
+
   -- Fuzzy finder ------------------------------------------------------------
   {
     'nvim-telescope/telescope.nvim',
@@ -109,23 +118,19 @@ require('lazy').setup({
       require('nvim-treesitter').install({
         'lua', 'vim', 'vimdoc', 'bash', 'yaml', 'json',
         'markdown', 'markdown_inline', 'terraform', 'dockerfile',
+        'javascript', 'typescript', 'tsx', 'rust', 'go', 'python',
       })
-      -- Highlighting is a built-in feature enabled per filetype.
+      -- Highlighting is a built-in feature enabled per filetype. Start it for
+      -- any filetype whose parser is installed; pcall no-ops when there is none,
+      -- so the install list above is the single source of truth.
       vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'lua', 'vim', 'help', 'sh', 'bash', 'yaml',
-          'json', 'markdown', 'terraform', 'dockerfile' },
         callback = function() pcall(vim.treesitter.start) end,
       })
     end,
   },
 
-  -- LSP server installer (binaries only; LSP itself stays native below) ------
-  { 'mason-org/mason.nvim', opts = {} },
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    dependencies = { 'mason-org/mason.nvim' },
-    opts = { ensure_installed = { 'yaml-language-server' } },
-  },
+  -- LSP servers are installed via brew (Brewfile) / mise (.mise.toml), not a
+  -- plugin. The native client below launches them off $PATH.
 }, {
   -- lazy.nvim options
   lockfile = repo_config .. '/lazy-lock.json',
@@ -191,7 +196,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 -- ===== LSP (native, nvim 0.11+) =====
--- yaml-language-server binary is installed by mason (its bin dir is on PATH).
+-- yaml-language-server binary comes from brew (Brewfile); it is on $PATH.
 -- Kubernetes schema scoped to bons8i-style kustomize layout.
 vim.lsp.config('yamlls', {
   cmd = { 'yaml-language-server', '--stdio' },
@@ -213,6 +218,23 @@ vim.lsp.config('yamlls', {
   },
 })
 vim.lsp.enable('yamlls')
+
+-- Servers below come from brew (Brewfile) / mise (.mise.toml); all on $PATH:
+--   rust-analyzer -> mise | typescript-language-server -> brew
+vim.lsp.config('rust_analyzer', {
+  cmd = { 'rust-analyzer' },
+  filetypes = { 'rust' },
+  root_markers = { 'Cargo.toml', 'Cargo.lock', '.git' },
+})
+vim.lsp.config('ts_ls', {
+  cmd = { 'typescript-language-server', '--stdio' },
+  filetypes = {
+    'javascript', 'javascriptreact', 'javascript.jsx',
+    'typescript', 'typescriptreact', 'typescript.tsx',
+  },
+  root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+})
+vim.lsp.enable({ 'rust_analyzer', 'ts_ls' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup,

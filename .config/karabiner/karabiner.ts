@@ -19,6 +19,7 @@ const VIM_APP_IDS = [
   ...TERMINAL_BUNDLE_IDS,
   '^com\\.google\\.Chrome$',
   '^dev\\.zed\\.Zed$',
+  '^com\\.neovide\\.neovide$',
 ] as const;
 const unlessVimApp = ifApp({
   bundle_identifiers: [...VIM_APP_IDS],

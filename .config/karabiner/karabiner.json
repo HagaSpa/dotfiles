@@ -5104,7 +5104,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5146,7 +5147,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5188,7 +5190,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5230,7 +5233,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5272,7 +5276,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5314,7 +5319,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5356,7 +5362,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5398,7 +5405,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5440,7 +5448,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5482,7 +5491,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5524,7 +5534,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5566,7 +5577,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5608,7 +5620,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5650,7 +5663,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5692,7 +5706,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5734,7 +5749,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5776,7 +5792,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5818,7 +5835,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5860,7 +5878,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5902,7 +5921,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5944,7 +5964,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -5986,7 +6007,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6028,7 +6050,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6070,7 +6093,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6112,7 +6136,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6154,7 +6179,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6196,7 +6222,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6238,7 +6265,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6280,7 +6308,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6322,7 +6351,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6364,7 +6394,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6406,7 +6437,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6448,7 +6480,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6490,7 +6523,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6532,7 +6566,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6574,7 +6609,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6616,7 +6652,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6658,7 +6695,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6700,7 +6738,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6742,7 +6781,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6784,7 +6824,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6826,7 +6867,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6868,7 +6910,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6910,7 +6953,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6952,7 +6996,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -6994,7 +7039,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7036,7 +7082,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7078,7 +7125,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7120,7 +7168,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7162,7 +7211,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7204,7 +7254,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7246,7 +7297,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7288,7 +7340,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7330,7 +7383,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7372,7 +7426,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7414,7 +7469,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7456,7 +7512,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7498,7 +7555,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]
@@ -7539,7 +7597,8 @@
                       "^com\\.mitchellh\\.ghostty$",
                       "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.google\\.Chrome$",
-                      "^dev\\.zed\\.Zed$"
+                      "^dev\\.zed\\.Zed$",
+                      "^com\\.neovide\\.neovide$"
                     ]
                   }
                 ]

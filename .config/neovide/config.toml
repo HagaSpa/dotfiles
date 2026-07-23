@@ -1,0 +1,5 @@
+# Neovide global settings. Neovim behaviour itself lives in ../nvim/init.lua
+# (read as-is via the `if vim.g.neovide` guard); this file is GUI-only.
+
+# Frameless window (no title bar / traffic-light buttons).
+frame = "none"

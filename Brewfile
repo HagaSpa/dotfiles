@@ -19,7 +19,7 @@ brew "tree-sitter-cli" # nvim-treesitter (main branch) compiles parsers with thi
 brew "gh"
 brew "git-delta"
 brew "tmux"
-brew "typescript-language-server"
+brew "typescript-language-server" # LSP: js/ts (nvim)
 brew "crit"
 
 # Kubernetes / YAML

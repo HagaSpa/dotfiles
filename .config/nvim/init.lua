@@ -78,7 +78,25 @@ require('lazy').setup({
     },
     config = function()
       local telescope = require('telescope')
-      telescope.setup({})
+      telescope.setup({
+        defaults = {
+          -- include dotfiles (e.g. .config) but skip the .git directory
+          file_ignore_patterns = { '^%.git/' },
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',
+          },
+        },
+        pickers = {
+          find_files = { hidden = true },
+        },
+      })
       telescope.load_extension('fzf')
     end,
   },

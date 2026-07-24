@@ -13,5 +13,13 @@
       "j": "markdown::ScrollDown",
       "k": "markdown::ScrollUp"
     }
+  },
+  // ファイルタブ移動を vim 流に（cmd-shift-[ / ] の置き換え）
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "g ]": "pane::ActivateNextItem",
+      "g [": "pane::ActivatePreviousItem"
+    }
   }
 ]

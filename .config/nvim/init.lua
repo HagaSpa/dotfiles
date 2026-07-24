@@ -127,6 +127,19 @@ require('lazy').setup({
     },
   },
 
+  -- File explorer (edit the filesystem like a buffer) ----------------------
+  {
+    'stevearc/oil.nvim',
+    lazy = false, -- so it can hijack netrw and open directories on startup
+    opts = {
+      -- Take over netrw so `:e <dir>` and `<leader>e` open oil, not netrw
+      default_file_explorer = true,
+      view_options = {
+        show_hidden = true, -- match telescope find_files (hidden = true)
+      },
+    },
+  },
+
   -- Treesitter (main branch; required for Neovim 0.11+ / 0.12) --------------
   {
     'nvim-treesitter/nvim-treesitter',
@@ -175,8 +188,9 @@ map('n', 'N', 'Nzzzv')
 -- Paste without yanking replaced text
 map('x', '<leader>p', '"_dP')
 
--- File explorer (built-in netrw)
-map('n', '<leader>e', '<cmd>Explore<CR>')
+-- File explorer (oil.nvim: edit the filesystem like a buffer)
+map('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open parent dir (oil)' })
+map('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent dir (oil)' })
 
 -- Telescope
 map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'Find files' })

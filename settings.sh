@@ -17,12 +17,12 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Free up Ctrl+Space for tmux prefix by disabling "Select the previous input source"
-# (AppleSymbolicHotKeys id 60). Requires logout/login or `activateSettings -u` to apply.
-# NOTE: On macOS Tahoe (26+) this plist write often fails to propagate to the runtime;
-# if Ctrl+Space still switches input sources, manually uncheck via:
-#   System Settings → Keyboard → Keyboard Shortcuts → Input Sources → "Select the previous input source"
+# (AppleSymbolicHotKeys id 60).
+# Must be XML plist: the old-style `{enabled = 0; ...}` syntax has no number/bool
+# type, so `enabled` lands as the string "0" and macOS falls back to enabled.
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60 \
-  '{enabled = 0; value = { parameters = (32, 49, 262144); type = "standard"; }; }'
+  '<dict><key>enabled</key><false/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>262144</integer></array></dict></dict>'
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
 # Japanese IME (Kotoeri): disable predictive candidates and live conversion.
 # Predictive candidates cause heavily-learned words to be mis-committed during

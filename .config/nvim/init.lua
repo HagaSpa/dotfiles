@@ -164,22 +164,22 @@ require('lazy').setup({
 -- ===== Keymaps =====
 local map = vim.keymap.set
 
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+map('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 
 -- Window navigation
-map('n', '<C-h>', '<C-w>h')
-map('n', '<C-j>', '<C-w>j')
-map('n', '<C-k>', '<C-w>k')
-map('n', '<C-l>', '<C-w>l')
+map('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
+map('n', '<C-j>', '<C-w>j', { desc = 'Window down' })
+map('n', '<C-k>', '<C-w>k', { desc = 'Window up' })
+map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
 
 -- Center cursor on big jumps / search
-map('n', '<C-d>', '<C-d>zz')
-map('n', '<C-u>', '<C-u>zz')
-map('n', 'n', 'nzzzv')
-map('n', 'N', 'Nzzzv')
+map('n', '<C-d>', '<C-d>zz', { desc = 'Half page down (centered)' })
+map('n', '<C-u>', '<C-u>zz', { desc = 'Half page up (centered)' })
+map('n', 'n', 'nzzzv', { desc = 'Next search match (centered)' })
+map('n', 'N', 'Nzzzv', { desc = 'Prev search match (centered)' })
 
 -- Paste without yanking replaced text
-map('x', '<leader>p', '"_dP')
+map('x', '<leader>p', '"_dP', { desc = 'Paste over selection (keep register)' })
 
 -- File explorer (oil.nvim: edit the filesystem like a buffer)
 map('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open parent dir (oil)' })
@@ -191,17 +191,17 @@ map('n', '<leader>fg', function() Snacks.picker.grep() end, { desc = 'Live grep'
 map('n', '<leader>fb', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
 map('n', '<leader>fh', function() Snacks.picker.help() end, { desc = 'Help tags' })
 map('n', '<leader>fd', function() Snacks.picker.diagnostics() end, { desc = 'Diagnostics' })
+-- Self-documentation: search every keymap / ex-command by its desc, run with <CR>.
+-- Every map below carries a desc so these two stay useful.
+map('n', '<leader>fk', function() Snacks.picker.keymaps() end, { desc = 'Keymaps (search what is bound)' })
+map('n', '<leader>fc', function() Snacks.picker.commands() end, { desc = 'Ex commands' })
 
 -- Projects (Zed cmd+opt+o equivalent)
 map('n', '<leader>fp', '<cmd>NeovimProjectDiscover<CR>', { desc = 'Discover projects' })
 map('n', '<leader>fP', '<cmd>NeovimProjectHistory<CR>', { desc = 'Recent projects' })
 
--- Buffer cycling
-map('n', '[b', '<cmd>bprevious<CR>')
-map('n', ']b', '<cmd>bnext<CR>')
-
-map('n', '<leader>w', '<cmd>write<CR>')
-map('n', '<leader>q', '<cmd>quit<CR>')
+map('n', '<leader>w', '<cmd>write<CR>', { desc = 'Write file' })
+map('n', '<leader>q', '<cmd>quit<CR>', { desc = 'Quit window' })
 
 -- ===== Autocommands =====
 local augroup = vim.api.nvim_create_augroup('user', { clear = true })
@@ -218,6 +218,17 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.cmd([[keeppatterns %s/\s\+$//e]])
     vim.fn.winrestview(save)
   end,
+})
+
+-- ===== Diagnostics =====
+-- virtual_text is off by default, so show the message on jump instead. This hooks
+-- Neovim's own [d / ]d maps; do not re-map those keys here.
+vim.diagnostic.config({
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor' })
+    end,
+  },
 })
 
 -- ===== LSP (native, nvim 0.11+) =====
@@ -265,14 +276,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup,
   callback = function(args)
     local buf = args.buf
-    local opts = { buffer = buf }
-    map('n', 'K', vim.lsp.buf.hover, opts)
-    map('n', 'gd', vim.lsp.buf.definition, opts)
-    map('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    map('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    map('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
-    map('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
-    map('n', '<leader>d', vim.diagnostic.open_float, opts)
+    local function lmap(lhs, rhs, desc)
+      map('n', lhs, rhs, { buffer = buf, desc = 'LSP: ' .. desc })
+    end
+    -- references / implementation / type definition / document symbol are already
+    -- mapped by Neovim itself (grr / gri / grt / gO) -- see :h lsp-defaults.
+    lmap('K', vim.lsp.buf.hover, 'Hover docs')
+    lmap('gd', vim.lsp.buf.definition, 'Go to definition')
+    lmap('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
+    lmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+    lmap('<leader>d', vim.diagnostic.open_float, 'Show diagnostic under cursor')
     vim.lsp.completion.enable(true, args.data.client_id, buf, { autotrigger = true })
   end,
 })

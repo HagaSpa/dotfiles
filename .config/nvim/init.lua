@@ -1,5 +1,5 @@
 -- Neovim config. Plugins managed by lazy.nvim.
--- Minimal starter: lazy.nvim + neovim-project + telescope + treesitter + mason.
+-- Minimal starter: lazy.nvim + neovim-project + snacks.picker + treesitter + mason.
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -39,7 +39,7 @@ opt.timeoutlen = 400
 opt.clipboard = 'unnamedplus'
 opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 
--- Built-in fuzzy file find via :find (kept as a fallback alongside telescope)
+-- Built-in fuzzy file find via :find (kept as a fallback alongside the picker)
 opt.path:append('**')
 opt.wildmode = 'longest:full,full'
 opt.wildignore:append({ '*/node_modules/*', '*/.git/*', '*/dist/*', '*/build/*' })
@@ -68,37 +68,30 @@ require('lazy').setup({
     end,
   },
 
+  -- File icons (per-filetype icons for the snacks picker) -------------------
+  {
+    'echasnovski/mini.icons',
+    opts = {},
+  },
+
   -- Fuzzy finder ------------------------------------------------------------
   {
-    'nvim-telescope/telescope.nvim',
-    branch = 'master',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    'folke/snacks.nvim',
+    priority = 1000,
+    dependencies = { 'echasnovski/mini.icons' },
+    opts = {
+      -- Only the picker module; explorer/dashboard/notifier etc. stay off
+      -- (oil.nvim already owns the file-explorer role).
+      picker = {
+        enabled = true,
+        sources = {
+          -- match the old telescope config: show dotfiles, skip .gitignored
+          files = { hidden = true },
+          grep = { hidden = true },
+        },
+        matcher = { frecency = true },
+      },
     },
-    config = function()
-      local telescope = require('telescope')
-      telescope.setup({
-        defaults = {
-          -- include dotfiles (e.g. .config) but skip the .git directory
-          file_ignore_patterns = { '^%.git/' },
-          vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--hidden',
-          },
-        },
-        pickers = {
-          find_files = { hidden = true },
-        },
-      })
-      telescope.load_extension('fzf')
-    end,
   },
 
   -- Project management (Zed-like: pick a dir -> swap session) ---------------
@@ -108,7 +101,7 @@ require('lazy').setup({
     priority = 100,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
+      'folke/snacks.nvim',
       'Shatur/neovim-session-manager',
     },
     init = function()
@@ -121,7 +114,7 @@ require('lazy').setup({
         '~/workspaces/*/*',
         '~/worktrees/*/*/*',
       },
-      picker = { type = 'telescope' },
+      picker = { type = 'snacks' },
       -- Launch into the cwd, not the last project (predictable, Zed-like)
       last_session_on_startup = false,
     },
@@ -192,12 +185,12 @@ map('x', '<leader>p', '"_dP')
 map('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open parent dir (oil)' })
 map('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent dir (oil)' })
 
--- Telescope
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'Find files' })
-map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = 'Live grep' })
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'Buffers' })
-map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = 'Help tags' })
-map('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = 'Diagnostics' })
+-- Picker (snacks.nvim)
+map('n', '<leader>ff', function() Snacks.picker.files() end, { desc = 'Find files' })
+map('n', '<leader>fg', function() Snacks.picker.grep() end, { desc = 'Live grep' })
+map('n', '<leader>fb', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
+map('n', '<leader>fh', function() Snacks.picker.help() end, { desc = 'Help tags' })
+map('n', '<leader>fd', function() Snacks.picker.diagnostics() end, { desc = 'Diagnostics' })
 
 -- Projects (Zed cmd+opt+o equivalent)
 map('n', '<leader>fp', '<cmd>NeovimProjectDiscover<CR>', { desc = 'Discover projects' })

@@ -94,6 +94,31 @@ require('lazy').setup({
     },
   },
 
+  -- Keymap hints (popup of what is bound under the prefix just typed) -------
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {
+      preset = 'modern',
+      -- Mappings without a desc are noise here (and unsearchable in the picker).
+      filter = function(mapping)
+        return mapping.desc ~= nil and mapping.desc ~= ''
+      end,
+      spec = {
+        { '<leader>c', group = 'code' },
+        { '<leader>f', group = 'find' },
+        { '<leader>r', group = 'refactor' },
+      },
+    },
+    keys = {
+      {
+        '<leader>?',
+        function() require('which-key').show({ global = false }) end,
+        desc = 'Buffer-local keymaps',
+      },
+    },
+  },
+
   -- Project management (Zed-like: pick a dir -> swap session) ---------------
   {
     'coffebar/neovim-project',

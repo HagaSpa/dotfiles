@@ -30,6 +30,61 @@
 2. `Ctrl+T` でファイルを検索 → `nvim` で開く
    - 例: `nvim ` → `Ctrl+T` → ファイル選択 → Enter
 
+## Neovim / エディタ
+
+**Leader は `Space`**。プラグインは `.config/nvim/lua/plugins/`、エディタ素のキーマップは `lua/config/keymaps.lua`。
+
+### 探す
+
+| ユースケース | キー | 備考 |
+|---|---|---|
+| ファイル名で開く | `Space` → `ff` | snacks picker。隠しファイル表示・gitignore 除外 |
+| 内容で grep | `Space` → `fg` | |
+| バッファ切替 | `Space` → `fb` | |
+| プロジェクト切替 | `Space` → `fp` / `fP` | 一覧 / 履歴。`~/workspaces` と `~/worktrees` を走査 |
+| ファイラを開く | `-` または `Space` → `e` | oil。バッファとして編集し保存で反映 |
+| キーマップを検索 | `Space` → `fk` | この config が定義したマップのみ（後述の注意点） |
+| ヘルプを検索 | `Space` → `fh` | 組み込みコマンドを調べる入口 |
+| 押せるキーを見る | `Space` 単独 | which-key。`g` / `z` / `[` / `]` / `Ctrl+W` では組み込みキーの説明も出る |
+
+### 移動・ジャンプ
+
+| ユースケース | キー | 備考 |
+|---|---|---|
+| ジャンプ元に戻る | `Ctrl+O` | jumplist。`gd` で定義に飛んだ後もこれで戻る |
+| ジャンプ先に進む | `Ctrl+I` | `Tab` と同じ |
+| ジャンプリストを表示 | `:jumps` | |
+| 直前の位置に戻る | `''` | バッククォート 2 つなら列も復元 |
+
+### LSP
+
+| ユースケース | キー | 備考 |
+|---|---|---|
+| 定義へ移動 | `gd` | 戻るのは `Ctrl+O` |
+| 参照一覧 | `grr` | 実装は `gri`、型定義は `grt`、シンボルは `gO` |
+| ドキュメント表示 | `K` | |
+| リネーム | `Space` → `rn` | |
+| コードアクション | `Space` → `ca` | |
+| 診断を表示 | `Space` → `d` | 一覧は `Space` → `fd` |
+
+サーバーは brew / mise で入れて PATH から起動（mason 不使用）。定義は `lua/config/lsp.lua`。
+
+### Git
+
+| ユースケース | キー | 備考 |
+|---|---|---|
+| 変更 hunk 一覧（repo 全体） | `Space` → `gg` | staged / unstaged 両方。`Tab` で stage |
+| 変更ファイル一覧 | `Space` → `gf` | untracked もここに出る |
+| lazygit を開く | `Space` → `gG` | float。`e` で親 nvim にファイルが開く |
+| 次 / 前の hunk | `]c` / `[c` | |
+| hunk を stage / 戻す | `Space` → `gs` / `gr` | visual で選択した行だけにも効く |
+| hunk の中身を見る | `Space` → `gi` | その場に inline 展開 |
+| blame | `Space` → `gb` | 行末常時表示のトグルは `Space` → `gB` |
+
+gutter のバーは太い `┃` が unstaged、細い `│` が staged。
+
+> **`Space` → `fk` に出ないキーがある**（ハマりやすい点）: このピッカーの情報源は `nvim_get_keymap` で、**`vim.keymap.set` で定義したマップしか一覧できない**。`Ctrl+O` / `dd` / `gg` / `%` のような Neovim 組み込みコマンドは原理的に出てこない。which-key のポップアップにも出ない（`Ctrl+O` は 1 キーで完結するため、プレフィックス待ちが発生せず表示の機会がない）。組み込みを調べたいときは `Space` → `fh` でヘルプタグを検索するか `:help normal-index` を見る。逆に `Ctrl+D` / `n` / `N` が一覧に出るのは、centering (`zz`) 付きで再マップしているため。
+
 ## Tmux / ターミナル多重化
 
 **Prefix: `Ctrl+Space`**（D=Ctrl ホールド + 右親指 Space の bilateral chord。`Ctrl+B` は左手同手チョードで打ちにくいため変更。詳細は [HRM.md](../.config/karabiner/HRM.md)）
@@ -56,7 +111,7 @@
 
 ## Yazi / ファイルマネージャ
 
-tmux 内から `Prefix` → `y` でポップアップ起動。Helix で開いているときはファイル選択が `:open` に連携される。
+tmux 内から `Prefix` → `y` でポップアップ起動。呼び出したペインで nvim が動いていれば、選択したファイルが `:args` で渡される（それ以外は `nvim <paths>` を送る）。
 
 | ユースケース | キー | 備考 |
 |---|---|---|

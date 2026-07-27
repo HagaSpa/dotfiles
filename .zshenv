@@ -9,6 +9,9 @@ export LESSCHARSET=utf-8
 # export CLAUDE_CODE_EFFORT_LEVEL=max
 
 # Add user-local binaries to PATH
+# `mise activate` runs in .zshrc, which non-interactive shells skip; GUI apps that
+# spawn `zsh -c` (Neovide) see no mise tools at all without these shims.
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 

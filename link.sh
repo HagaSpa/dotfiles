@@ -12,7 +12,7 @@ entries=(
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
   .config/neovide/config.toml
-  .config/nvim/init.lua
+  .config/nvim
   .config/sheldon/plugins.toml
   .config/tmux/yazi-picker.sh
   .config/yazi/init.lua

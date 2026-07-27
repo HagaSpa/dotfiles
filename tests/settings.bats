@@ -21,3 +21,21 @@ setup() {
   [ "$status" -eq 0 ]
   [ "$output" = "0" ]
 }
+
+@test "settings.sh disables Ctrl+Space input source switching with a real boolean" {
+  command -v plutil >/dev/null 2>&1 || skip "plutil not available (not macOS)"
+
+  ./settings.sh
+
+  # A string "0" here reads as enabled by macOS, so assert the type too.
+  run plutil -extract AppleSymbolicHotKeys.60.enabled raw -o - \
+    "$HOME/Library/Preferences/com.apple.symbolichotkeys.plist"
+  [ "$status" -eq 0 ]
+  [ "$output" = "false" ]
+
+  # json, not raw: raw prints 32 for both the integer and the string "32".
+  run plutil -extract AppleSymbolicHotKeys.60.value.parameters json -o - \
+    "$HOME/Library/Preferences/com.apple.symbolichotkeys.plist"
+  [ "$status" -eq 0 ]
+  [ "$output" = "[32,49,262144]" ]
+}

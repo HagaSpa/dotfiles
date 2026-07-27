@@ -22,7 +22,6 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # type, so `enabled` lands as the string "0" and macOS falls back to enabled.
 defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60 \
   '<dict><key>enabled</key><false/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>262144</integer></array></dict></dict>'
-/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
 # Japanese IME (Kotoeri): disable predictive candidates and live conversion.
 # Predictive candidates cause heavily-learned words to be mis-committed during
@@ -31,7 +30,11 @@ defaults write com.apple.symbolichotkeys.plist AppleSymbolicHotKeys -dict-add 60
 defaults write com.apple.inputmethod.Kotoeri JIMPrefPredictiveCandidateKey -bool false
 defaults write com.apple.inputmethod.Kotoeri JIMPrefLiveConversionKey -bool false
 
-echo "macOS settings applied. Please restart your system for all changes to take effect."
+# Symbolic hotkeys are read into the runtime at login, so without this the
+# Ctrl+Space change stays dormant until the next login (and looks like it worked).
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+
+echo "macOS settings applied. Ctrl+Space took effect now; the rest (Kotoeri) needs a restart."
 echo ""
 echo -e "\033[1;33m⚠️  RESTART REQUIRED\033[0m"
 echo -e "\033[1;33mSome settings will not take effect until you restart your Mac.\033[0m"

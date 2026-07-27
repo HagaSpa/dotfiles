@@ -32,4 +32,10 @@ setup() {
     "$HOME/Library/Preferences/com.apple.symbolichotkeys.plist"
   [ "$status" -eq 0 ]
   [ "$output" = "false" ]
+
+  # json, not raw: raw prints 32 for both the integer and the string "32".
+  run plutil -extract AppleSymbolicHotKeys.60.value.parameters json -o - \
+    "$HOME/Library/Preferences/com.apple.symbolichotkeys.plist"
+  [ "$status" -eq 0 ]
+  [ "$output" = "[32,49,262144]" ]
 }

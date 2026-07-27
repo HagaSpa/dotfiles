@@ -304,10 +304,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local function lmap(lhs, rhs, desc)
       map('n', lhs, rhs, { buffer = buf, desc = 'LSP: ' .. desc })
     end
-    -- references / implementation / type definition / document symbol are already
-    -- mapped by Neovim itself (grr / gri / grt / gO) -- see :h lsp-defaults.
+    -- Neovim's own grr / gri / grt / gO (:h lsp-defaults) dump results into the
+    -- quickfix list; these overrides route them through the snacks picker instead.
+    -- Every source auto-confirms on a single result, so the popup only appears
+    -- when there is a real choice to make.
     lmap('K', vim.lsp.buf.hover, 'Hover docs')
-    lmap('gd', vim.lsp.buf.definition, 'Go to definition')
+    lmap('gd', function() Snacks.picker.lsp_definitions() end, 'Go to definition')
+    lmap('grr', function() Snacks.picker.lsp_references() end, 'References')
+    lmap('gri', function() Snacks.picker.lsp_implementations() end, 'Implementations')
+    lmap('grt', function() Snacks.picker.lsp_type_definitions() end, 'Type definitions')
+    lmap('gO', function() Snacks.picker.lsp_symbols() end, 'Document symbols')
     lmap('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
     lmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
     lmap('<leader>d', vim.diagnostic.open_float, 'Show diagnostic under cursor')

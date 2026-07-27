@@ -164,21 +164,11 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
-      signs = {
-        add = { text = '┃' },
-        change = { text = '┃' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-        untracked = { text = '┆' },
-      },
+      -- The defaults already draw a thick bar (┃); only staged is overridden, to
+      -- a thin bar. gitsigns dims staged signs to 50% fg on top of that.
       signs_staged = {
-        add = { text = '┃' },
-        change = { text = '┃' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-        untracked = { text = '┆' },
+        add = { text = '│' },
+        change = { text = '│' },
       },
       on_attach = function(bufnr)
         local gs = require('gitsigns')

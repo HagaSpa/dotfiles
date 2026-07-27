@@ -18,6 +18,7 @@ brew "tree-sitter-cli" # nvim-treesitter (main branch) compiles parsers with thi
 # Development
 brew "gh"
 brew "git-delta"
+brew "lazygit" # launched in a float from nvim (Snacks.lazygit)
 brew "tmux"
 brew "typescript-language-server" # LSP: js/ts (nvim)
 brew "crit"

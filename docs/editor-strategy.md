@@ -1,12 +1,41 @@
-# エディタ戦略: nvim (Neovide) へ主力移行中・Zed 併用・レビューは crit (2026-07)
+# エディタ戦略: Zed 主力に回帰・nvim はターミナル併用・レビューは crit (2026-07)
 
-2026-07 前半に「主力は Zed、nvim は built-ins only の小道具」と一度結論したが、**2026-07-22 に本人判断で nvim 主力化を再トライアル**し、現在も継続中。**現状: 日常の編集を nvim (Neovide) に寄せる移行期間で、Zed は併用。PR / AI 成果物レビューは crit を層として残す（当初判断から不変）。** トライアルの成否判定軸は設けていない（期限や judge 基準を決めずに訓練期間として続ける）。
+2026-07 前半に「主力は Zed、nvim は built-ins only の小道具」と一度結論 → 2026-07-22 に Neovide 採用を機に nvim 主力化を再トライアル → **2026-07-28、Neovide のフリーズ多発で脱却を決め、Zed 主力に回帰**（経緯は次節）。nvim 構成は破棄せず、ghostty でのターミナル起動で併用を続ける。PR / AI 成果物レビューは crit を層として残す（全期間を通じて不変）。
 
-## 現在地 (2026-07-27)
+## Neovide 脱却と Zed 回帰 (2026-07-28)
+
+### 何が起きたか
+
+ここ数日 Neovide のフリーズが頻発した。直近の一件は「終了時の未保存確認ダイアログが描画されないまま nvim がブロックし、フリーズに見える」もので、`sample` によるスタック採取（`dialog_changed` での入力待ち）で特定した。品質面で開発に耐えないと判断し、#192 で完全撤去した（Brewfile / link.sh / karabiner.ts / `.config/neovide/` / アプリ本体）。
+
+### Neovide が担っていた要件と代替の検討
+
+Neovide の役割は「nvim の体験のまま、エディタのフォントサイズ (SF Mono 15pt) を ghostty のシェル (13pt) と分ける」ことだった。ターミナル nvim で代替する場合の分離手段を検討した:
+
+- **ghostty 複数インスタンス**（`open -na` + `--font-size`）: 不可。Raycast のアプリ単位 hotkey 運用と非両立
+- **ghostty 単一インスタンス + `set_font_size` keybind (1.3+) + Raycast Script Command のウィンドウ切替 + フラグファイル/.zshrc の nvim 自動起動**: 技術的には成立するが、フォントサイズという要件の小ささに対して複雑すぎる（5ファイル・3ワークフロー横断）ため見送り。必要が再燃したら再検討する
+- **kitty / WezTerm の追加**や **VimR**（メンテが続く唯一の macOS nvim GUI）: ターミナル二重管理・GUI レイヤーのリスクが残るため見送り
+
+なお、kitty / WezTerm はエディタ連動のフォントサイズ変更を一級機能として持つ（kitty remote control / WezTerm user-var）。ghostty にはまだ相当機能がない。
+
+### Zed 回帰の根拠
+
+Zed vim モードのデフォルト（`assets/keymaps/vim.json`）を精査した結果、懸念だった操作がほぼ揃っていた:
+
+- **`ctrl-^` = `pane::AlternateFile`（直前バッファ往復）**。「Zed では前バッファに戻れない」という以前の認識は誤りだった
+- `ctrl-o` / `ctrl-i`（ジャンプリスト）、`gd`、`K`、`gO`、`gc`、fold 一式、マクロ、surround
+- Neovim 0.11 の新デフォルト `grr` / `grn` / `gri` / `gra` に Zed が追随しており、**両エディタで同じキーが使える**
+- `]c` / `[c`（hunk 移動）も nvim 側（gitsigns）に付けたのと同じキーがデフォルト
+
+残る本質差は「ex コマンドが引数未対応（`:e <path>` 不可、公式ドキュメントに明記）」「oil.nvim 相当なし」「バッファ内 git 操作（gitsigns の stage / reset）なし」の3点で、当面許容する。
+
+nvim 寄せの設定は #193 の**タブバー非表示**（`tab_bar.show: false`）のみ。kanagawa テーマ・SF Mono・周辺 UI 色の統一も試したが見た目の差が小さく、テーマは Ayu Mirage を維持した。
+
+## nvim 構成の現在地（ターミナル併用側, 2026-07-28）
 
 | 項目 | 状態 |
 |---|---|
-| GUI フロントエンド | **Neovide**（#175）。`frame = "none"`、フォントは SF Mono 15pt（→ [.config/neovide/config.toml](../.config/neovide/config.toml)） |
+| フロントエンド | **ghostty でのターミナル起動**（Neovide #175 は #192 で撤去。フォントサイズはシェルと同じ 13pt） |
 | プラグイン管理 | lazy.nvim。`lazy-lock.json` 11 エントリ（lazy.nvim 自身を含む） |
 | 構成 | `init.lua` は bootstrap のみ。`lua/config/`（options / keymaps / autocmds / lsp）+ `lua/plugins/`（git / editor / picker / treesitter / ui）に分割（#189） |
 | LSP | nvim-native `vim.lsp.config` + `vim.lsp.enable`。yamlls / rust_analyzer / ts_ls。**mason 不使用の PATH ベース運用** |
@@ -14,7 +43,7 @@
 | git | gitsigns + snacks.picker (git_diff / git_status) + lazygit フロート（#187） |
 | その他 | oil.nvim（#179）、which-key（#184）、neovim-project + session-manager、treesitter、kanagawa (wave) |
 
-派生して解決した問題: GUI から起動した Neovide は `.zshrc` を読まず mise 管理ツールが PATH から消える（rust-analyzer が起動しない）。`.zshenv` に mise shims を追加して解消 → [gui-app-path.md](gui-app-path.md)。
+派生して解決した問題（Neovide 当時）: GUI から起動したアプリは `.zshrc` を読まず mise 管理ツールが PATH から消える（rust-analyzer が起動しない）。`.zshenv` の mise shims で解消し、この対処は GUI アプリ全般に効くため Neovide 撤去後も維持 → [gui-app-path.md](gui-app-path.md)。
 
 ## 当初の判断（2026-07 前半）とその根拠
 
@@ -54,6 +83,8 @@ Neovim は「使う人の満足度・定着率が突出して高いニッチ」�
 | Claude Code をエディタに組み込まない | ⭕ 不変。ghostty / ネイティブで動かす |
 | レビューは crit が必要 | ⭕ 不変（次節） |
 
+※ 2026-07-28 の Neovide 撤去で1行目の前提（トラックパッド不使用の GUI は Zed だけ）が復活した。これが Zed 回帰の背景条件でもある。
+
 ## レビュー体験の事実確認（期待と現実のズレ）
 
 「crit でやってることをエディタ単体で満たせるか」の確認結果。**結論: 不可。crit は手放さない。** これは Zed 主力を前提にした確認だが、nvim 主力化後も結論は変わらない（nvim にも PR コメントスレッド層はない）。
@@ -70,22 +101,25 @@ Neovim は「使う人の満足度・定着率が突出して高いニッチ」�
 2. **レビューは crit + エディタの合成**。エディタのネイティブ PR レビューを当てにしない
 3. **LSP は PATH ベース（brew / mise）で mason を使わない**。理由と設計境界は [gui-app-path.md](gui-app-path.md)
 4. **LazyVim へは移行しない**。mason 前提の LSP スタックが PATH ベース運用と衝突し、core だけでプラグインが 11 → 28 に増える（→ [tooling-roadmap.md](tooling-roadmap.md)）
-5. **Zed は消さない**。移行期間中の併用先として残す
+5. **nvim は消さない**。構成・プラグインは現状維持のまま、ghostty でのターミナル起動先として残す
 
 ## 引き受けたコスト
 
 nvim 主力化は、当初「常用面がないので割に合わない」と判断した**プラグイン保守税を引き受ける**という選択でもある。実際 2026-07 の一度目の構築では、nvim 0.12.4 に対して固定タグ / 旧ブランチの非互換を 1 セッションで 3 件踏んだ（nvim-treesitter master、telescope 0.1.8、main ブランチの tree-sitter CLI 依存）。常用面ができた以上この税は回収可能な見込みだが、**プラグインを増やすほど戻りにくくなる**点は意識して、追加は「最小構成 + 明確に便利なもの」に絞る。
 
+※ Zed 回帰（2026-07-28）で nvim は併用に戻ったため、この税の回収前提は弱まった。構成は維持するが、プラグイン追加はこれまで以上に絞る。
+
 ## 再検討のトリガー
 
-1. **保守税が回収できないと感じ始めた**（nvim 更新のたびに壊れて作業が止まる頻度が上がった）→ プラグイン削減か Zed 復帰を検討
-2. Zed が **GitHub PR レビューをネイティブ実装**した（crit との合成を見直す契機。nvim 主力化とは独立の論点）
-3. Neovide が no-trackpad 運用や単一画面ワークフローを破壊する変更を入れた
-4. クラスタ / コンテナに**日常的に入る**運用に変わった（nvim の ubiquity が効き始め、判断がさらに補強される）
+1. Zed が **GitHub PR レビューをネイティブ実装**した（crit との合成を見直す契機）
+2. Zed の **ex コマンド引数対応**や oil 相当の登場など、nvim との本質差が解消された（nvim 併用の意義が縮む方向）
+3. ターミナル nvim の常用が増え、**シェルとのフォントサイズ分離が再び必要**になった → 見送った ghostty 単一インスタンス実装（`set_font_size` keybind + Raycast Script Command）を再検討
+4. クラスタ / コンテナに**日常的に入る**運用に変わった（nvim の ubiquity が効き始め、nvim 主力の再挑戦を補強する）
 5. コードを書く比率が大きく戻り、SQL/dbt を超える重量級言語が主戦場になった
 
 ## 参考リンク
 
+- [Zed docs: Vim Mode](https://zed.dev/docs/vim) / [デフォルト vim キーマップ (vim.json)](https://github.com/zed-industries/zed/blob/main/assets/keymaps/vim.json)
 - [Neovide](https://neovide.dev/) / [Neovide FAQ: macOS Login Shells](https://neovide.dev/faq.html)
 - [Stack Overflow Dev Survey: VS Code Holds Off AI IDEs (Visual Studio Magazine)](https://visualstudiomagazine.com/articles/2025/08/01/stack-overflow-dev-survey-visual-studio-vs-code-hold-of-ai-ides-to-remain-on-top.aspx)
 - [Neovim is highly Admired — Stack Overflow Developer Survey](https://programming.dev/post/85088)

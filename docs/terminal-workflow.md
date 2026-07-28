@@ -89,7 +89,7 @@
 - `F`（左人差し）— Shift / 全アプリ
 - `S`（左薬指）— Option / 全アプリ
 - `D`（左中指）— Control / 全アプリ
-- `J`（右人差し）— Shift / ターミナル・Chrome・Zed・Neovide を除く
+- `J`（右人差し）— Shift / ターミナル・Chrome・Zed を除く
 - `;`（右小指）— ⌘⌥⌃（Raycast 用）/ 全アプリ
 - `Cmd`（tap）— 英数（左）/ かな（右）、hold で Cmd
 

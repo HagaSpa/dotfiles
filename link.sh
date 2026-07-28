@@ -11,7 +11,6 @@ entries=(
   .config/ghostty/config
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
-  .config/neovide/config.toml
   .config/nvim
   .config/sheldon/plugins.toml
   .config/tmux/yazi-picker.sh

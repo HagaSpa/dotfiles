@@ -33,6 +33,5 @@ brew "mise"
 
 # GUI Apps
 cask "ghostty"
-cask "neovide-app"
 cask "zed"
 cask "font-hack-nerd-font"

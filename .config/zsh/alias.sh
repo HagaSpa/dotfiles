@@ -9,6 +9,10 @@ alias olta="z ~/workspaces/OLTAInc"
 
 alias c="claude"
 
+# -r は --help に出ない隠しフラグ。既存ウィンドウの workspace を差し替える
+alias zed='zed -r'
+alias zed.='zed .'
+
 # git aliases
 alias ga='git add'
 alias ga.='git add .'

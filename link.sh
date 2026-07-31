@@ -7,6 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Source path only: destination is ~/{source}
 # source:destination: destination differs from ~/{source}
 entries=(
+  .config/amethyst/amethyst.yml
   .config/fd/config
   .config/ghostty/config
   .config/karabiner/HRM.md

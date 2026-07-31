@@ -34,4 +34,5 @@ brew "mise"
 # GUI Apps
 cask "ghostty"
 cask "zed"
+cask "amethyst"
 cask "font-hack-nerd-font"

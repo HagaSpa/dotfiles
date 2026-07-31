@@ -36,3 +36,12 @@ setup() {
 @test "karabiner.json is valid JSON" {
   python3 -m json.tool .config/karabiner/karabiner.json >/dev/null
 }
+
+@test "amethyst configuration exists" {
+  [ -f .config/amethyst/amethyst.yml ]
+}
+
+@test "amethyst.yml is valid YAML" {
+  command -v yq >/dev/null 2>&1 || skip "yq not available"
+  yq '.' .config/amethyst/amethyst.yml >/dev/null
+}

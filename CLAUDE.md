@@ -58,6 +58,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)
 - **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below)
+- **Window Manager**: `.config/amethyst/amethyst.yml` (Amethyst; `screen-padding-*` is tied to the external monitor's logical width — see `docs/window-manager.md`)
 - **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
 
 ### Karabiner (TypeScript build)
@@ -70,7 +71,7 @@ cd .config/karabiner && bun run build  # generate → sync repo copy → reload 
 `build` regenerates the config, copies `~/.config/karabiner/karabiner.json` back into the repo (Karabiner's atomic writes break symlinks), and reloads the profile via `karabiner_cli`.
 
 ### Docs
-`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, raycast-dotfiles, secure-input-hotkey-outage, gui-app-path) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
+`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, raycast-dotfiles, secure-input-hotkey-outage, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
 
 ### Workspace Conventions
 Custom shell functions assume this structure:

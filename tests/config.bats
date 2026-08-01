@@ -37,6 +37,10 @@ setup() {
   python3 -m json.tool .config/karabiner/karabiner.json >/dev/null
 }
 
+@test "vimium-c.json is valid JSON" {
+  python3 -m json.tool .config/vimium/vimium-c.json >/dev/null
+}
+
 @test "amethyst configuration exists" {
   [ -f .config/amethyst/amethyst.yml ]
 }

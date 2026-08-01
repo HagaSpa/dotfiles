@@ -23,5 +23,13 @@
       "alt-]": "pane::ActivateNextItem",
       "alt-[": "pane::ActivatePreviousItem"
     }
+  },
+  // 直前バッファへのトグル。Zed 既定は ctrl-^ (= Ctrl+Shift+6) のみ
+  // nvim / Vimium C は Ctrl+6 で通るので、3 つを同じ打鍵に揃えるための追加
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-6": "pane::AlternateFile"
+    }
   }
 ]

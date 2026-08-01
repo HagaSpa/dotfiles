@@ -1,0 +1,14 @@
+{
+	"name": "Vimium C",
+	"@time": "2026/8/1 16:28:14",
+	"time": 1785569294203,
+	"environment": {
+		"extension": "2.12.2",
+		"platform": "mac",
+		"chromium": 150
+	},
+	"exclusionRules": [],
+	"keyLayout": 2,
+	"vimSync": true,
+	"keyMappings": "map <c-6> visitPreviousTab\n"
+}

@@ -58,6 +58,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)
 - **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below)
+- **Browser**: `.config/vimium/vimium-c.json` (Vimium C settings export; import-only, not symlinked — see `.config/vimium/README.md`)
 - **Window Manager**: `.config/amethyst/amethyst.yml` (Amethyst; `screen-padding-*` is tied to the external monitor's logical width — see `docs/window-manager.md`)
 - **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
 

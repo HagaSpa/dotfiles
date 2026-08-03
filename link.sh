@@ -12,6 +12,7 @@ entries=(
   .config/ghostty/config
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
+  .config/lazygit/config.yml
   .config/nvim
   .config/sheldon/plugins.toml
   .config/tmux/yazi-picker.sh

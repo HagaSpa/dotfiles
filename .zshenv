@@ -15,6 +15,9 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+# lazygit reads ~/Library/Application Support on macOS; this points it at .config/lazygit/config.yml
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
+
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

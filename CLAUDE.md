@@ -51,7 +51,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 ### Configuration Files
 - **Shell**: `.zshrc` / `.zshenv` (main) + `.config/zsh/` (alias.sh, command.sh, hosts/)
 - **Runtime**: `.mise.toml` (Node.js LTS, bun, gcloud, terraform, biome, rust + rust-analyzer)
-- **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf)
+- **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf), `.config/lazygit/config.yml` (delta pager; found via `LG_CONFIG_FILE` in `.zshenv`, since lazygit defaults to `~/Library/Application Support`)
 - **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`)
 - **Editor**: `.config/nvim/init.lua` (Neovim), `.config/zed/settings.json` (Zed)
 - **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`

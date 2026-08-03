@@ -59,6 +59,28 @@ disable-padding-on-builtin-display: true
 
 `mod1`/`mod2` は Amethyst が起動時に UserDefaults へ移行する（`migrated-toggle-float` 等）。yml を直したのに効かないときは `defaults read com.amethyst.Amethyst | grep KeyboardShortcuts_` で実際の登録内容を見る（`carbonModifiers` は `⌘256 / ⇧512 / ⌥2048 / ⌃4096` の和）。
 
+## LG より狭い外部モニタでは破綻する
+
+`screen-padding-*` は**内蔵以外のすべての外部ディスプレイに同じ px 値が一律で適用される**。`Screen.swift` の `adjustedFrame` は下限をクランプしないため、幅から常に 1400px（700 × 2）が引かれるだけになる。
+
+```swift
+frame.origin.x += paddingLeft
+frame.size.width -= (paddingRight + paddingLeft)
+```
+
+判定に使われるのは**論理幅（`UI Looks like`）**で物理解像度ではない。4K を既定スケールで繋ぐと論理 1920 になるため、ここが罠になる。
+
+| 論理幅 | ウィンドウ幅 |
+|---|---|
+| 3440（LG） | 2040 |
+| 2560（WQHD、HiDPI なし） | 1160 |
+| 1920（FHD / 4K の既定スケール） | 520 |
+| 1400 以下 | 0 または負（ガードなし） |
+
+**一時的に別のモニタへ繋ぐだけなら `toggle-tiling`（⇧⌃⌘+T）で止める。** タイリングごと止まるので padding も効かなくなり、yml を触らずに macOS 通常のウィンドウ操作へ戻れる。常用するモニタが増えたときだけ値を書き換える。
+
+`window-minimum-width` で下限を守れる可能性はあるが**未検証**（2 台目の外部モニタで実機確認していない）。
+
 ## 触っていない設定
 
 **「ディスプレイごとに個別の操作スペース」は ON のまま。** AeroSpace の公式は OFF を推奨していたが、その根拠は主に native フルスクリーンとマルチモニタのフォーカス不具合で、Space 1 枚・native フルスクリーン未使用の構成では効く場面が限られる。しかも OFF にするとメニューバーが片方の画面にしか出なくなり、今より不便になる。フォーカスの不具合が実際に出たら `defaults write com.apple.spaces spans-displays` を `settings.sh` に追加する（再ログインが必要）。
@@ -72,6 +94,7 @@ disable-padding-on-builtin-display: true
 ## 再検討のトリガー
 
 - 外部モニタを買い替えたとき → `screen-padding-*` の再計算
+- LG より狭い外部モニタを常用するようになったとき → padding はグローバル値なので両立できない。`window-minimum-width` の検証か、片方を諦める判断が必要
 - native フルスクリーンを使い始めたとき → Amethyst と衝突するため設計を見直す
 - 内蔵と外部の両方に別のアプリを常時出したくなったとき → 現構成は「全アプリを1画面に集約」前提
 
@@ -84,4 +107,5 @@ disable-padding-on-builtin-display: true
 
 - [Amethyst 公式サイト](https://ianyh.com/amethyst/)
 - [Amethyst - Configuration Files](https://github.com/ianyh/Amethyst/blob/development/docs/configuration-files.md)
+- [Amethyst - Screen.swift](https://github.com/ianyh/Amethyst/blob/development/Amethyst/Model/Screen.swift) — `adjustedFrame` の padding 適用箇所
 - [AeroSpace Guide](https://nikitabobko.github.io/AeroSpace/guide)

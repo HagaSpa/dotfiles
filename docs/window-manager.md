@@ -7,7 +7,7 @@
 | # | 要件 | 理由 |
 |---|---|---|
 | 1 | アプリ切り替えは Raycast の per-app hotkey を維持する | 既に定着している主動線。ここを捨てる移行はしない |
-| 2 | LG では中央 1720px、内蔵では全画面 | 3440px の全幅は視線移動が大きく、首肩対策と逆行する |
+| 2 | LG では中央 2040px、内蔵では全画面 | 3440px の全幅は視線移動が大きく、首肩対策と逆行する |
 | 3 | モニタ着脱で崩れない | これが元の課題 |
 | 4 | 設定が dotfiles に載る | GUI に閉じる設定は管理外になる（→ [raycast-dotfiles.md](raycast-dotfiles.md)） |
 
@@ -36,16 +36,28 @@ Amethyst は **native の macOS Space をそのまま使う**。ウィンドウ�
 
 ```yaml
 layouts: [fullscreen]
-screen-padding-left: 860
-screen-padding-right: 860
+screen-padding-left: 700
+screen-padding-right: 700
 disable-padding-on-builtin-display: true
 ```
 
-- **padding の単位は px。** LG は HiDPI なし（`UI Looks like: 3440 x 1440`）なので px = pt として扱える。860 で中央 1720px が残る
-- **`disable-padding-on-builtin-display: true` が必須。** 内蔵は Retina（2x）で論理幅が 1720px より狭いため、同じ px 値を共有できない。このキーで内蔵だけ padding 対象から外し、全画面のまま使う
-- モニタを買い替えたら `860` は再計算が必要（`system_profiler SPDisplaysDataType` の `UI Looks like` を見る）
+- **padding の単位は px。** LG は HiDPI なし（`UI Looks like: 3440 x 1440`）なので px = pt として扱える。700 で中央 2040px が残る
+- **`disable-padding-on-builtin-display: true` が必須。** 内蔵は Retina（2x）で論理幅が 2040px より狭いため、同じ px 値を共有できない。このキーで内蔵だけ padding 対象から外し、全画面のまま使う
+- モニタを買い替えたら `700` は再計算が必要（`system_profiler SPDisplaysDataType` の `UI Looks like` を見る）
+- 当初は 860（中央 1720px）だったが、ターミナルと Chrome が狭かったため 2026-08 に 2040px へ広げた
 
-`mod1`（既定 `option + shift`）と `mod2` は、修飾キーを盛って事実上無効化している。Karabiner の HRM で `S` ホールドが Opt を出すため、既定のままだとタイプ中に暴発する（→ [../.config/karabiner/HRM.md](../.config/karabiner/HRM.md)）。ウィンドウ操作は Raycast に任せるので、Amethyst 側のバインドは不要。
+`mod1`（既定 `option + shift`）と `mod2` は、修飾キーを盛って事実上無効化している。Karabiner の HRM で `S` ホールドが Opt を出すため、既定のままだとタイプ中に暴発する（→ [../.config/karabiner/HRM.md](../.config/karabiner/HRM.md)）。ウィンドウの切り替え自体は Raycast に任せるので、移動・フォーカス系のバインドは使わない。
+
+例外として、一時的に fullscreen レイアウトから外したいときに次の 2 つを使う。
+
+- `toggle-float`（`mod1 + t` = ⌥⇧⌃⌘+T） — フォーカス中のウィンドウだけをタイル管理から外す。もう一度押すとタイルに復帰する
+- `toggle-tiling`（`mod2 + t` = ⇧⌃⌘+T） — タイリング自体を停止する
+
+`;` ホールドは ⌘⌥⌃ 止まり（中国語変換サービスとの衝突回避）なので、`mod1` は `;` ホールド + Shift で出す。**`;` は 200ms 以上ホールドしてから T を叩く**（`basic.to_if_held_down_threshold_milliseconds`）。速く叩くと `;` がリテラルとして出るだけで何も起きない。
+
+**`toggle-float` は見た目を変えない。** ウィンドウを管理対象から外すだけで、サイズも位置も動かさない。効いたかどうかは「その後リサイズして維持されるか」でしか分からないので、無反応に見えても失敗とは限らない。
+
+`mod1`/`mod2` は Amethyst が起動時に UserDefaults へ移行する（`migrated-toggle-float` 等）。yml を直したのに効かないときは `defaults read com.amethyst.Amethyst | grep KeyboardShortcuts_` で実際の登録内容を見る（`carbonModifiers` は `⌘256 / ⇧512 / ⌥2048 / ⌃4096` の和）。
 
 ## 触っていない設定
 

@@ -2,9 +2,9 @@ layouts:
   - fullscreen
 
 # The LG ULTRAGEAR is 3440px wide with no HiDPI, so a full-width window is unusable.
-# 860 leaves a centered 1720px column; the built-in display is excluded so it stays full screen.
-screen-padding-left: 860
-screen-padding-right: 860
+# 700 leaves a centered 2040px column; the built-in display is excluded so it stays full screen.
+screen-padding-left: 700
+screen-padding-right: 700
 screen-padding-top: 0
 screen-padding-bottom: 0
 disable-padding-on-builtin-display: true

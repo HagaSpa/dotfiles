@@ -86,7 +86,7 @@
             ]
           },
           {
-            "description": "Ctrl navigation (hjkl / word / page)",
+            "description": "Ctrl navigation (hjkl / word)",
             "manipulators": [
               {
                 "type": "basic",
@@ -129,44 +129,6 @@
                     "modifiers": [
                       "left_option"
                     ]
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "w",
-                  "modifiers": {
-                    "mandatory": [
-                      "left_control"
-                    ],
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "page_up"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "v",
-                  "modifiers": {
-                    "mandatory": [
-                      "left_control"
-                    ],
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "page_down"
                   }
                 ]
               },

@@ -28,8 +28,6 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 | ------------------------- | -------------------------------------------- |
 | Ctrl + h / j / k / l      | ← / ↓ / ↑ / →                                |
 | Ctrl + , / .              | Option + ← / →  (word jump)                  |
-| Ctrl + w                  | Page Up                                      |
-| Ctrl + v                  | Page Down                                    |
 | Ctrl + Space  (terminal)  | 英数 → Ctrl+Space  (tmux prefix と同時に IME 抜け) |
 | Ctrl + g  (zsh)           | clear-screen  (Ctrl+L が → に潰れる代替)     |
 | Ctrl + P, Ctrl + O  (zsh) | 現在行を pbcopy                              |

@@ -75,6 +75,11 @@ function homeRowMod(opts: {
   ];
 }
 
+// simple modification のまま置く。Karabiner は simple → complex の順に適用するので
+// caps_lock は left_control として下の complex ルール群に流れる。complex 側の
+// map('caps_lock').to('left_control') に置き換えると出力が再評価されず chain が切れる。
+const SIMPLE_MODIFICATIONS = [map('caps_lock').to('left_control')];
+
 writeToProfile('Default profile', [
   rule('Terminal Ctrl tap-hold + tmux IME bypass', ifTerminal).manipulators([
     map({ key_code: 'left_control', modifiers: { optional: ['any'] } })
@@ -168,4 +173,4 @@ writeToProfile('Default profile', [
         .parameters({ 'basic.to_if_held_down_threshold_milliseconds': 100 }),
     ),
   ]),
-]);
+], undefined, { simple_modifications: SIMPLE_MODIFICATIONS });

@@ -1,5 +1,6 @@
 import {
   ifApp,
+  ifDevice,
   map,
   mapSimultaneous,
   rule,
@@ -9,6 +10,10 @@ import {
 import { TERMINAL_BUNDLE_IDS } from './apps.ts';
 
 const ifTerminal = ifApp({ bundle_identifiers: [...TERMINAL_BUNDLE_IDS] });
+
+// 外付けキーボード (7sPro) はキーマップを QMK 側で完結させるため、Karabiner の
+// ルールは内蔵キーボードだけに適用する。rule を追加するときも必ず付ける。
+const ifBuiltIn = ifDevice({ is_built_in_keyboard: true });
 
 // vim hjkl key repeat conflicts fundamentally with hold-for-modifier. Only the
 // right-index J needs disabling in vim apps (vim/Vimium hold j to scroll); F
@@ -81,7 +86,11 @@ function homeRowMod(opts: {
 const SIMPLE_MODIFICATIONS = [map('caps_lock').to('left_control')];
 
 writeToProfile('Default profile', [
-  rule('Terminal Ctrl tap-hold + tmux IME bypass', ifTerminal).manipulators([
+  rule(
+    'Terminal Ctrl tap-hold + tmux IME bypass',
+    ifBuiltIn,
+    ifTerminal,
+  ).manipulators([
     map({ key_code: 'left_control', modifiers: { optional: ['any'] } })
       .to({ key_code: 'left_control', lazy: true })
       .toIfAlone({ key_code: 'left_control', hold_down_milliseconds: 300 })
@@ -95,7 +104,7 @@ writeToProfile('Default profile', [
       .to({ key_code: 'spacebar', modifiers: ['left_control'] }),
   ]),
 
-  rule('Ctrl navigation (hjkl / word)').manipulators([
+  rule('Ctrl navigation (hjkl / word)', ifBuiltIn).manipulators([
     map({
       key_code: 'comma',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },
@@ -121,7 +130,7 @@ writeToProfile('Default profile', [
 
   // Shift を含めると macOS の中国語変換サービス (⌃⌥⇧⌘C / ⌃⌥⇧⌘V) と衝突するため
   // ⌘⌥⌃ に留める。Cmd を含むことが Secure Input 固着時のホットキー生存条件。
-  rule('Home Row Mods (Cmd+Opt+Ctrl on ;)').manipulators([
+  rule('Home Row Mods (Cmd+Opt+Ctrl on ;)', ifBuiltIn).manipulators([
     map({ key_code: 'semicolon', modifiers: { optional: ['any'] } })
       .to({
         key_code: 'right_command',
@@ -135,7 +144,10 @@ writeToProfile('Default profile', [
       }),
   ]),
 
-  rule('Home Row Mods (Shift on F, Opt on S, Ctrl on D)').manipulators([
+  rule(
+    'Home Row Mods (Shift on F, Opt on S, Ctrl on D)',
+    ifBuiltIn,
+  ).manipulators([
     ...homeRowMod({
       key: 'f',
       toModifier: { key_code: 'left_shift' },
@@ -153,7 +165,7 @@ writeToProfile('Default profile', [
     }),
   ]),
 
-  rule('Home Row Mods (Shift on J)', unlessVimApp).manipulators([
+  rule('Home Row Mods (Shift on J)', ifBuiltIn, unlessVimApp).manipulators([
     ...homeRowMod({
       key: 'j',
       toModifier: { key_code: 'right_shift' },
@@ -161,7 +173,7 @@ writeToProfile('Default profile', [
     }),
   ]),
 
-  rule('Tap CMD to toggle Kana/Eisuu').manipulators([
+  rule('Tap CMD to toggle Kana/Eisuu', ifBuiltIn).manipulators([
     withMapper({
       left_command: 'japanese_eisuu',
       right_command: 'japanese_kana',

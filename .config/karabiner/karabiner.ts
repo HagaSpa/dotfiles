@@ -90,7 +90,7 @@ writeToProfile('Default profile', [
       .to({ key_code: 'spacebar', modifiers: ['left_control'] }),
   ]),
 
-  rule('Ctrl navigation (hjkl / word / page)').manipulators([
+  rule('Ctrl navigation (hjkl / word)').manipulators([
     map({
       key_code: 'comma',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },
@@ -100,16 +100,6 @@ writeToProfile('Default profile', [
       key_code: 'period',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },
     }).to({ key_code: 'right_arrow', modifiers: ['left_option'] }),
-
-    map({
-      key_code: 'w',
-      modifiers: { mandatory: ['left_control'], optional: ['any'] },
-    }).to({ key_code: 'page_up' }),
-
-    map({
-      key_code: 'v',
-      modifiers: { mandatory: ['left_control'], optional: ['any'] },
-    }).to({ key_code: 'page_down' }),
 
     withMapper({
       h: 'left_arrow',

@@ -72,13 +72,10 @@
 - ファイル内容を表示 — `bat ファイル`
 - ファイル一覧 — `ls` / `l`
 - 後方 / 前方へ単語移動 — `⌥+←` / `⌥+→`（`Ctrl+,` / `Ctrl+.` でも可）
-- 後方へ単語削除 — `⌥+Backspace`
+- 後方へ単語削除 — `Ctrl+W`（`⌥+Backspace` でも可）
 - 前方へ単語削除 — `⌥+D`
 - 現在のコマンドラインをコピー — `Ctrl+P` → `Ctrl+O`
 - 画面クリア — `Ctrl+G`
-
-> **`Ctrl+W` は単語削除にならない**（Page Up に再マップ済み・末尾に `~` が残る）。
-> 後方単語削除は `⌥+Backspace`。
 
 ## Keyboard Shortcuts (Karabiner / HRM)
 
@@ -99,7 +96,6 @@ Ctrl navigation（D ホールドで Ctrl を作って発火・全アプリ）:
 
 - 矢印キー（左/下/上/右）— `Ctrl+H/J/K/L`
 - 単語単位で左/右移動 — `Ctrl+,` / `Ctrl+.`
-- Page Up / Page Down — `Ctrl+W` / `Ctrl+V`
 
 ターミナル限定:
 

@@ -63,7 +63,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
 
 ### Karabiner (TypeScript build)
-`karabiner.json` is generated from `karabiner.ts` using the karabiner.ts library. Never edit `karabiner.json` directly — edit `karabiner.ts` and build:
+`karabiner.json` is generated from `karabiner.ts` using the karabiner.ts library. Never edit `karabiner.json` directly, and never add Simple Modifications from the Karabiner GUI (they live in `karabiner.ts`'s `SIMPLE_MODIFICATIONS` too) — edit `karabiner.ts` and build:
 
 ```bash
 cd .config/karabiner && bun run build  # generate → sync repo copy → reload profile

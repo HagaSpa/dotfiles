@@ -4,10 +4,7 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 
 適用対象は **Mac 内蔵キーボードのみ** (`ifBuiltIn` = `device_if: is_built_in_keyboard`)。外付けキーボード (7sPro) は QMK 側でキーマップを完結させるため Karabiner を通さない。以下の Scope 列の「All apps」は内蔵キーボード上での話。
 
-7sPro 側にも同じ HRM・IME 切替・Ctrl ナビゲーションを実装済み (`.config/qmk/README.md`)。**残る差は 2 つだけ**:
-
-- **J = Shift** — QMK はホストのアプリを知らないため「vim 系アプリで無効」を再現できず、7sPro では載せていない
-- **ターミナルの Ctrl tap-hold** — prefix が `Ctrl+b` だった時代の対策 (#69) で前提が失われているため、意図的に移していない
+7sPro 側にも同じ HRM・IME 切替・Ctrl ナビゲーションを実装済み (`.config/qmk/README.md`)。**残る差は J = Shift だけ** — QMK はホストのアプリを知らないため「vim 系アプリで無効」を再現できず、7sPro では載せていない。
 
 ## Modifier mappings
 

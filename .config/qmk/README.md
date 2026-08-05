@@ -47,12 +47,19 @@ MacBook 内蔵キーボードでは Karabiner が同等の機能を提供して�
 ### 最下段
 
 ```
-[Alt][Cmd/英数][Space][MO(FN)] │ [Space][Enter][Cmd/かな][Alt]
-                      ^^^^^^^^   ^^^^^^^
-                   左親指ホーム  右親指ホーム
+[MO(FN)][ Ctrl ][ Alt  ][Cmd/英数] │ [Space][ Cmd/かな ][ BS  ][Return]
+  1u      1.5u    1.5u    1.25u       1.25u     2u        1.5u    1u
+                         ^^^^^^^^      ^^^^^^^
+                      左親指ホーム    右親指ホーム
 ```
 
-右親指の Space は tmux prefix (`D` ホールド + Space = Ctrl+Space) の相方なので動かさない。MacBook では同じ位置が Space なので、左親指ホームだけは 2 台で役割が違う (レイヤーキーを最も押しやすい位置に置くことを優先した)。
+**左手は MacBook の `cmd` から左をそのまま並べている** (`fn` `ctrl` `opt` `cmd`)。Cmd が最頻出かつ IME 切替も兼ねるので、MacBook と同じ「親指の定位置のすぐ内側」に置くことを最優先した。`fn` は Apple 独自実装で QMK から送れないため、その枠を `MO(_FN)` に充てている。
+
+Home Row Mods のリファレンス実装 ([Miryoku](https://github.com/manna-harbour/miryoku)) は GUI を小指 (`A`) に載せる (GACS) ので最下段の Cmd を議論しない。ここでは `A` に HRM を載せない方針 (左手首腱鞘炎対策) を優先した結果、Cmd を物理キーとして親指に置く必要がある。
+
+Space は右親指のみ。左手側は修飾キーで埋まるが、実際に Space を打つのは右親指だけなので支障はない (左手が Ctrl / D / Cmd と組む側だから)。tmux prefix (`D` ホールド + Space = Ctrl+Space) もこの位置で成立する。
+
+BS と Return を親指に置いたのは、素の配置では BS が右上・Return が右手小指 (2.25u) で遠いため。`[9,3]` `[9,4]` は親指ホームから 2〜3 つ外側なので、指を伸ばす必要はある。
 
 ## Build & Flash
 

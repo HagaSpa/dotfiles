@@ -4,11 +4,8 @@ local map = vim.keymap.set
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 
--- Window navigation
-map('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
-map('n', '<C-j>', '<C-w>j', { desc = 'Window down' })
-map('n', '<C-k>', '<C-w>k', { desc = 'Window up' })
-map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
+-- Ctrl+hjkl は Karabiner (内蔵キーボード) と QMK (7sPro) が矢印に変換するため
+-- ここに割り当てても届かない。ウィンドウ移動は <C-w>hjkl を直接使う。
 
 -- Center cursor on big jumps / search
 map('n', '<C-d>', '<C-d>zz', { desc = 'Half page down (centered)' })

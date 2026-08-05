@@ -106,6 +106,38 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 return state;
 }
 
+// Ctrl + hjkl / , / . → arrows and word jump, mirroring the Karabiner rule that
+// covers the built-in keyboard. The Ctrl bit is stripped so the app sees a bare
+// arrow; any other modifier held at the time (Shift, for selection) passes
+// through. Returns true when the key was replaced.
+static bool ctrl_nav(uint16_t keycode, keyrecord_t *record) {
+  if (!(get_mods() & MOD_MASK_CTRL)) {
+    return false;
+  }
+  if (!record->event.pressed) {
+    return true;  // the press already sent a complete tap
+  }
+
+  uint16_t to_code;
+  switch (keycode) {
+    case KC_H:    to_code = KC_LEFT;        break;
+    case KC_J:    to_code = KC_DOWN;        break;
+    case KC_K:    to_code = KC_UP;          break;
+    case KC_L:    to_code = KC_RIGHT;       break;
+    case KC_COMM: to_code = LALT(KC_LEFT);  break;
+    case KC_DOT:  to_code = LALT(KC_RIGHT); break;
+    default:      return false;
+  }
+
+  const uint8_t saved = get_mods();
+  del_mods(MOD_MASK_CTRL);
+  send_keyboard_report();
+  tap_code16(to_code);
+  set_mods(saved);
+  send_keyboard_report();
+  return true;
+}
+
 int RGB_current_mode;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool result = false;
@@ -126,6 +158,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
         break;
     #endif
+    case KC_H:
+    case KC_J:
+    case KC_K:
+    case KC_L:
+    case KC_COMM:
+    case KC_DOT:
+      result = !ctrl_nav(keycode, record);
+      break;
     default:
       result = true;
       break;

@@ -1,7 +1,7 @@
-# Firmware files (qmk userspace-compile drops them in the userspace root)
-*.hex
-*.bin
-*.uf2
+# Build artifacts land in the userspace root; stock/ is tracked on purpose
+/*.hex
+/*.bin
+/*.uf2
 
 # clangd
 compile_commands.json

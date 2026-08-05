@@ -28,6 +28,8 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 
 ## Ctrl navigation (D ホールドで発火)
 
+hjkl / , / . の変換は 7sPro 側にも実装済み (`.config/qmk/README.md`)。Ctrl+Space (terminal) だけはアプリ判定が必要なため内蔵キーボード限定。
+
 | Combo                     | Action                                       |
 | ------------------------- | -------------------------------------------- |
 | Ctrl + h / j / k / l      | ← / ↓ / ↑ / →                                |

@@ -44,6 +44,19 @@ MacBook 内蔵キーボードでは Karabiner が同等の機能を提供して�
 
 `get_hold_on_other_key_press()` で Cmd だけ「他キー押下で即ホールド確定」にしている。`TAPPING_TERM` を待つと `Cmd+C` が鈍く感じるため。
 
+### Ctrl ナビゲーション
+
+| 入力 | 出力 |
+|---|---|
+| Ctrl + h / j / k / l | ← / ↓ / ↑ / → |
+| Ctrl + , / . | Opt + ← / → (word jump) |
+
+`process_record_user()` の `ctrl_nav()` で実装。Ctrl のビットだけ落として送るので、`Ctrl+Shift+h` は `Shift+←` になり選択範囲が伸びる。
+
+Ctrl の出どころは `D` のホールド (HRM)、`A` の左、最下段の左から 2 番目のいずれでもよい。
+
+`Ctrl+h/j/k/l` を潰すので **nvim のウィンドウ移動 (`<C-w>hjkl` の別名) は使えない**。内蔵キーボードでも Karabiner が同じ変換をしていて元から機能していなかったため、`.config/nvim/lua/config/keymaps.lua` から該当の割り当てを外した。
+
 ### 最下段
 
 ```

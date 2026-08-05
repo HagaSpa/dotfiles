@@ -86,16 +86,7 @@ function homeRowMod(opts: {
 const SIMPLE_MODIFICATIONS = [map('caps_lock').to('left_control')];
 
 writeToProfile('Default profile', [
-  rule(
-    'Terminal Ctrl tap-hold + tmux IME bypass',
-    ifBuiltIn,
-    ifTerminal,
-  ).manipulators([
-    map({ key_code: 'left_control', modifiers: { optional: ['any'] } })
-      .to({ key_code: 'left_control', lazy: true })
-      .toIfAlone({ key_code: 'left_control', hold_down_milliseconds: 300 })
-      .parameters({ 'basic.to_if_alone_timeout_milliseconds': 300 }),
-
+  rule('Terminal tmux IME bypass', ifBuiltIn, ifTerminal).manipulators([
     map({
       key_code: 'spacebar',
       modifiers: { mandatory: ['left_control'], optional: ['any'] },

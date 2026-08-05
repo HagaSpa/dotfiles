@@ -140,8 +140,7 @@ Simple Modifications (`caps_lock` → `left_control`) だけは profile 全体�
 
 ### 移していないもの
 
-- **`J` = Shift**。Karabiner 側は vim 系アプリで無効化しているが、QMK はホストのアプリを知らないため同じ切り分けができない。7sPro では右 Shift は物理キーを使う
-- **ターミナルでの Ctrl tap-hold**。[PR #69](https://github.com/HagaSpa/dotfiles/pull/69) で「`Ctrl+b` を素早くタップして離した後に `b` を押すと単独の `b` になる」対策として入ったものだが、**tmux prefix はその後 `Ctrl+Space` に変わっており前提が失われている**。さらに `LCTL_T(KC_D)` が送る `left_control` を Karabiner が再度掴む二重処理のリスクがあるため、意図的に移していない
+**`J` = Shift** だけ。Karabiner 側は vim 系アプリで無効化しているが、QMK はホストのアプリを知らないため同じ切り分けができない。7sPro では右 Shift は物理キーを使う。
 
 ## VIA / Remap
 

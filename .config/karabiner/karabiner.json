@@ -4,55 +4,8 @@
       "complex_modifications": {
         "rules": [
           {
-            "description": "Terminal Ctrl tap-hold + tmux IME bypass",
+            "description": "Terminal tmux IME bypass",
             "manipulators": [
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "left_control",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "left_control",
-                    "lazy": true
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "left_control",
-                    "hold_down_milliseconds": 300
-                  }
-                ],
-                "parameters": {
-                  "basic.to_if_alone_timeout_milliseconds": 300
-                },
-                "conditions": [
-                  {
-                    "type": "device_if",
-                    "identifiers": [
-                      {
-                        "is_built_in_keyboard": true
-                      }
-                    ]
-                  },
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.apple\\.Terminal$",
-                      "^com\\.googlecode\\.iterm2$",
-                      "^org\\.alacritty$",
-                      "^com\\.github\\.wez\\.wezterm$",
-                      "^com\\.mitchellh\\.ghostty$",
-                      "^net\\.kovidgoyal\\.kitty$"
-                    ]
-                  }
-                ]
-              },
               {
                 "type": "basic",
                 "from": {
@@ -9932,9 +9885,6 @@
       },
       "name": "Default profile",
       "selected": true,
-      "virtual_hid_keyboard": {
-        "keyboard_type_v2": "ansi"
-      },
       "simple_modifications": [
         {
           "to": [
@@ -9946,7 +9896,10 @@
             "key_code": "caps_lock"
           }
         }
-      ]
+      ],
+      "virtual_hid_keyboard": {
+        "keyboard_type_v2": "ansi"
+      }
     }
   ]
 }

@@ -53,7 +53,7 @@ MacBook 内蔵キーボードでは Karabiner が同等の機能を提供して�
 
 `process_record_user()` の `ctrl_nav()` で実装。Ctrl のビットだけ落として送るので、`Ctrl+Shift+h` は `Shift+←` になり選択範囲が伸びる。
 
-Ctrl の出どころは `D` のホールド (HRM)、`A` の左、最下段の左から 2 番目のいずれでもよい。
+Ctrl の出どころは `D` のホールド (HRM) でも `A` の左でもよい。
 
 `Ctrl+h/j/k/l` を潰すので **nvim のウィンドウ移動 (`<C-w>hjkl` の別名) は使えない**。内蔵キーボードでも Karabiner が同じ変換をしていて元から機能していなかったため、`.config/nvim/lua/config/keymaps.lua` から該当の割り当てを外した。
 
@@ -66,17 +66,19 @@ Karabiner 側はこれをターミナル限定にしているが、QMK はフロ
 ### 最下段
 
 ```
-[MO(FN)][ Ctrl ][ Alt  ][Cmd/英数] │ [Space][ Cmd/かな ][ BS  ][Return]
-  1u      1.5u    1.5u    1.25u       1.25u     2u        1.5u    1u
-                         ^^^^^^^^      ^^^^^^^
-                      左親指ホーム    右親指ホーム
+[MO(FN)][ Opt  ][Cmd/英数][ Space ] │ [Space][ Cmd/かな ][ BS  ][Return]
+  1u      1.5u    1.5u      1.25u      1.25u     2u        1.5u    1u
+                           ^^^^^^^^     ^^^^^^^
+                        左親指ホーム   右親指ホーム
 ```
 
-**左手は MacBook の `cmd` から左をそのまま並べている** (`fn` `ctrl` `opt` `cmd`)。Cmd が最頻出かつ IME 切替も兼ねるので、MacBook と同じ「親指の定位置のすぐ内側」に置くことを最優先した。`fn` は Apple 独自実装で QMK から送れないため、その枠を `MO(_FN)` に充てている。
+**MacBook の `opt` `cmd` `Space` の並びをそのまま再現している。** 親指ホームが Space でその隣が Cmd なので、MacBook で指が覚えている相対位置と一致する。Cmd は最頻出で IME 切替も兼ねるため、この一致を優先した。
+
+`fn` は Apple 独自実装で QMK から送れないため、その枠を `MO(_FN)` に充てている。MacBook の `ctrl` の枠は `opt` に置き換えた — Ctrl は `A` の左と HRM の `D` で足りるが、**Option は物理キーがここだけ**になるため (右 Option は無い)。HRM の `S` だけに頼ると、HRM が効かない状況で Option を入力できなくなる。
 
 Home Row Mods のリファレンス実装 ([Miryoku](https://github.com/manna-harbour/miryoku)) は GUI を小指 (`A`) に載せる (GACS) ので最下段の Cmd を議論しない。ここでは `A` に HRM を載せない方針 (左手首腱鞘炎対策) を優先した結果、Cmd を物理キーとして親指に置く必要がある。
 
-Space は右親指のみ。左手側は修飾キーで埋まるが、実際に Space を打つのは右親指だけなので支障はない (左手が Ctrl / D / Cmd と組む側だから)。tmux prefix (`D` ホールド + Space = Ctrl+Space) もこの位置で成立する。
+Space は左右両方の親指ホームにある。tmux prefix (`D` ホールド + Space = Ctrl+Space) は右親指で打つ (左手は `D` を押している側なので)。
 
 BS と Return を親指に置いたのは、素の配置では BS が右上・Return が右手小指 (2.25u) で遠いため。`[9,3]` `[9,4]` は親指ホームから 2〜3 つ外側なので、指を伸ばす必要はある。
 

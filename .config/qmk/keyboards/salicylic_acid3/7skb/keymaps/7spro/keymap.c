@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, MO(_FN),
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               MO(_FN), KC_LCTL, KC_LALT, LGUI_T(KC_LNG2),   KC_SPC, RGUI_T(KC_LNG1), KC_BSPC,  KC_ENT
+               MO(_FN), KC_LALT, LGUI_T(KC_LNG2), KC_SPC,    KC_SPC, RGUI_T(KC_LNG1), KC_BSPC,  KC_ENT
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
@@ -72,7 +72,7 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','*','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R',
-      'L','L','L','*',        'R','*','R','R'
+      'L','L','*','L',        'R','*','R','R'
 );
 
 // Cmd has to engage the moment another key is pressed; waiting out TAPPING_TERM

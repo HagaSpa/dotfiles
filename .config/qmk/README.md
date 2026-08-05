@@ -51,9 +51,9 @@ MacBook 内蔵キーボードでは Karabiner が同等の機能を提供して�
 | Ctrl + h / j / k / l | ← / ↓ / ↑ / → |
 | Ctrl + , / . | Opt + ← / → (word jump) |
 
-`process_record_user()` の `ctrl_nav()` で実装。Ctrl のビットだけ落として送るので、`Ctrl+Shift+h` は `Shift+←` になり選択範囲が伸びる。
+[Key Overrides](https://docs.qmk.fm/features/key_overrides) (`KEY_OVERRIDE_ENABLE`) で実装。押している間だけ Ctrl を報告から抑止して矢印を押し下げたままにするので、`Ctrl+Shift+h` は `Shift+←` になり選択範囲が伸び、**押しっぱなしでは OS のキーリピートがそのまま効く**。`process_record_user()` から `tap_code16()` を送る実装では 1 回で止まってしまう。
 
-Ctrl の出どころは `D` のホールド (HRM) でも `A` の左でもよい。
+トリガは**左 Ctrl 限定**。`;` ホールドの `RCAG_T` は右 Ctrl を含むため、`MOD_MASK_CTRL` にすると Raycast の ⌘⌥⌃ + `hjkl` を食う。左 Ctrl であれば出どころは `D` のホールド (HRM) でも `A` の左でもよい。
 
 `Ctrl+h/j/k/l` を潰すので **nvim のウィンドウ移動 (`<C-w>hjkl` の別名) は使えない**。内蔵キーボードでも Karabiner が同じ変換をしていて元から機能していなかったため、`.config/nvim/lua/config/keymaps.lua` から該当の割り当てを外した。
 
@@ -146,4 +146,4 @@ Simple Modifications (`caps_lock` → `left_control`) だけは profile 全体�
 
 ## VIA / Remap
 
-使わない。`rules.mk` を置かず `VIA_ENABLE` も有効にしていない。有効にすると EEPROM 側のキーマップが優先され、このディレクトリのソースと二重管理になる。
+使わない。`VIA_ENABLE` は有効にしていない。有効にすると EEPROM 側のキーマップが優先され、このディレクトリのソースと二重管理になる (`rules.mk` にあるのは `KEY_OVERRIDE_ENABLE` だけ)。

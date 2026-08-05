@@ -1,0 +1,9 @@
+# Firmware files (qmk userspace-compile drops them in the userspace root)
+*.hex
+*.bin
+*.uf2
+
+# clangd
+compile_commands.json
+.clangd/
+.cache/

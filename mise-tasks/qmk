@@ -1,0 +1,36 @@
+#!/bin/bash
+#MISE description="Install the QMK toolchain and register this repo as an External Userspace"
+set -euo pipefail
+
+# Bumping this is deliberate: the toolchain and Python deps track latest, so a
+# stale pin is the only thing keeping a qmk_firmware breaking change visible.
+QMK_FIRMWARE_REF="0.33.13"
+
+QMK_HOME="$HOME/workspaces/hagaspa/qmk_firmware"
+OVERLAY_DIR="$PWD/.config/qmk"
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "uv not found, skipping QMK setup"
+  exit 0
+fi
+
+if ! command -v qmk >/dev/null 2>&1; then
+  # SKIP_PACKAGE_MANAGER: the installer otherwise runs `brew update` and upgrades
+  # every package it already finds; those deps are in the Brewfile instead.
+  # SKIP_UV: uv comes from the Brewfile too.
+  curl -fsSL https://install.qmk.fm |
+    CONFIRM=1 SKIP_PACKAGE_MANAGER=1 SKIP_UV=1 sh
+fi
+
+if [ ! -d "$QMK_HOME/.git" ]; then
+  git clone --filter=blob:none https://github.com/qmk/qmk_firmware.git "$QMK_HOME"
+fi
+
+git -C "$QMK_HOME" fetch --tags origin
+git -C "$QMK_HOME" checkout "$QMK_FIRMWARE_REF"
+git -C "$QMK_HOME" submodule update --init --recursive
+
+qmk config "user.qmk_home=$QMK_HOME"
+qmk config "user.overlay_dir=$OVERLAY_DIR"
+
+echo "QMK ready. Build with: cd .config/qmk && qmk userspace-compile"

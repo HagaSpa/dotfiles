@@ -30,6 +30,17 @@ brew "yaml-language-server"
 
 # Runtime management
 brew "mise"
+brew "uv"
+
+# QMK (keyboard firmware)
+# install.qmk.fm would `brew update` + `brew upgrade` these itself; mise-tasks/qmk
+# passes SKIP_PACKAGE_MANAGER=1 so this file stays the source of truth
+brew "zstd"
+brew "clang-format"
+brew "make"
+brew "hidapi"
+brew "libusb"
+brew "dos2unix"
 
 # GUI Apps
 cask "ghostty"

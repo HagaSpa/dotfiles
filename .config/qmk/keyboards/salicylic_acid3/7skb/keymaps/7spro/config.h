@@ -20,3 +20,10 @@
 
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 180
+
+/* Home Row Mods. CHORDAL_HOLD settles same-hand chords as taps, so only
+ * opposite-hand chords produce a modifier; it requires PERMISSIVE_HOLD or
+ * HOLD_ON_OTHER_KEY_PRESS to define the opposite-hand case. */
+#define CHORDAL_HOLD
+#define PERMISSIVE_HOLD
+#define FLOW_TAP_TERM 150

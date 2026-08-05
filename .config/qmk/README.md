@@ -57,6 +57,12 @@ Ctrl の出どころは `D` のホールド (HRM)、`A` の左、最下段の左
 
 `Ctrl+h/j/k/l` を潰すので **nvim のウィンドウ移動 (`<C-w>hjkl` の別名) は使えない**。内蔵キーボードでも Karabiner が同じ変換をしていて元から機能していなかったため、`.config/nvim/lua/config/keymaps.lua` から該当の割り当てを外した。
 
+### tmux prefix と IME
+
+`Ctrl+Space` (`D` ホールド + 右親指 Space) は、先に 英数 (`KC_LNG2`) を送ってから `Ctrl+Space` を送る。日本語入力中でも prefix を打つだけで IME から抜けられる。
+
+Karabiner 側はこれをターミナル限定にしているが、QMK はフロントのアプリを判定できないため **全アプリ対象**。`Ctrl+Space` に他の割り当てが無いので支障はない (macOS 自身の入力ソース切替は `settings.sh` で無効化済み)。
+
 ### 最下段
 
 ```
@@ -132,14 +138,10 @@ Complex modifications は `ifBuiltIn` で内蔵キーボードに限定してあ
 
 Simple Modifications (`caps_lock` → `left_control`) だけは profile 全体に効くが、このキーマップは caps lock を送らず該当位置に直接 `KC_LCTL` を置いているので衝突しない。詳細は `../karabiner/README.md`。
 
-### QMK では実現できないもの
+### 移していないもの
 
-アプリごとに挙動を変える必要があるものは、QMK にホストのアプリを知る手段がないため移植できない:
-
-- ターミナルでの Ctrl tap-hold
-- ターミナルでの Ctrl+Space → 英数 (tmux prefix と同時に IME を抜ける)
-
-これらを 7sPro でも使いたい場合は Karabiner 側のルールに 7sPro のデバイス条件を足すことになる (未対応)。
+- **`J` = Shift**。Karabiner 側は vim 系アプリで無効化しているが、QMK はホストのアプリを知らないため同じ切り分けができない。7sPro では右 Shift は物理キーを使う
+- **ターミナルでの Ctrl tap-hold**。[PR #69](https://github.com/HagaSpa/dotfiles/pull/69) で「`Ctrl+b` を素早くタップして離した後に `b` を押すと単独の `b` になる」対策として入ったものだが、**tmux prefix はその後 `Ctrl+Space` に変わっており前提が失われている**。さらに `LCTL_T(KC_D)` が送る `left_control` を Karabiner が再度掴む二重処理のリスクがあるため、意図的に移していない
 
 ## VIA / Remap
 

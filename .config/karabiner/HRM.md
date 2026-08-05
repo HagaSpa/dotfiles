@@ -4,7 +4,10 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 
 適用対象は **Mac 内蔵キーボードのみ** (`ifBuiltIn` = `device_if: is_built_in_keyboard`)。外付けキーボード (7sPro) は QMK 側でキーマップを完結させるため Karabiner を通さない。以下の Scope 列の「All apps」は内蔵キーボード上での話。
 
-7sPro 側にも同じ HRM を実装済み (`.config/qmk/README.md`)。**差は J だけ** — QMK はホストのアプリを知らないため「vim 系アプリで無効」を再現できず、7sPro では J に HRM を載せていない。ターミナル限定の Ctrl tap-hold と Ctrl+Space も同じ理由で 7sPro 側は未対応。
+7sPro 側にも同じ HRM・IME 切替・Ctrl ナビゲーションを実装済み (`.config/qmk/README.md`)。**残る差は 2 つだけ**:
+
+- **J = Shift** — QMK はホストのアプリを知らないため「vim 系アプリで無効」を再現できず、7sPro では載せていない
+- **ターミナルの Ctrl tap-hold** — prefix が `Ctrl+b` だった時代の対策 (#69) で前提が失われているため、意図的に移していない
 
 ## Modifier mappings
 
@@ -28,7 +31,7 @@ source: `.config/karabiner/karabiner.ts` / `.config/zsh/command.sh` / `.config/t
 
 ## Ctrl navigation (D ホールドで発火)
 
-hjkl / , / . の変換は 7sPro 側にも実装済み (`.config/qmk/README.md`)。Ctrl+Space (terminal) だけはアプリ判定が必要なため内蔵キーボード限定。
+hjkl / , / . の変換と Ctrl+Space の IME 抜けは 7sPro 側にも実装済み (`.config/qmk/README.md`)。ただし QMK はアプリ判定ができないため、7sPro の Ctrl+Space は全アプリ対象。
 
 | Combo                     | Action                                       |
 | ------------------------- | -------------------------------------------- |

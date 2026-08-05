@@ -21,6 +21,39 @@ mise run qmk   # toolchain + qmk_firmware clone + overlay_dir 登録
 | `~/.local/bin/qmk` | CLI (uv tool 経由) |
 | `~/Library/Application Support/qmk/qmk.ini` | CLI 設定 (`user.qmk_home` / `user.overlay_dir`) |
 
+## キーマップ
+
+MacBook 内蔵キーボードでは Karabiner が同等の機能を提供している (`../karabiner/HRM.md`)。持ち替えたときの操作感を揃えるため、同じものを QMK 側に実装している。
+
+### Home Row Mods
+
+| キー | ホールド |
+|---|---|
+| F | Shift |
+| S | Option |
+| D | Control |
+| ; | ⌘⌥⌃ (Raycast 用) |
+
+`A` には載せない (左手首腱鞘炎対策)。`J` にも載せない — Karabiner 側は vim 系アプリで無効化しているが、**QMK はホストのアプリを知らないため同じ切り分けができない**。7sPro では右 Shift は物理キーを使う。
+
+`CHORDAL_HOLD` が同手のロールをタップ扱いにするので、`fa` のような同手ロールで Shift が誤爆しない。**ただし効くのは `TAPPING_TERM` (180ms) 以内**で、意図的に同手で修飾子を使いたいときは長めにホールドしてから相方を叩く (Karabiner 側も同じ運用)。加えて `FLOW_TAP_TERM` が高速タイプ中のホールド判定を止める。
+
+### Cmd 単押しで IME
+
+左 Cmd = 英数 (`KC_LNG2`)、右 Cmd = かな (`KC_LNG1`)。Karabiner の `japanese_eisuu` / `japanese_kana` と同一の HID usage。
+
+`get_hold_on_other_key_press()` で Cmd だけ「他キー押下で即ホールド確定」にしている。`TAPPING_TERM` を待つと `Cmd+C` が鈍く感じるため。
+
+### 最下段
+
+```
+[Alt][Cmd/英数][Space][MO(FN)] │ [Space][Enter][Cmd/かな][Alt]
+                      ^^^^^^^^   ^^^^^^^
+                   左親指ホーム  右親指ホーム
+```
+
+右親指の Space は tmux prefix (`D` ホールド + Space = Ctrl+Space) の相方なので動かさない。MacBook では同じ位置が Space なので、左親指ホームだけは 2 台で役割が違う (レイヤーキーを最も押しやすい位置に置くことを優先した)。
+
 ## Build & Flash
 
 ```bash
@@ -38,7 +71,7 @@ ATmega32U4 なので UF2 のドラッグ&ドロップではなく avrdude 書き
 
 キーマップから入れる。物理リセットは不要。
 
-1. `MO(_FN)` を押しながら — 最下段の 1 つ上、右端のキー
+1. `MO(_FN)` を押しながら — 左親指ホーム、または最下段の 1 つ上の右端
 2. **左上 Esc の位置**を押す — `_FN` レイヤーの `TG(_ADJUST)` に当たる
 3. `MO(_FN)` を離す
 4. **右上 Grave (`~`) の位置**を押す — `_ADJUST` レイヤーの `QK_BOOT`
@@ -75,9 +108,18 @@ QMK CLI の設定は `~/.config/qmk/` ではなく `~/Library/Application Suppor
 
 ## Karabiner との責務分割
 
-Complex modifications は `ifBuiltIn` で内蔵キーボードに限定してあるので、7sPro には効かない。Home Row Mods を 7sPro でも使うなら QMK 側に実装する。
+Complex modifications は `ifBuiltIn` で内蔵キーボードに限定してあるので、7sPro には効かない。HRM と IME 切替は上記のとおり QMK 側で実装済み。
 
 Simple Modifications (`caps_lock` → `left_control`) だけは profile 全体に効くが、このキーマップは caps lock を送らず該当位置に直接 `KC_LCTL` を置いているので衝突しない。詳細は `../karabiner/README.md`。
+
+### QMK では実現できないもの
+
+アプリごとに挙動を変える必要があるものは、QMK にホストのアプリを知る手段がないため移植できない:
+
+- ターミナルでの Ctrl tap-hold
+- ターミナルでの Ctrl+Space → 英数 (tmux prefix と同時に IME を抜ける)
+
+これらを 7sPro でも使いたい場合は Karabiner 側のルールに 7sPro のデバイス条件を足すことになる (未対応)。
 
 ## VIA / Remap
 

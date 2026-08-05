@@ -107,36 +107,29 @@ return state;
 }
 
 // Ctrl + hjkl / , / . → arrows and word jump, mirroring the Karabiner rule that
-// covers the built-in keyboard. The Ctrl bit is stripped so the app sees a bare
-// arrow; any other modifier held at the time (Shift, for selection) passes
-// through. Returns true when the key was replaced.
-static bool ctrl_nav(uint16_t keycode, keyrecord_t *record) {
-  if (!(get_mods() & MOD_MASK_CTRL)) {
-    return false;
-  }
-  if (!record->event.pressed) {
-    return true;  // the press already sent a complete tap
-  }
+// covers the built-in keyboard. Key overrides hold the replacement down for as
+// long as the trigger is held, so the host's own key repeat applies; sending a
+// tap from process_record_user instead would fire exactly once. Ctrl is
+// suppressed so the app sees a bare arrow, while other modifiers held at the
+// time (Shift, for selection) pass through.
+//
+// Left Ctrl only: RCAG_T(KC_SCLN) holds *right* Ctrl for the Raycast hotkey, and
+// matching MOD_MASK_CTRL would eat ⌘⌥⌃ + hjkl.
+const key_override_t ctrl_h_override    = ko_make_basic(MOD_LCTL, KC_H, KC_LEFT);
+const key_override_t ctrl_j_override    = ko_make_basic(MOD_LCTL, KC_J, KC_DOWN);
+const key_override_t ctrl_k_override    = ko_make_basic(MOD_LCTL, KC_K, KC_UP);
+const key_override_t ctrl_l_override    = ko_make_basic(MOD_LCTL, KC_L, KC_RIGHT);
+const key_override_t ctrl_comm_override = ko_make_basic(MOD_LCTL, KC_COMM, LALT(KC_LEFT));
+const key_override_t ctrl_dot_override  = ko_make_basic(MOD_LCTL, KC_DOT, LALT(KC_RIGHT));
 
-  uint16_t to_code;
-  switch (keycode) {
-    case KC_H:    to_code = KC_LEFT;        break;
-    case KC_J:    to_code = KC_DOWN;        break;
-    case KC_K:    to_code = KC_UP;          break;
-    case KC_L:    to_code = KC_RIGHT;       break;
-    case KC_COMM: to_code = LALT(KC_LEFT);  break;
-    case KC_DOT:  to_code = LALT(KC_RIGHT); break;
-    default:      return false;
-  }
-
-  const uint8_t saved = get_mods();
-  del_mods(MOD_MASK_CTRL);
-  send_keyboard_report();
-  tap_code16(to_code);
-  set_mods(saved);
-  send_keyboard_report();
-  return true;
-}
+const key_override_t *key_overrides[] = {
+  &ctrl_h_override,
+  &ctrl_j_override,
+  &ctrl_k_override,
+  &ctrl_l_override,
+  &ctrl_comm_override,
+  &ctrl_dot_override,
+};
 
 // Ctrl+Space (tmux prefix) drops out of the IME on the way through: 英数 first,
 // then the prefix itself. The Karabiner equivalent scopes this to terminals, but
@@ -181,14 +174,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
         break;
     #endif
-    case KC_H:
-    case KC_J:
-    case KC_K:
-    case KC_L:
-    case KC_COMM:
-    case KC_DOT:
-      result = !ctrl_nav(keycode, record);
-      break;
     case KC_SPC:
       result = !ctrl_space_ime_bypass(record);
       break;

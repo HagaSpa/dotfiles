@@ -16,6 +16,7 @@ Individual setup steps are mise file tasks under `mise-tasks/` (repo-scoped; the
 mise tasks            # list tasks
 mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tasks run in parallel
 mise run karabiner    # full re-run of one step incl. deps (bun install + build)
+mise run qmk          # QMK toolchain + firmware clone (not part of setup — see QMK section)
 ```
 
 Note: `mise run karabiner` is for setup-style runs (installs bun deps first). For day-to-day karabiner.ts edits, `cd .config/karabiner && bun run build` remains the primary flow (see Karabiner section).
@@ -57,7 +58,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)
-- **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below)
+- **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below), `.config/qmk/` (7sPro keymap as a QMK External Userspace; not symlinked — see below)
 - **Browser**: `.config/vimium/vimium-c.json` (Vimium C settings export; import-only, not symlinked — see `.config/vimium/README.md`)
 - **Window Manager**: `.config/amethyst/amethyst.yml` (Amethyst; `screen-padding-*` is tied to the external monitor's logical width — see `docs/window-manager.md`)
 - **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
@@ -70,6 +71,17 @@ cd .config/karabiner && bun run build  # generate → sync repo copy → reload 
 ```
 
 `build` regenerates the config, copies `~/.config/karabiner/karabiner.json` back into the repo (Karabiner's atomic writes break symlinks), and reloads the profile via `karabiner_cli`.
+
+### QMK (7sPro keymap)
+`.config/qmk/` is a QMK [External Userspace](https://docs.qmk.fm/newbs_external_userspace) holding the keymap for the 7sPro — which QMK knows as `salicylic_acid3/7skb/rev1`, not `7spro`. Set up with `mise run qmk` (not part of `mise run setup`: it pulls down a few hundred MB and is only needed on a machine with the 7sPro).
+
+```bash
+qmk userspace-compile   # .hex lands in .config/qmk/; works from any directory
+```
+
+Do NOT add `.config/qmk/` to `link.sh` — `overlay_dir` points at the in-repo path directly, so a symlink would accomplish nothing. The CLI's own config lives in `~/Library/Application Support/qmk/qmk.ini` (platformdirs), not `~/.config/qmk/`.
+
+Karabiner's complex modifications are scoped to the built-in keyboard, so they never apply to the 7sPro; anything the 7sPro needs (Home Row Mods included) lives in the keymap. See `.config/qmk/README.md`.
 
 ### Docs
 `docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, raycast-dotfiles, secure-input-hotkey-outage, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.

@@ -138,6 +138,29 @@ static bool ctrl_nav(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+// Ctrl+Space (tmux prefix) drops out of the IME on the way through: 英数 first,
+// then the prefix itself. The Karabiner equivalent scopes this to terminals, but
+// QMK cannot see the frontmost app so it applies everywhere. That is safe as long
+// as nothing else is bound to Ctrl+Space — settings.sh disables macOS's own
+// input-source switcher on it.
+static bool ctrl_space_ime_bypass(keyrecord_t *record) {
+  if (!(get_mods() & MOD_MASK_CTRL)) {
+    return false;
+  }
+  if (!record->event.pressed) {
+    return true;
+  }
+
+  const uint8_t saved = get_mods();
+  del_mods(MOD_MASK_CTRL);
+  send_keyboard_report();
+  tap_code(KC_LNG2);
+  set_mods(saved);
+  send_keyboard_report();
+  tap_code(KC_SPC);
+  return true;
+}
+
 int RGB_current_mode;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool result = false;
@@ -165,6 +188,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_COMM:
     case KC_DOT:
       result = !ctrl_nav(keycode, record);
+      break;
+    case KC_SPC:
+      result = !ctrl_space_ime_bypass(record);
       break;
     default:
       result = true;

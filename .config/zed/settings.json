@@ -48,5 +48,13 @@
     "inline": {
       "enabled": true
     }
+  },
+  "languages": {
+    "Python": {
+      "language_servers": [
+        "ty",
+        "!basedpyright"
+      ]
+    }
   }
 }

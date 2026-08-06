@@ -57,7 +57,7 @@ tmux list-panes -a -F '#{pane_current_command} alt=#{alternate_on} hist=#{histor
 
 `.config/claude/settings.json` を `"tui": "default"` にすると通常画面に描画され、コピーモードで遡る・検索する・コピーするが全て使える。`/tui <fullscreen|default>` でも切り替わる (設定ファイルに書き戻される)。
 
-fullscreen のまま使う場合、スクロールは Claude Code 自身の機能になる (`PageUp` / `PageDown`、`ctrl+home` / `ctrl+end`)。ただしそれは tmux のコピーモードではないので、範囲選択してコピーする用途には tmux 側の機能を使えない。
+fullscreen のまま使う場合、スクロールは Claude Code 自身の機能になる (`PageUp` / `PageDown`、`ctrl+home` / `ctrl+end`)。PageUp / PageDown は 7sPro では `Fn+L` / `Fn+.`、内蔵キーボードでは `Fn+↑` / `Fn+↓`。ただしそれは tmux のコピーモードではないので、範囲選択してコピーする用途には tmux 側の機能を使えない。
 
 ### 誤診しやすい点
 

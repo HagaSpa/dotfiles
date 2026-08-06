@@ -49,8 +49,13 @@ vim.lsp.config('ts_ls', {
   },
   root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
 })
+vim.lsp.config('ty', {
+  cmd = { 'ty', 'server' },
+  filetypes = { 'python' },
+  root_markers = { 'ty.toml', 'pyproject.toml', 'setup.py', '.git' },
+})
 
-vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls' })
+vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'ty' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup,

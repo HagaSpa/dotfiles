@@ -38,6 +38,8 @@ MacBook 内蔵キーボードでは Karabiner が同等の機能を提供して�
 
 `CHORDAL_HOLD` が同手のロールをタップ扱いにするので、`fa` のような同手ロールで Shift が誤爆しない。**ただし効くのは `TAPPING_TERM` (180ms) 以内**で、意図的に同手で修飾子を使いたいときは長めにホールドしてから相方を叩く (Karabiner 側も同じ運用)。加えて `FLOW_TAP_TERM` が高速タイプ中のホールド判定を止める。
 
+**`Ctrl+D` は D が Ctrl 自身なので HRM では作れない。** 同手の `Ctrl+G` / `Ctrl+B` / `Ctrl+F` も `CHORDAL_HOLD` がタップに倒す。これらはホームロー左端の物理 `KC_LCTL` を使う。
+
 ### Cmd 単押しで IME
 
 左 Cmd = 英数 (`KC_LNG2`)、右 Cmd = かな (`KC_LNG1`)。Karabiner の `japanese_eisuu` / `japanese_kana` と同一の HID usage。

@@ -84,7 +84,7 @@ Do NOT add `.config/qmk/` to `link.sh` — `overlay_dir` points at the in-repo p
 Karabiner's complex modifications are scoped to the built-in keyboard, so they never apply to the 7sPro; anything the 7sPro needs (Home Row Mods included) lives in the keymap. See `.config/qmk/README.md`.
 
 ### Docs
-`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, brew-vs-mise-bootstrap, editor-strategy, raycast-dotfiles, secure-input-hotkey-outage, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
+`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, brew-vs-mise-bootstrap, editor-strategy, raycast-dotfiles, secure-input-hotkey-outage, terminal-scrollback, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
 
 ### Workspace Conventions
 Custom shell functions assume this structure:

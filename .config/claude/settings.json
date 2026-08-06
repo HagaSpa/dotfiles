@@ -119,7 +119,7 @@
   },
   "language": "Japanese",
   "effortLevel": "high",
-  "tui": "fullscreen",
+  "tui": "default",
   "skipAutoPermissionPrompt": true,
   "showThinkingSummary": true
 }

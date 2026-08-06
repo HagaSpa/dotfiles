@@ -38,6 +38,8 @@ hjkl / , / . の変換と Ctrl+Space の IME 抜けは 7sPro 側にも実装済�
 | Ctrl + g  (zsh)           | clear-screen  (Ctrl+L が → に潰れる代替)     |
 | Ctrl + P, Ctrl + O  (zsh) | 現在行を pbcopy                              |
 
+**左手のキーとの Ctrl コードは D ホールドでは作れない。** 180ms 以内のロールはリテラル 2 文字になり、`Ctrl+D` に至っては D が Ctrl 自身なので原理的に不可能。`Ctrl+D` / `Ctrl+G` / `Ctrl+B` / `Ctrl+F` などは A の左の物理 Control (caps lock) を使う。7sPro も同じ制約 (`CHORDAL_HOLD` が同手コードをタップに倒す)。
+
 ## tmux prefix
 
 `Ctrl + Space` = D (Ctrl) + 右親指 Space の bilateral chord。

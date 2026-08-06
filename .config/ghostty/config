@@ -27,3 +27,8 @@ keybind = cmd+shift+t=toggle_background_opacity
 # Shift+Enter を ESC+CR (Meta+Enter) として送る。Claude Code が改行と解釈する。
 # バイト列なので tmux を素通し、tmux 内の Claude Code でも改行できる
 keybind = shift+enter=text:\x1b\r
+
+# Ghostty 1.3.1 は Ctrl+U を pty に渡さない (Ctrl+Y / Ctrl+G は届く)。明示的に
+# 0x15 を送り直す。これが無いと tmux copy-mode の halfpage-up、zsh の
+# kill-whole-line、nvim の <C-u> がまとめて死ぬ。
+keybind = ctrl+u=text:\x15

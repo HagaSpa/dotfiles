@@ -14,6 +14,11 @@ vim.diagnostic.config({
   },
 })
 
+-- Delta only: nvim merges this onto vim.lsp.protocol.make_client_capabilities().
+vim.lsp.config('*', {
+  capabilities = require('blink.cmp').get_lsp_capabilities({}, false),
+})
+
 -- Kubernetes schema scoped to bons8i-style kustomize layout.
 vim.lsp.config('yamlls', {
   cmd = { 'yaml-language-server', '--stdio' },
@@ -77,6 +82,5 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lmap('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
     lmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
     lmap('<leader>d', vim.diagnostic.open_float, 'Show diagnostic under cursor')
-    vim.lsp.completion.enable(true, args.data.client_id, buf, { autotrigger = true })
   end,
 })

@@ -17,6 +17,7 @@ mise tasks            # list tasks
 mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tasks run in parallel
 mise run karabiner    # full re-run of one step incl. deps (bun install + build)
 mise run qmk          # QMK toolchain + firmware clone (not part of setup — see QMK section)
+mise run qmk-keymap   # redraw .config/qmk/keymap.svg from keymap.c
 ```
 
 Note: `mise run karabiner` is for setup-style runs (installs bun deps first). For day-to-day karabiner.ts edits, `cd .config/karabiner && bun run build` remains the primary flow (see Karabiner section).
@@ -91,6 +92,8 @@ cd .config/karabiner && bun run build  # generate → sync repo copy → reload 
 ```bash
 qmk userspace-compile   # .hex lands in .config/qmk/; works from any directory
 ```
+
+`keymap.svg` is the keymap reference, generated from `keymap.c` by `mise run qmk-keymap` (keymap-drawer). The `Ctrl 併用` layer in it is hand-written in `keymap-notes.yaml` — Key Overrides and the Ctrl+Space IME bypass live outside `keymaps[][][]`, so `qmk c2json` cannot see them.
 
 Do NOT add `.config/qmk/` to `link.sh` — `overlay_dir` points at the in-repo path directly, so a symlink would accomplish nothing. The CLI's own config lives in `~/Library/Application Support/qmk/qmk.ini` (platformdirs), not `~/.config/qmk/`.
 

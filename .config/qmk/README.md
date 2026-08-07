@@ -23,6 +23,8 @@ mise run qmk   # toolchain + qmk_firmware clone + overlay_dir 登録
 
 ## キーマップ
 
+![7sPro keymap](keymap.svg)
+
 MacBook 内蔵キーボードでは Karabiner が同等の機能を提供している (`../karabiner/HRM.md`)。持ち替えたときの操作感を揃えるため、同じものを QMK 側に実装している。
 
 ### Home Row Mods
@@ -83,6 +85,18 @@ Home Row Mods のリファレンス実装 ([Miryoku](https://github.com/manna-ha
 Space は左右両方の親指ホームにある。tmux prefix (`D` ホールド + Space = Ctrl+Space) は右親指で打つ (左手は `D` を押している側なので)。
 
 BS と Return を親指に置いたのは、素の配置では BS が右上・Return が右手小指 (2.25u) で遠いため。`[9,3]` `[9,4]` は親指ホームから 2〜3 つ外側なので、指を伸ばす必要はある。
+
+### 図の再生成
+
+```bash
+mise run qmk-keymap   # keymap.c → keymap.svg
+```
+
+[keymap-drawer](https://github.com/caksoylar/keymap-drawer) が `qmk c2json` の出力を描画する。`keymap.c` を変えたら走らせる。SVG はテキストなので diff が読める。
+
+図は 4 レイヤーで、うち 3 つは `keymaps[][][]` から自動生成される。**4 枚目の `Ctrl 併用` だけは `keymap-notes.yaml` に手で書いている** — Key Overrides と `Ctrl+Space` の IME 先送りは `keymaps` の外にあり、`c2json` からは見えないため。`keymap.c` のこれらを変えたら手で追随させる。
+
+`keymap-drawer.yaml` はラベルの読み替え (`KC_LNG2` → 英数 など)。`parse_config.qmk_keycode_map` に書くと組み込みの対応表ごと置き換わってしまうので、`raw_binding_map` を使っている。
 
 ## Build & Flash
 

@@ -54,3 +54,12 @@ setup() {
   command -v yq >/dev/null 2>&1 || skip "yq not available"
   yq '.' .config/amethyst/amethyst.yml >/dev/null
 }
+
+@test "the hand-written keymap layer reaches keymap.svg" {
+  # A name mismatch between the task and the notes file draws an empty layer
+  # instead of failing, so the drawing silently loses the Key Overrides.
+  layer=$(sed -n 's/^NOTES_LAYER="\(.*\)"$/\1/p' mise-tasks/qmk-keymap)
+  [ -n "$layer" ]
+  grep -qF "  $layer:" .config/qmk/keymap-notes.yaml
+  grep -qF ">$layer<" .config/qmk/keymap.svg
+}

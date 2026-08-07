@@ -1,0 +1,43 @@
+#!/bin/bash
+#MISE description="Redraw .config/qmk/keymap.svg from the 7sPro keymap.c"
+set -euo pipefail
+
+KEYBOARD="salicylic_acid3/7skb/rev1"
+KEYMAP="7spro"
+QMK_DIR="$PWD/.config/qmk"
+
+# Must match enum layer_number in keymap.c, plus the hand-written layer whose
+# name is the top-level key in keymap-notes.yaml.
+LAYER_NAMES=(QWERTY FN ADJUST)
+NOTES_LAYER="Ctrl 併用"
+
+if ! command -v qmk >/dev/null 2>&1; then
+  echo "qmk not found, run: mise run qmk" >&2
+  exit 1
+fi
+
+if ! command -v uvx >/dev/null 2>&1; then
+  echo "uvx not found (comes from the Brewfile's uv)" >&2
+  exit 1
+fi
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+# -j below feeds the physical layout from this checkout's qmk_firmware; without
+# it keymap-drawer fetches info.json from api.qmk.fm.
+qmk info -kb "$KEYBOARD" -f json >"$tmp/info.json"
+qmk c2json -kb "$KEYBOARD" -km "$KEYMAP" >"$tmp/keymap.json"
+
+uvx --from keymap-drawer keymap -c "$QMK_DIR/keymap-drawer.yaml" parse \
+  -q "$tmp/keymap.json" \
+  -l "${LAYER_NAMES[@]}" \
+  --virtual-layers "$NOTES_LAYER" \
+  -o "$tmp/layers.yaml"
+
+uvx --from keymap-drawer keymap -c "$QMK_DIR/keymap-drawer.yaml" draw \
+  -j "$tmp/info.json" \
+  -o "$QMK_DIR/keymap.svg" \
+  "$tmp/layers.yaml" "$QMK_DIR/keymap-notes.yaml"
+
+echo "wrote .config/qmk/keymap.svg"

@@ -1,0 +1,13 @@
+# Hand-written layer merged on top of the generated ones. keymaps[][][] is the
+# only thing qmk c2json can see, so Key Overrides and the Ctrl+Space IME bypass
+# would otherwise be absent from the drawing entirely.
+#
+# Row lengths follow LAYOUT: 15 / 14 / 13 / 13 / 8. The layer key must match the
+# --virtual-layers name in mise-tasks/qmk-keymap.
+layers:
+  Ctrl 併用:
+    - ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+    - ['', '', '', '', '', '', '', '', '', '', '', '', '', '']
+    - [{t: Ctrl, type: held}, '', '', {t: D, h: Ctrl, type: held}, '', '', ←, ↓, ↑, →, '', '', '']
+    - ['', '', '', '', '', '', '', '', ⌥←, ⌥→, '', '', '']
+    - ['', '', '', {t: tmux prefix, h: 英数を先送り}, {t: tmux prefix, h: 英数を先送り}, '', '', '']

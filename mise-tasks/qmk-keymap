@@ -8,7 +8,7 @@ QMK_DIR="$PWD/.config/qmk"
 
 # Must match enum layer_number in keymap.c, plus the hand-written layer whose
 # name is the top-level key in keymap-notes.yaml.
-LAYER_NAMES=(QWERTY FN ADJUST)
+LAYER_NAMES=(QWERTY FN NAV ADJUST)
 NOTES_LAYER="Ctrl 併用"
 
 if ! command -v qmk >/dev/null 2>&1; then

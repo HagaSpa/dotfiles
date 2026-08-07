@@ -10,6 +10,8 @@ entries=(
   .config/amethyst/amethyst.yml
   .config/fd/config
   .config/ghostty/config
+  .config/herdr/config.toml
+  .config/herdr/yazi-picker.sh
   .config/karabiner/HRM.md
   .config/karabiner/karabiner.json
   .config/lazygit/config.yml

@@ -1,0 +1,52 @@
+# キーバインドは .config/tmux/tmux.conf に揃えてある。tmux 側を変えたらここも合わせる。
+# 既定値のまま tmux と一致するものは書いていない (prefix+c / n / p / x / z / ? /
+# h j k l / [ / 1..9、vi 風コピーモード、マウス操作)。
+
+[terminal]
+default_shell = "/bin/zsh"
+
+[keys]
+prefix = "ctrl+space"
+
+detach = "prefix+d"                              # herdr 既定は prefix+q
+copy_mode = ["prefix+[", "prefix+u"]             # tmux: bind u copy-mode -u
+split_vertical = ["prefix+v", "prefix+%"]        # 右に分割
+split_horizontal = ["prefix+minus", "prefix+\""] # 下に分割
+rename_tab = ["prefix+shift+t", "prefix+,"]      # tmux: rename-window
+close_tab = ["prefix+shift+x", "prefix+&"]       # tmux: kill-window
+last_pane = "prefix+;"                           # tmux: last-pane
+cycle_pane_next = ["prefix+tab", "prefix+o"]     # tmux: select-pane -t :.+
+swap_pane_left = ["prefix+shift+h", "prefix+{"]
+swap_pane_right = ["prefix+shift+l", "prefix+}"]
+workspace_picker = ["prefix+w", "prefix+s"]      # tmux: choose-tree / choose-session
+settings = "prefix+shift+s"                      # 既定の prefix+s は上に譲る
+
+# yazi を popup で開き、選んだファイルを呼び出し元ペインの nvim に渡す
+[[keys.command]]
+key = "prefix+y"
+type = "popup"
+command = "~/.config/herdr/yazi-picker.sh"
+width = "90%"
+height = "90%"
+
+# HRM (Home Row Mods) チートシート
+[[keys.command]]
+key = "prefix+m"
+type = "popup"
+command = "bat --style=plain --color=always --paging=always ~/.config/karabiner/HRM.md"
+width = "80%"
+height = "80%"
+
+# ツール横断のワークフロー早見表。実体は docs/terminal-workflow.md で、link.sh が
+# tmux 側のパスに貼っている
+[[keys.command]]
+key = "prefix+shift+m"
+type = "popup"
+command = "bat --style=plain --color=always --paging=always ~/.config/tmux/terminal-workflow.md"
+width = "80%"
+height = "80%"
+
+[ui]
+# サイドバーは常設せず prefix+b で出す。"compact" だと畳んでも細い状態バーが残る
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"

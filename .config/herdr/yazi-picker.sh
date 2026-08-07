@@ -4,6 +4,7 @@ set -uo pipefail
 
 CALLER_PANE=$HERDR_ACTIVE_PANE_ID
 tmp=$(mktemp /tmp/yazi-chosen.XXXXXX)
+trap 'rm -f "$tmp"' EXIT
 
 yazi --chooser-file="$tmp"
 
@@ -32,5 +33,3 @@ if [[ -s "$tmp" ]]; then
     herdr pane run "$CALLER_PANE" "nvim $paths"
   fi
 fi
-
-rm -f "$tmp"

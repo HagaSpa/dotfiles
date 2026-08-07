@@ -11,6 +11,7 @@ extern uint8_t is_master;
 enum layer_number {
   _QWERTY = 0,
   _FN,
+  _NAV,
   _ADJUST,
 };
 
@@ -25,11 +26,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_LBRC, KC_RBRC, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A, LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,  KC_H,    KC_J,    KC_K,    KC_L, RCAG_T(KC_SCLN), KC_QUOT, KC_ENT,
+      KC_LCTL,    KC_A, LT(_FN, KC_S), LT(_NAV, KC_D), LSFT_T(KC_F), KC_G,  KC_H,  KC_J,    KC_K,    KC_L, RCAG_T(KC_SCLN), KC_QUOT, KC_ENT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, MO(_FN),
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               MO(_FN), KC_LALT, LGUI_T(KC_LNG2), KC_SPC,    KC_SPC, RGUI_T(KC_LNG1), KC_BSPC,  KC_ENT
+               MO(_FN), KC_BSPC, LGUI_T(KC_LNG2), KC_LCTL,    KC_SPC, RGUI_T(KC_LNG1), RSFT_T(KC_ENT), KC_LALT
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
@@ -44,6 +45,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______,     _______, _______,  KC_END, KC_PGDN, KC_DOWN, _______, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
                _______, _______, _______, _______,              _______, _______,          KC_STOP, _______
+          //`---------------------------------------------|   |--------------------------------------------'
+  ),
+
+  [_NAV] = LAYOUT(
+  //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
+      _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
+      _______, _______, _______, _______, _______, _______,     _______, KC_PGUP, _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+      _______, _______, _______, _______, _______, _______,     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+      _______, _______, _______, _______, _______, _______,     KC_PGDN, _______, LALT(KC_LEFT), LALT(KC_RGHT), _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+               _______,  KC_DEL, _______, _______,              _______, _______,          _______, _______
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
@@ -66,17 +81,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // '*' exempts a key from Chordal Hold's opposite-hands rule. The Cmd mod-taps
 // need same-hand chords (Cmd+A, Cmd+C) and ; sends ⌘⌥⌃ to Raycast, whose
 // hotkey may sit on the right hand. Marking them 'L'/'R' would settle those as
-// taps and emit 英数 / かな / ; instead of the modifier.
+// taps and emit 英数 / かな / ; instead of the modifier. The left thumb
+// Backspace is exempt so D-hold (_NAV, same hand) can chord it into Delete.
+// The Enter thumb stays 'R' on purpose: Shift there only serves left-hand
+// letters, right-hand letters use F-hold, so an Enter→letter roll on the right
+// hand cannot misfire into Shift.
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','*','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R',
-      'L','L','*','L',        'R','*','R','R'
+      'L','*','*','L',        'R','*','R','R'
 );
 
 // Cmd has to engage the moment another key is pressed; waiting out TAPPING_TERM
-// would make Cmd+C feel sluggish. The home row mods stay on PERMISSIVE_HOLD.
+// would make Cmd+C feel sluggish. The home row taps and the Enter Shift stay
+// on PERMISSIVE_HOLD.
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LGUI_T(KC_LNG2):
@@ -105,31 +125,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif
 return state;
 }
-
-// Ctrl + hjkl / , / . → arrows and word jump, mirroring the Karabiner rule that
-// covers the built-in keyboard. Key overrides hold the replacement down for as
-// long as the trigger is held, so the host's own key repeat applies; sending a
-// tap from process_record_user instead would fire exactly once. Ctrl is
-// suppressed so the app sees a bare arrow, while other modifiers held at the
-// time (Shift, for selection) pass through.
-//
-// Left Ctrl only: RCAG_T(KC_SCLN) holds *right* Ctrl for the Raycast hotkey, and
-// matching MOD_MASK_CTRL would eat ⌘⌥⌃ + hjkl.
-const key_override_t ctrl_h_override    = ko_make_basic(MOD_LCTL, KC_H, KC_LEFT);
-const key_override_t ctrl_j_override    = ko_make_basic(MOD_LCTL, KC_J, KC_DOWN);
-const key_override_t ctrl_k_override    = ko_make_basic(MOD_LCTL, KC_K, KC_UP);
-const key_override_t ctrl_l_override    = ko_make_basic(MOD_LCTL, KC_L, KC_RIGHT);
-const key_override_t ctrl_comm_override = ko_make_basic(MOD_LCTL, KC_COMM, LALT(KC_LEFT));
-const key_override_t ctrl_dot_override  = ko_make_basic(MOD_LCTL, KC_DOT, LALT(KC_RIGHT));
-
-const key_override_t *key_overrides[] = {
-  &ctrl_h_override,
-  &ctrl_j_override,
-  &ctrl_k_override,
-  &ctrl_l_override,
-  &ctrl_comm_override,
-  &ctrl_dot_override,
-};
 
 // Ctrl+Space (tmux prefix) drops out of the IME on the way through: 英数 first,
 // then the prefix itself. The Karabiner equivalent scopes this to terminals, but

@@ -1,0 +1,22 @@
+draw_config:
+  dark_mode: auto
+  n_columns: 1
+  append_colon_to_layer_header: false
+
+parse_config:
+  # Supplying qmk_keycode_map here would REPLACE the built-in one (MINS -> "-"
+  # etc.), so per-binding overrides go through raw_binding_map instead.
+  raw_binding_map:
+    "LGUI_T(KC_LNG2)": {t: 英数, h: Cmd}
+    "RGUI_T(KC_LNG1)": {t: かな, h: Cmd}
+    "RCAG_T(KC_SCLN)": {t: ";", h: ⌘⌥⌃}
+    "LALT_T(KC_S)": {t: S, h: Opt}
+    "LCTL_T(KC_D)": {t: D, h: Ctrl}
+    "LSFT_T(KC_F)": {t: F, h: Shift}
+    "KC_LCTL": Ctrl
+    "KC_LSFT": Shift
+    "KC_RSFT": Shift
+    "KC_LALT": Opt
+    "MO(_FN)": {t: FN, h: hold}
+    "TG(_ADJUST)": {t: ADJUST, h: toggle}
+    "QK_BOOT": BOOT

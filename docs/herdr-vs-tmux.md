@@ -1,6 +1,6 @@
 # herdr のキーバインドを tmux に揃える (2026-08)
 
-herdr 0.8.0 を導入し、`.config/tmux/tmux.conf` のキーバインドを `.config/herdr/config.toml` に移植した記録。**結論: 押すキーはほぼ完全に一致させられた。再現できないのは 4 つだけ。**
+herdr 0.8.0 を導入し、`.config/tmux/tmux.conf` のキーバインドを `.config/herdr/config.toml` に移植した記録。**結論: 押すキーはほぼ完全に一致させられた。再現できないのは 3 つだけ。**
 
 herdr は tmux と同じ prefix モデルを持つ多重化ツール（Rust + Ratatui）で、pane / tab / session に加えて「AI エージェントの状態（working / blocked / done / idle）をサイドバーに出す」層が乗っている。`herdr --default-config` が全設定項目の注釈付きリストを出す。
 
@@ -16,7 +16,7 @@ prefix を `ctrl+space` にした上で、herdr の既定が tmux とズレて�
 | `prefix %` / `prefix "` 分割 | `split_vertical` / `split_horizontal` の既定は `prefix+v` / `prefix+minus` | ✅ 両方受ける |
 | `prefix ,` rename-window | `rename_tab` の既定は `prefix+shift+t` | ✅ 両方受ける |
 | `prefix &` kill-window | `close_tab` の既定は `prefix+shift+x` | ✅ 両方受ける |
-| `prefix ;` last-pane | `last_pane` は既定で未割当 | ✅ 割当 |
+| `prefix ;` last-pane / `prefix Space` last-window | `last_pane` は既定で未割当 | ✅ 両方割当。herdr の `last_pane` は tab をまたぐ（下記） |
 | `prefix o` 次のペイン | `cycle_pane_next` の既定は `prefix+tab` | ✅ 両方受ける |
 | `prefix {` / `}` swap-pane | `swap_pane_left` / `_right` の既定は `prefix+shift+h` / `+l` | ✅ 両方受ける |
 | `prefix w` / `prefix s` ツリー選択 | `workspace_picker` (既定 `prefix+w`) | ✅ `prefix+s` も割当。既定でここにあった `settings` は `prefix+shift+s` に退避 |
@@ -33,9 +33,8 @@ prefix を `ctrl+space` にした上で、herdr の既定が tmux とズレて�
 `herdr --default-config` に出る全アクション名（バイナリ側の一覧とも突き合わせた）に該当するものが無い。
 
 1. **`bind C-Space send-prefix`** — prefix そのものをペインに送るアクションが無い。入れ子（herdr の中で tmux を動かす等）で prefix を透過させられない。
-2. **`bind Space last-window`** — `last_pane` はあるが「直前の tab」に相当するアクションが無い。CLI の `herdr tab` にも直前 tab の状態は出ないので、シェルスクリプトで状態ファイルを持つ手はあるが、`prefix+n` やクリックで tab を移ると値が腐る（tmux は全ての切り替えを追跡する）。plugin の `[[events]]` に tab フォーカスイベントがあれば正しく作れるが、v1 で公開されているのは `worktree.created` だけ。
-3. **`bind -n PPage ...`** — `PageUp` がそもそもバインド可能なキーではない（`pageup` / `page_up` / `pgup` いずれも `invalid keybinding`。通るのは `backspace` / `space` / `esc` / `enter` / `tab` と英数字・記号）。加えて herdr には `if-shell -F '#{alternate_on}'` に相当する条件分岐が無いので、「代替画面のアプリには素通し、それ以外はコピーモード」という振り分けも書けない。**修飾キー無しスクロールは `prefix+u` 側だけが残る。**
-4. **コピーモード内のキー再割当** — `[keys]` にあるのは「コピーモードに入る」`copy_mode` だけで、モード内のキー（herdr は `ctrl+u` / `ctrl+d` で半ページ）は設定に出てこない。`.config/tmux/tmux.conf` が `copy-mode-vi` の `u` / `d` を半ページに割り当てているのは真似できない。ghostty 側に `keybind = ctrl+u=text:\x15` があるので `ctrl+u` は herdr には届く。
+2. **`bind -n PPage ...`** — `PageUp` がそもそもバインド可能なキーではない（`pageup` / `page_up` / `pgup` いずれも `invalid keybinding`。通るのは `backspace` / `space` / `esc` / `enter` / `tab` と英数字・記号）。加えて herdr には `if-shell -F '#{alternate_on}'` に相当する条件分岐が無いので、「代替画面のアプリには素通し、それ以外はコピーモード」という振り分けも書けない。**修飾キー無しスクロールは `prefix+u` 側だけが残る。**
+3. **コピーモード内のキー再割当** — `[keys]` にあるのは「コピーモードに入る」`copy_mode` だけで、モード内のキー（herdr は `ctrl+u` / `ctrl+d` で半ページ）は設定に出てこない。`.config/tmux/tmux.conf` が `copy-mode-vi` の `u` / `d` を半ページに割り当てているのは真似できない。ghostty 側に `keybind = ctrl+u=text:\x15` があるので `ctrl+u` は herdr には届く。
 
 ## tmux 側にあって herdr では別の仕組みになるもの
 
@@ -46,6 +45,7 @@ prefix を `ctrl+space` にした上で、herdr の既定が tmux とズレて�
 - **`allow-passthrough on`** — yazi の画像プレビューに使っていたパススルーは `[experimental] kitty_graphics` に相当するが既定 off。
 - **`automatic-rename off`** — 自動リネーム自体が無く、`[ui] prompt_new_tab_name = true`（既定）が tab 作成時に名前を訊く。
 - **`prefix 0`** — `switch_tab` は `prefix+1..9` 固定（`prefix+0..9` は `invalid keybinding`）。tmux は window 0 から始まるのでここだけ 1 つずれる。
+- **`last-window` と `last-pane`** — tmux は 2 つを別々の履歴で持つが、herdr の「直前」は `last_pane` 1 本だけ。ただしこれは名前に反して pane 内に閉じておらず、tab をまたいで直前にフォーカスしていたペインへ戻る（`herdr --default-config` の「global back-and-forth」）。**1 tab = 1 pane で使う限り `prefix Space` と同じ挙動**なので `prefix+;` と両方を割り当てているが、tab を分割していると同一 tab 内の往復になり tab 単位の往復にはならない。
 
 ## yazi popup の移植
 

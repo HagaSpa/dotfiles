@@ -53,7 +53,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **Shell**: `.zshrc` / `.zshenv` (main) + `.config/zsh/` (alias.sh, command.sh, hosts/)
 - **Runtime**: `.mise.toml` (Node.js LTS, bun, gcloud, terraform, biome, rust + rust-analyzer)
 - **Git**: `.gitconfig` (personal) + `.gitconfig-olta` (work, includeIf), `.config/lazygit/config.yml` (delta pager; found via `LG_CONFIG_FILE` in `.zshenv`, since lazygit defaults to `~/Library/Application Support`)
-- **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`)
+- **Terminal**: `.config/ghostty/config`, `.config/tmux/tmux.conf` (→ `~/.tmux.conf`), `.config/herdr/` (herdr; keybindings mirror tmux.conf — see below)
 - **Editor**: `.config/nvim/init.lua` (Neovim), `.config/zed/settings.json` (Zed)
 - **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
@@ -62,6 +62,19 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **Browser**: `.config/vimium/vimium-c.json` (Vimium C settings export; import-only, not symlinked — see `.config/vimium/README.md`)
 - **Window Manager**: `.config/amethyst/amethyst.yml` (Amethyst; `screen-padding-*` is tied to the external monitor's logical width — see `docs/window-manager.md`)
 - **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
+
+### herdr (agent multiplexer)
+`.config/herdr/config.toml` mirrors `.config/tmux/tmux.conf`'s keybindings so the two multiplexers are interchangeable by muscle memory — change one and change the other. Apply edits to a running server without restarting panes:
+
+```bash
+herdr config check          # validate config.toml (also a bats test)
+herdr server reload-config  # apply to the running server
+herdr --default-config      # full annotated default config
+```
+
+Four tmux bindings have no herdr equivalent in 0.8.0 and are deliberately absent: `send-prefix`, `last-window`, `PageUp` as a bindable key, and rebinding keys *inside* copy mode. See `docs/herdr-vs-tmux.md`.
+
+`.config/herdr/yazi-picker.sh` is the herdr port of `.config/tmux/yazi-picker.sh`. It sends the chosen paths to nvim with `herdr pane send-keys` one character at a time, not `herdr pane run` — `run` pastes via bracketed paste, which nvim inserts into the buffer regardless of mode.
 
 ### Karabiner (TypeScript build)
 `karabiner.json` is generated from `karabiner.ts` using the karabiner.ts library. Never edit `karabiner.json` directly, and never add Simple Modifications from the Karabiner GUI (they live in `karabiner.ts`'s `SIMPLE_MODIFICATIONS` too) — edit `karabiner.ts` and build:
@@ -84,7 +97,7 @@ Do NOT add `.config/qmk/` to `link.sh` — `overlay_dir` points at the in-repo p
 Karabiner's complex modifications are scoped to the built-in keyboard, so they never apply to the 7sPro; anything the 7sPro needs (Home Row Mods included) lives in the keymap. See `.config/qmk/README.md`.
 
 ### Docs
-`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, karabiner-vs-nix, brew-vs-nix, brew-vs-mise-bootstrap, editor-strategy, raycast-dotfiles, secure-input-hotkey-outage, terminal-scrollback, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
+`docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, herdr-vs-tmux, karabiner-vs-nix, brew-vs-nix, brew-vs-mise-bootstrap, editor-strategy, raycast-dotfiles, secure-input-hotkey-outage, terminal-scrollback, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.
 
 ### Workspace Conventions
 Custom shell functions assume this structure:

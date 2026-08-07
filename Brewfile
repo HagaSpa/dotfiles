@@ -20,6 +20,7 @@ brew "gh"
 brew "git-delta"
 brew "lazygit" # launched in a float from nvim (Snacks.lazygit)
 brew "tmux"
+brew "herdr"
 brew "typescript-language-server" # LSP: js/ts (nvim)
 brew "crit"
 

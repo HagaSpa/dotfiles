@@ -60,7 +60,46 @@ vim.lsp.config('ty', {
   root_markers = { 'ty.toml', 'pyproject.toml', 'setup.py', '.git' },
 })
 
-vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'ty' })
+-- gofumpt / staticcheck are built into gopls; there are no separate binaries.
+vim.lsp.config('gopls', {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  root_markers = { 'go.work', 'go.mod', '.git' },
+  settings = {
+    gopls = {
+      gofumpt = true,
+      staticcheck = true,
+      analyses = { unusedparams = true, shadow = true },
+    },
+  },
+})
+
+vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'ty', 'gopls' })
+
+-- Go alone formats on save: the language expects imports to be maintained by the
+-- tooling, so editing one by hand is not part of the workflow.
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = augroup,
+  pattern = '*.go',
+  callback = function(args)
+    local client = vim.lsp.get_clients({ bufnr = args.buf, name = 'gopls' })[1]
+    if not client then
+      return
+    end
+    local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
+    params.context = { only = { 'source.organizeImports' }, diagnostics = {} }
+    -- 1000ms is not enough for the first save of a session: gopls loads the package first.
+    local responses = vim.lsp.buf_request_sync(args.buf, 'textDocument/codeAction', params, 3000)
+    for _, response in pairs(responses or {}) do
+      for _, action in pairs(response.result or {}) do
+        if action.edit then
+          vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+        end
+      end
+    end
+    vim.lsp.buf.format({ bufnr = args.buf, async = false, timeout_ms = 3000 })
+  end,
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup,

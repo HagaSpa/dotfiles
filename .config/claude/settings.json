@@ -108,7 +108,8 @@
     "claude-md-management@claude-plugins-official": false,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "crit@crit": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "crit": {

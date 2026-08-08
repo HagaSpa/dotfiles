@@ -5,7 +5,7 @@ return {
     version = '1.*',
     opts = {
       keymap = {
-        preset = 'default',
+        preset = 'super-tab',
         -- The preset's <C-space> is the tmux prefix (.config/tmux/tmux.conf).
         ['<C-g>'] = { 'show', 'show_documentation', 'hide_documentation' },
       },

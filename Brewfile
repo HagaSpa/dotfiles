@@ -22,6 +22,7 @@ brew "lazygit" # launched in a float from nvim (Snacks.lazygit)
 brew "tmux"
 brew "herdr"
 brew "typescript-language-server" # LSP: js/ts (nvim)
+brew "gopls" # LSP: go (nvim). gofumpt and staticcheck ship inside it -- do not add them separately
 brew "crit"
 
 # Kubernetes / YAML

@@ -1,5 +1,6 @@
 return {
-  -- Gutter diff bars + hunk actions (Zed-like)
+  -- Gutter diff bars + in-buffer navigation (Zed-like). Staging/reset is lazygit's
+  -- job, so gitsigns deliberately maps neither.
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
@@ -34,25 +35,11 @@ return {
 
         gmap('n', '<leader>gp', gs.preview_hunk, 'Preview hunk (float)')
         gmap('n', '<leader>gi', gs.preview_hunk_inline, 'Preview hunk (inline)')
-        gmap('n', '<leader>gs', gs.stage_hunk, 'Stage hunk')
-        gmap('n', '<leader>gr', gs.reset_hunk, 'Reset hunk')
-        gmap('v', '<leader>gs', function()
-          gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-        end, 'Stage selected lines')
-        gmap('v', '<leader>gr', function()
-          gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-        end, 'Reset selected lines')
-        gmap('n', '<leader>gS', gs.stage_buffer, 'Stage buffer')
-        gmap('n', '<leader>gR', gs.reset_buffer, 'Reset buffer')
         gmap('n', '<leader>gb', function()
           gs.blame_line({ full = true })
         end, 'Blame line')
         gmap('n', '<leader>gB', gs.toggle_current_line_blame, 'Toggle inline blame')
         gmap('n', '<leader>gw', gs.toggle_word_diff, 'Toggle word diff')
-        gmap('n', '<leader>gd', gs.diffthis, 'Diff against index')
-        gmap('n', '<leader>gD', function()
-          gs.diffthis('~')
-        end, 'Diff against last commit')
         gmap({ 'o', 'x' }, 'ih', gs.select_hunk, 'Select hunk')
       end,
     },

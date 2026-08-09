@@ -32,7 +32,6 @@ opt.timeoutlen = 400
 opt.clipboard = 'unnamedplus'
 opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 
--- Built-in fuzzy file find via :find (kept as a fallback alongside the picker)
 opt.path:append('**')
 opt.wildmode = 'longest:full,full'
 opt.wildignore:append({ '*/node_modules/*', '*/.git/*', '*/dist/*', '*/build/*' })

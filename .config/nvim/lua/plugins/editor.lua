@@ -1,5 +1,4 @@
 return {
-  -- Project management (Zed-like: pick a dir -> swap session)
   {
     'coffebar/neovim-project',
     lazy = false,
@@ -14,13 +13,11 @@ return {
       vim.opt.sessionoptions:append('globals')
     end,
     opts = {
-      -- Match the workspace conventions from CLAUDE.md
       projects = {
         '~/workspaces/*/*',
         '~/worktrees/*/*/*',
       },
       picker = { type = 'snacks' },
-      -- Launch into the cwd, not the last project (predictable, Zed-like)
       last_session_on_startup = false,
     },
     keys = {
@@ -29,15 +26,14 @@ return {
     },
   },
 
-  -- File explorer (edit the filesystem like a buffer)
   {
     'stevearc/oil.nvim',
-    lazy = false, -- so it can hijack netrw and open directories on startup
+    lazy = false, -- required for the netrw hijack below to take effect
     opts = {
-      -- Take over netrw so `:e <dir>` and `<leader>e` open oil, not netrw
+      -- paired with snacks explorer's replace_netrw = false (plugins/picker.lua)
       default_file_explorer = true,
       view_options = {
-        show_hidden = true, -- match telescope find_files (hidden = true)
+        show_hidden = true,
       },
     },
     keys = {

@@ -1,12 +1,9 @@
 return {
-  -- Gutter diff bars + in-buffer navigation (Zed-like). Staging/reset is lazygit's
-  -- job, so gitsigns deliberately maps neither.
+  -- Staging / reset is lazygit's job; gitsigns deliberately maps neither.
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
-      -- The defaults already draw a thick bar (┃); only staged is overridden, to
-      -- a thin bar. gitsigns dims staged signs to 50% fg on top of that.
       signs_staged = {
         add = { text = '│' },
         change = { text = '│' },
@@ -18,7 +15,6 @@ return {
         end
 
         gmap('n', ']c', function()
-          -- Keep the built-in ]c / [c when this buffer is in a real diff split
           if vim.wo.diff then
             vim.cmd.normal({ ']c', bang = true })
           else
@@ -45,10 +41,6 @@ return {
     },
   },
 
-  -- Repo-wide views, on top of snacks (already installed for the picker).
-  -- git_diff shows staged and unstaged hunks together; <Tab> stages, <C-r> restores.
-  -- lazygit gets its theme generated from the colorscheme by snacks, which also
-  -- sets os.editPreset=nvim-remote so `e` opens files in this nvim.
   {
     'folke/snacks.nvim',
     keys = {

@@ -11,19 +11,30 @@ return {
     priority = 1000,
     dependencies = { 'echasnovski/mini.icons' },
     opts = {
-      -- Only the picker module; explorer/dashboard/notifier etc. stay off
-      -- (oil.nvim already owns the file-explorer role).
+      -- Only picker + explorer; dashboard/notifier etc. stay off.
+      -- oil.nvim stays the netrw replacement (`:e <dir>`); the explorer is a
+      -- persistent sidebar tree, opened on demand.
+      explorer = {
+        enabled = true,
+        replace_netrw = false, -- default is true, which would fight oil.nvim
+      },
       picker = {
         enabled = true,
         sources = {
           -- match the old telescope config: show dotfiles, skip .gitignored
           files = { hidden = true },
           grep = { hidden = true },
+          explorer = {
+            hidden = true,
+            layout = { layout = { position = 'right' } },
+          },
         },
         matcher = { frecency = true },
       },
     },
     keys = {
+      -- Snacks.explorer() closes an already-open explorer, so this is a toggle
+      { '<leader>E', function() Snacks.explorer() end, desc = 'File tree sidebar (toggle)' },
       { '<leader>ff', function() Snacks.picker.files() end, desc = 'Find files' },
       { '<leader>fg', function() Snacks.picker.grep() end, desc = 'Live grep' },
       { '<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffers' },

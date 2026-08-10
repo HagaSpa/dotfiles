@@ -7,6 +7,8 @@ alias z..='z ..'
 
 alias c="claude"
 
+alias nv="nvim"
+
 # -r は --help に出ない隠しフラグ。既存ウィンドウの workspace を差し替える
 alias zed='zed -r'
 alias zed.='zed .'

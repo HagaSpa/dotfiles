@@ -50,3 +50,8 @@ height = "80%"
 # サイドバーは常設せず prefix+b で出す。"compact" だと畳んでも細い状態バーが残る
 sidebar_start_collapsed = true
 sidebar_collapsed_mode = "hidden"
+agent_panel_sort = "spaces"
+
+# claude の行だけ、Claude Code が端末タイトルに出す現在のタスク要約を挟む
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]

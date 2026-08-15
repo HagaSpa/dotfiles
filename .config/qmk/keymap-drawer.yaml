@@ -7,13 +7,12 @@ parse_config:
   # Supplying qmk_keycode_map here would REPLACE the built-in one (MINS -> "-"
   # etc.), so per-binding overrides go through raw_binding_map instead.
   raw_binding_map:
-    "LGUI_T(KC_LNG2)": {t: 英数, h: Cmd}
+    "LCTL_T(KC_LNG2)": {t: 英数, h: Ctrl}
     "RGUI_T(KC_LNG1)": {t: かな, h: Cmd}
     "RCAG_T(KC_SCLN)": {t: ";", h: ⌘⌥⌃}
     "LT(_FN, KC_S)": {t: S, h: FN}
     "LT(_NAV, KC_D)": {t: D, h: NAV}
     "LSFT_T(KC_F)": {t: F, h: Shift}
-    "RSFT_T(KC_ENT)": {t: Enter, h: Shift}
     "LALT(KC_LEFT)": ⌥←
     "LALT(KC_RGHT)": ⌥→
     "KC_LEFT": ←

@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, MO(_FN),
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               MO(_FN), KC_BSPC, LGUI_T(KC_LNG2), KC_LCTL,    KC_SPC, RGUI_T(KC_LNG1), RSFT_T(KC_ENT), KC_LALT
+               MO(_FN), XXXXXXX, KC_BSPC, LCTL_T(KC_LNG2),    KC_SPC, RGUI_T(KC_LNG1), XXXXXXX, KC_LALT
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,     KC_PGDN, _______, LALT(KC_LEFT), LALT(KC_RGHT), _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               _______,  KC_DEL, _______, _______,              _______, _______,          _______, _______
+               _______, _______,  KC_DEL, _______,              _______, _______,          _______, _______
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
@@ -78,28 +78,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-// '*' exempts a key from Chordal Hold's opposite-hands rule. The Cmd mod-taps
-// need same-hand chords (Cmd+A, Cmd+C) and ; sends ⌘⌥⌃ to Raycast, whose
-// hotkey may sit on the right hand. Marking them 'L'/'R' would settle those as
-// taps and emit 英数 / かな / ; instead of the modifier. The left thumb
-// Backspace is exempt so D-hold (_NAV, same hand) can chord it into Delete.
-// The Enter thumb stays 'R' on purpose: Shift there only serves left-hand
-// letters, right-hand letters use F-hold, so an Enter→letter roll on the right
-// hand cannot misfire into Shift.
+// '*' exempts a key from Chordal Hold's opposite-hands rule. Marking these
+// 'L'/'R' would settle their same-hand chords as taps and emit 英数 / かな / ;
+// instead of the modifier: Ctrl+C/D/A/E/W/U are all left-hand keys, Cmd+K/L/P
+// right-hand ones, and ; sends ⌘⌥⌃ to Raycast, whose hotkey may sit on either
+// hand. The left thumb Backspace is exempt so D-hold (_NAV, same hand) can
+// chord it into Delete.
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','*','R','R',
   'L','L','L','L','L','L',    'R','R','R','R','R','R','R',
-      'L','*','*','L',        'R','*','R','R'
+      'L','L','*','*',        'R','*','R','R'
 );
 
 // Cmd has to engage the moment another key is pressed; waiting out TAPPING_TERM
-// would make Cmd+C feel sluggish. The home row taps and the Enter Shift stay
-// on PERMISSIVE_HOLD.
+// would make Cmd+C feel sluggish. The home row taps stay on PERMISSIVE_HOLD, and
+// so does the Ctrl thumb on purpose — deciding by release order instead means a
+// 英数 → letter roll cannot misfire into Ctrl+D.
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case LGUI_T(KC_LNG2):
     case RGUI_T(KC_LNG1):
       return true;
     default:

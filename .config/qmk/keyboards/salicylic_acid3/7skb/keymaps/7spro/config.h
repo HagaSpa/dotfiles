@@ -21,7 +21,7 @@
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 180
 
-/* Home row tap-holds (S/D layer-taps, F Shift) and the thumb Enter Shift.
+/* Home row tap-holds (S/D layer-taps, F Shift) and the thumb Ctrl / Cmd.
  * CHORDAL_HOLD settles same-hand chords as taps, so only opposite-hand chords
  * produce a hold; it requires PERMISSIVE_HOLD or HOLD_ON_OTHER_KEY_PRESS to
  * define the opposite-hand case. */

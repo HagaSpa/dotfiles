@@ -90,6 +90,36 @@ vim.lsp.config('oxfmt', {
   root_dir = root_or_skip({ '.oxfmtrc.json', '.oxfmtrc.jsonc' }),
 })
 
+local function ruff_root_or_skip(bufnr, on_dir)
+  local root = vim.fs.root(bufnr, function(name, path)
+    if name == 'ruff.toml' or name == '.ruff.toml' then
+      return true
+    end
+    if name ~= 'pyproject.toml' then
+      return false
+    end
+    local file = io.open(vim.fs.joinpath(path, name))
+    if not file then
+      return false
+    end
+    local text = file:read('*a')
+    file:close()
+    return text:find('%[tool%.ruff') ~= nil
+  end)
+  if root then
+    on_dir(root)
+  end
+end
+
+vim.lsp.config('ruff', {
+  cmd = { 'ruff', 'server' },
+  filetypes = { 'python' },
+  root_dir = ruff_root_or_skip,
+  on_attach = function(client)
+    client.server_capabilities.hoverProvider = false
+  end,
+})
+
 -- gofumpt / staticcheck are built into gopls; there are no separate binaries.
 vim.lsp.config('gopls', {
   cmd = { 'gopls' },
@@ -104,7 +134,7 @@ vim.lsp.config('gopls', {
   },
 })
 
-vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'ty', 'gopls', 'biome', 'oxfmt' })
+vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'ty', 'gopls', 'biome', 'oxfmt', 'ruff' })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = augroup,

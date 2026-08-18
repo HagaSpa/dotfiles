@@ -1,3 +1,4 @@
+onboarding = false
 # キーバインドは .config/tmux/tmux.conf に揃えてある。tmux 側を変えたらここも合わせる。
 # 既定値のまま tmux と一致するものは書いていない (prefix+c / n / p / x / z / ? /
 # h j k l / [ / 1..9、vi 風コピーモード、マウス操作)。

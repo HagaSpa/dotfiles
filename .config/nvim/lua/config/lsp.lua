@@ -153,5 +153,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lmap('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
     lmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
     lmap('<leader>d', vim.diagnostic.open_float, 'Show diagnostic under cursor')
+    lmap('<leader>ih', function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })
+    end, 'Toggle inlay hints')
   end,
 })

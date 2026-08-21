@@ -18,6 +18,7 @@ mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tas
 mise run karabiner    # full re-run of one step incl. deps (bun install + build)
 mise run qmk          # QMK toolchain + firmware clone (not part of setup — see QMK section)
 mise run qmk-keymap   # redraw .config/qmk/keymap.svg from keymap.c
+mise run atuin-clean  # tidy the atuin history DB (run by hand — see atuin section)
 ```
 
 Note: `mise run karabiner` is for setup-style runs (installs bun deps first). For day-to-day karabiner.ts edits, `cd .config/karabiner && bun run build` remains the primary flow (see Karabiner section).
@@ -76,6 +77,18 @@ herdr --default-config      # full annotated default config
 Four tmux bindings have no herdr equivalent in 0.8.0 and are deliberately absent: `send-prefix`, `last-window`, `PageUp` as a bindable key, and rebinding keys *inside* copy mode. See `docs/herdr-vs-tmux.md`.
 
 `.config/herdr/yazi-picker.sh` is the herdr port of `.config/tmux/yazi-picker.sh`. It sends the chosen paths to nvim with `herdr pane send-keys` one character at a time, not `herdr pane run` — `run` pastes via bracketed paste, which nvim inserts into the buffer regardless of mode.
+
+### atuin history (manual cleanup)
+atuin records into its own SQLite DB (`~/.local/share/atuin/history.db`) via zsh `preexec`/`precmd` hooks — it never reads `~/.zsh_history`, so zsh's `setopt hist_*` options do not affect it. atuin dedupes by exact command string at search time, so entries differing only in whitespace show up as separate "duplicates", and failed commands stay in history because atuin has no exit-code filter.
+
+`mise run atuin-clean` fixes both after the fact. It takes a timestamped backup, then:
+
+- trims leading/trailing whitespace on every entry, and collapses runs of internal spaces **only** on entries containing no quote, backslash, or newline — a blanket `s/\s+/ /g` would corrupt multi-line commands (`gcloud logging read` filters, heredocs, `\` continuations)
+- deletes entries whose exit code is 127 (command not found), 255 (ssh failure), or 2 (bad arguments)
+
+`--dry-run` reports the counts without writing. Exit codes 1 / 130 / 101 / 145 / 128 are deliberately kept — they cover `go test`, `npm run dev`, `cargo build`, `fg`, `gp`. Exit code -1 means atuin's `history end` hook never fired (`exit`, `exec zsh`), not a failure, so it is kept too.
+
+This is deliberately a manual task rather than a `precmd` hook, so nothing runs in the background. If whitespace duplicates start piling up between runs, the fix is to normalize at record time instead: `setopt hist_reduce_blanks` plus a `_atuin_preexec` wrapper passing `${history[$HISTCMD]}` (zsh's blank-reduced form, which is lexer-aware and preserves quoted content) in place of the raw `$1`.
 
 ### Karabiner (TypeScript build)
 `karabiner.json` is generated from `karabiner.ts` using the karabiner.ts library. Never edit `karabiner.json` directly, and never add Simple Modifications from the Karabiner GUI (they live in `karabiner.ts`'s `SIMPLE_MODIFICATIONS` too) — edit `karabiner.ts` and build:

@@ -1,0 +1,119 @@
+#!/bin/bash
+#MISE description="Normalize whitespace and drop failed commands in the atuin history DB"
+set -euo pipefail
+
+DB="${ATUIN_DB:-$HOME/.local/share/atuin/history.db}"
+DROP_EXITS="127,255,2"
+
+dry_run=false
+case "${1:-}" in
+--dry-run) dry_run=true ;;
+"") ;;
+*)
+  echo "usage: mise run atuin-clean [--dry-run]" >&2
+  exit 1
+  ;;
+esac
+
+if [[ ! -f "$DB" ]]; then
+  echo "atuin history db not found: $DB" >&2
+  exit 1
+fi
+
+for c in sqlite3 perl; do
+  command -v "$c" >/dev/null 2>&1 || {
+    echo "$c not found" >&2
+    exit 1
+  }
+done
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+cat >"$tmp/norm.pl" <<'PERL'
+use strict;
+use warnings;
+
+my ($n_trim, $n_inner) = (0, 0);
+my @sql;
+
+open my $in, '<', $ARGV[0] or die "$ARGV[0]: $!";
+while (my $line = <$in>) {
+    chomp $line;
+    my ($id, $hex) = split /\|/, $line, 2;
+    next unless defined $hex;
+    die "unsafe history id: $id\n" if $id =~ /[^0-9A-Za-z_-]/;
+    my $cmd = pack 'H*', $hex;
+
+    my $trimmed = $cmd;
+    $trimmed =~ s/\A[ \t\r\n]+//;
+    $trimmed =~ s/[ \t\r\n]+\z//;
+
+    my $new = $trimmed;
+    $new =~ s/[ \t]{2,}/ /g unless $trimmed =~ /["'\\\n]/;
+
+    next if $new eq $cmd;
+    $n_trim++  if $trimmed ne $cmd;
+    $n_inner++ if $new ne $trimmed;
+    push @sql, sprintf "UPDATE history SET command=cast(x'%s' AS TEXT) WHERE id='%s';",
+        uc(unpack 'H*', $new), $id;
+}
+close $in;
+
+open my $out, '>', $ARGV[1] or die "$ARGV[1]: $!";
+print {$out} "$_\n" for @sql;
+close $out;
+
+print "$n_trim $n_inner ", scalar(@sql), "\n";
+PERL
+
+sqlite3 "$DB" "select id || '|' || hex(command) from history;" >"$tmp/hex"
+
+perl "$tmp/norm.pl" "$tmp/hex" "$tmp/norm.sql" >"$tmp/counts"
+read -r n_trim n_inner n_sql <"$tmp/counts"
+n_drop="$(sqlite3 "$DB" "select count(*) from history where exit in ($DROP_EXITS);")"
+rows_before="$(sqlite3 "$DB" "select count(*) from history;")"
+uniq_before="$(sqlite3 "$DB" "select count(distinct command) from history;")"
+
+echo "db: $DB"
+echo "  rows $rows_before / distinct commands $uniq_before"
+echo "whitespace: trim $n_trim, collapse inner $n_inner, updates $n_sql"
+echo "failed commands (exit in $DROP_EXITS): $n_drop"
+
+if [[ "$n_sql" -eq 0 && "$n_drop" -eq 0 ]]; then
+  echo "nothing to do"
+  exit 0
+fi
+
+if $dry_run; then
+  echo "dry run, no changes written"
+  exit 0
+fi
+
+bak="$DB.bak-$(date +%Y%m%d-%H%M%S)"
+cp "$DB" "$bak"
+echo "backup: $bak"
+
+if [[ "$n_sql" -gt 0 ]]; then
+  {
+    echo ".bail on"
+    echo "BEGIN;"
+    cat "$tmp/norm.sql"
+    echo "COMMIT;"
+  } | sqlite3 "$DB"
+fi
+
+sqlite3 "$DB" "delete from history where exit in ($DROP_EXITS);"
+sqlite3 "$DB" "VACUUM;"
+
+integrity="$(sqlite3 "$DB" "pragma integrity_check;")"
+if [[ "$integrity" != "ok" ]]; then
+  echo "integrity_check failed: $integrity" >&2
+  echo "restore with: cp $bak $DB" >&2
+  exit 1
+fi
+
+rows_after="$(sqlite3 "$DB" "select count(*) from history;")"
+uniq_after="$(sqlite3 "$DB" "select count(distinct command) from history;")"
+echo "  rows $rows_before -> $rows_after / distinct commands $uniq_before -> $uniq_after"
+echo "integrity_check ok"

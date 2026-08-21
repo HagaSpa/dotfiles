@@ -28,3 +28,74 @@ setup() {
     }
   done
 }
+
+@test "atuin-clean normalizes whitespace and drops failed commands" {
+  command -v sqlite3 >/dev/null 2>&1 || skip "sqlite3 not available"
+  command -v perl >/dev/null 2>&1 || skip "perl not available"
+
+  db="$BATS_TEST_TMPDIR/history.db"
+  sqlite3 "$db" <<'SQL'
+CREATE TABLE history (id text primary key, exit integer not null, command text not null);
+INSERT INTO history VALUES
+  ('1', 0, 'echo x '),
+  ('2', 0, 'echo x'),
+  ('3', 0, 'ls  -la'),
+  ('4', 0, 'print "a  b"'),
+  ('5', 127, 'eixt'),
+  ('6', 255, 'ssh nope'),
+  ('7', 2, 'gh pr crate');
+SQL
+
+  run env ATUIN_DB="$db" mise-tasks/atuin-clean
+  [ "$status" -eq 0 ]
+
+  [ "$(sqlite3 "$db" 'select count(*) from history;')" -eq 4 ]
+  [ "$(sqlite3 "$db" 'select count(distinct command) from history;')" -eq 3 ]
+  [ "$(sqlite3 "$db" "select command from history where id='1';")" = 'echo x' ]
+  [ "$(sqlite3 "$db" "select command from history where id='3';")" = 'ls -la' ]
+  [ "$(sqlite3 "$db" "select command from history where id='4';")" = 'print "a  b"' ]
+
+  run env ATUIN_DB="$db" mise-tasks/atuin-clean
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"nothing to do"* ]]
+}
+
+@test "atuin-clean --dry-run reports counts without writing" {
+  command -v sqlite3 >/dev/null 2>&1 || skip "sqlite3 not available"
+  command -v perl >/dev/null 2>&1 || skip "perl not available"
+
+  db="$BATS_TEST_TMPDIR/history.db"
+  sqlite3 "$db" <<'SQL'
+CREATE TABLE history (id text primary key, exit integer not null, command text not null);
+INSERT INTO history VALUES
+  ('1', 0, 'echo x '),
+  ('2', 0, 'ls  -la'),
+  ('3', 127, 'eixt');
+SQL
+  before="$(sqlite3 "$db" 'select group_concat(id || exit || command, char(10)) from history;')"
+
+  run env ATUIN_DB="$db" mise-tasks/atuin-clean --dry-run
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"updates 2"* ]]
+  [[ "$output" == *"exit in 127,255,2): 1"* ]]
+  [[ "$output" == *"dry run, no changes written"* ]]
+
+  [ "$(sqlite3 "$db" 'select group_concat(id || exit || command, char(10)) from history;')" = "$before" ]
+  [ ! -e "$db".bak-* ]
+}
+
+@test "atuin-clean rejects a history id that would break the generated SQL" {
+  command -v sqlite3 >/dev/null 2>&1 || skip "sqlite3 not available"
+  command -v perl >/dev/null 2>&1 || skip "perl not available"
+
+  db="$BATS_TEST_TMPDIR/history.db"
+  sqlite3 "$db" <<'SQL'
+CREATE TABLE history (id text primary key, exit integer not null, command text not null);
+INSERT INTO history VALUES ('x''; drop table history; --', 0, 'echo x ');
+SQL
+
+  run env ATUIN_DB="$db" mise-tasks/atuin-clean
+  [ "$status" -ne 0 ]
+  [[ "$output" == *"unsafe history id"* ]]
+  [ "$(sqlite3 "$db" 'select count(*) from history;')" -eq 1 ]
+}

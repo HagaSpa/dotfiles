@@ -42,6 +42,7 @@ while (my $line = <$in>) {
     chomp $line;
     my ($id, $hex) = split /\|/, $line, 2;
     next unless defined $hex;
+    die "unsafe history id: $id\n" if $id =~ /[^0-9A-Za-z_-]/;
     my $cmd = pack 'H*', $hex;
 
     my $trimmed = $cmd;
@@ -68,7 +69,8 @@ PERL
 
 sqlite3 "$DB" "select id || '|' || hex(command) from history;" >"$tmp/hex"
 
-read -r n_trim n_inner n_sql <<<"$(perl "$tmp/norm.pl" "$tmp/hex" "$tmp/norm.sql")"
+perl "$tmp/norm.pl" "$tmp/hex" "$tmp/norm.sql" >"$tmp/counts"
+read -r n_trim n_inner n_sql <"$tmp/counts"
 n_drop="$(sqlite3 "$DB" "select count(*) from history where exit in ($DROP_EXITS);")"
 rows_before="$(sqlite3 "$DB" "select count(*) from history;")"
 uniq_before="$(sqlite3 "$DB" "select count(distinct command) from history;")"

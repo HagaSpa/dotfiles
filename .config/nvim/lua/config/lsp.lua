@@ -50,6 +50,27 @@ vim.lsp.config('ts_ls', {
   },
   root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
 })
+
+local function typescript_sdk(root_dir)
+  for _, dir in ipairs(vim.fs.find('node_modules', { path = root_dir, upward = true, limit = math.huge })) do
+    local lib = vim.fs.joinpath(dir, 'typescript', 'lib')
+    if vim.uv.fs_stat(lib) then
+      return lib
+    end
+  end
+  return ''
+end
+
+vim.lsp.config('astro', {
+  cmd = { 'astro-ls', '--stdio' },
+  filetypes = { 'astro' },
+  root_markers = { 'astro.config.mjs', 'astro.config.ts', 'astro.config.js', 'package.json', '.git' },
+  init_options = { typescript = {} },
+  before_init = function(_, config)
+    config.init_options.typescript.tsdk = typescript_sdk(config.root_dir or vim.fn.getcwd())
+  end,
+})
+
 vim.lsp.config('ty', {
   cmd = { 'ty', 'server' },
   filetypes = { 'python' },
@@ -134,7 +155,7 @@ vim.lsp.config('gopls', {
   },
 })
 
-vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'ty', 'gopls', 'biome', 'oxfmt', 'ruff' })
+vim.lsp.enable({ 'yamlls', 'rust_analyzer', 'ts_ls', 'astro', 'ty', 'gopls', 'biome', 'oxfmt', 'ruff' })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = augroup,
@@ -161,7 +182,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
       -- js/ts formatting to biome / oxfmt, which attach only inside their own
       -- projects -- a project with neither is left untouched on save.
       filter = function(client)
-        return client.name ~= 'ts_ls'
+        return client.name ~= 'ts_ls' and client.name ~= 'astro'
       end,
     })
   end,

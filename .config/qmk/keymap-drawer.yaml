@@ -22,7 +22,6 @@ parse_config:
     "KC_PGUP": PgUp
     "KC_PGDN": PgDn
     "KC_DEL": Del
-    "KC_LCTL": Ctrl
     "KC_LSFT": Shift
     "KC_RSFT": Shift
     "KC_LALT": Opt

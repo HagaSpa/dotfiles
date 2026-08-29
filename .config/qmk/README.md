@@ -46,6 +46,14 @@ MacBook 内蔵キーボードでは Karabiner が近い機能を提供してい�
 
 `CHORDAL_HOLD` が同手のロールをタップ扱いにするので、`fa` や `ds` のような同手ロールで誤爆しない。**ただし効くのは `TAPPING_TERM` (180ms) 以内**で、意図的に同手で使いたいときは長めにホールドしてから相方を叩く。加えて `FLOW_TAP_TERM` (150ms) が高速タイプ中のホールド判定を止める — **文字入力の直後はホールドがタップに倒れる**ので、タイプ直後の矢印や Shift は一呼吸置く。
 
+### `A` の左 = Esc
+
+`A` の左には `KC_ESC` を置いている (2026-08-29)。左手首外側 (尺側) の腱鞘炎対策で、**数字行左端の Esc へ手ごと動かす到達をやめるため**。
+
+- **mod-tap にしていない。** Ctrl は左親指 (英数/Ctrl) にあるので、この位置に Ctrl を兼ねさせる理由がない。素の `KC_ESC` なので `TAPPING_TERM` の待ちも誤爆もゼロ
+- 数字行左端の Esc は残置。`_FN` レイヤではそこが `TG(_ADJUST)` なので、フラッシュ手順 (下記) の押下位置は変わらない
+- 内蔵キーボード側は追随していない。Karabiner で caps_lock を complex 側へ移すと `Ctrl+hjkl` → 矢印の chain が切れる懸念があるため、内蔵は `caps_lock` → `left_control` のまま
+
 ### 親指の単押しで IME
 
 左親指 内側 = 英数 (`KC_LNG2`)、右親指 ホーム = かな (`KC_LNG1`)。Karabiner の `japanese_eisuu` / `japanese_kana` と同一の HID usage。
@@ -98,7 +106,7 @@ Karabiner 側はこれをターミナル限定にしているが、QMK はフロ
 - **親指ホーム** (左 1.5u / 右 2u) に BS と かな/Cmd。**かな Cmd に 2u を充てているのは、最頻出ホールドのチョードアンカーだから** — Cmd+C/V のホールド中は親指の接地点がズレるので、面積がそのまま脱落防止になる
 - **内側 (左 1.25u / 右 1.25u)** に 英数/Ctrl と Space。Ctrl と Space が左右対称に並ぶので、tmux prefix が親指チョードで打てる
 
-BS は素の位置 (右上 1.5u) にも残っているので、長押しリピートが要る場面ではそちらも使える。物理 Ctrl (`A` の左) と物理 Shift (左下) は保険として残置。
+BS は素の位置 (右上 1.5u) にも残っているので、長押しリピートが要る場面ではそちらも使える。物理 Shift (左下) は保険として残置 (`A` の左は Esc に置き換えた。下記)。
 
 ### 図の再生成
 
@@ -168,7 +176,7 @@ QMK CLI の設定は `~/.config/qmk/` ではなく `~/Library/Application Suppor
 
 Complex modifications は `ifBuiltIn` で内蔵キーボードに限定してあるので、7sPro には効かない。ホームローの tap-hold と IME 切替は上記のとおり QMK 側で実装済み。
 
-Simple Modifications (`caps_lock` → `left_control`) だけは profile 全体に効くが、このキーマップは caps lock を送らず該当位置に直接 `KC_LCTL` を置いているので衝突しない。詳細は `../karabiner/README.md`。
+Simple Modifications (`caps_lock` → `left_control`) だけは profile 全体に効くが、このキーマップは caps lock を送らない (該当位置は `KC_ESC`) ので衝突しない。詳細は `../karabiner/README.md`。
 
 ### 移していないもの
 

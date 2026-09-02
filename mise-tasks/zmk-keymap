@@ -1,0 +1,24 @@
+#!/bin/bash
+#MISE description="Redraw .config/zmk/keymap.svg from the Go60 keymap"
+set -euo pipefail
+
+ZMK_DIR="$PWD/.config/zmk"
+
+if ! command -v uvx >/dev/null 2>&1; then
+  echo "uvx not found (comes from the Brewfile's uv)" >&2
+  exit 1
+fi
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+uvx --from keymap-drawer keymap parse \
+  -z "$ZMK_DIR/config/go60.keymap" \
+  -o "$tmp/layers.yaml"
+
+uvx --from keymap-drawer keymap draw \
+  -j "$ZMK_DIR/config/info.json" \
+  -o "$ZMK_DIR/keymap.svg" \
+  "$tmp/layers.yaml"
+
+echo "wrote .config/zmk/keymap.svg"

@@ -1,0 +1,58 @@
+name: Build Go60 firmware
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - ".config/zmk/**"
+      - ".github/workflows/zmk-go60.yml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - ".config/zmk/**"
+      - ".github/workflows/zmk-go60.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  ZMK_REF: v25.11
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v7.0.1
+
+    - name: Checkout moergo-sc/zmk
+      uses: actions/checkout@v7.0.1
+      with:
+        repository: moergo-sc/zmk
+        ref: ${{ env.ZMK_REF }}
+        path: .config/zmk/src
+
+    - name: Install nix
+      uses: cachix/install-nix-action@v31.11.1
+      with:
+        nix_path: nixpkgs=channel:nixos-22.05
+
+    - name: Use MoErgo binary cache
+      uses: cachix/cachix-action@v17
+      with:
+        name: moergo-glove80-zmk-dev
+        skipPush: true
+
+    - name: Build combined firmware
+      run: |
+        nix-build .config/zmk/config -o combined
+        cp combined/go60.uf2 go60.uf2
+
+    - name: Upload go60.uf2
+      uses: actions/upload-artifact@v7.0.1
+      with:
+        name: go60.uf2
+        path: go60.uf2
+        if-no-files-found: error

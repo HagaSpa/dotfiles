@@ -18,6 +18,7 @@ mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tas
 mise run karabiner    # full re-run of one step incl. deps (bun install + build)
 mise run qmk          # QMK toolchain + firmware clone (not part of setup — see QMK section)
 mise run qmk-keymap   # redraw .config/qmk/keymap.svg from keymap.c
+mise run zmk-keymap   # redraw .config/zmk/keymap.svg from go60.keymap
 mise run atuin-clean  # tidy the atuin history DB (run by hand — see atuin section)
 ```
 
@@ -60,7 +61,7 @@ zsh -n <file>   # zsh configs and .zshrc / .zshenv
 - **Prompt/Plugins**: `.config/starship/starship.toml` (→ `~/.config/starship.toml`), `.config/sheldon/plugins.toml`
 - **File Manager**: `.config/yazi/` (yazi config + projects plugin)
 - **Search**: `.config/fd/` (fd defaults)
-- **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below), `.config/qmk/` (7sPro keymap as a QMK External Userspace; not symlinked — see below)
+- **Input**: `.config/karabiner/` (keyboard remapping, TypeScript-based — see below), `.config/qmk/` (7sPro keymap as a QMK External Userspace; not symlinked — see below), `.config/zmk/` (Go60 keymap for ZMK; built by CI, not locally — see below)
 - **Browser**: `.config/vimium/vimium-c.json` (Vimium C settings export; import-only, not symlinked — see `.config/vimium/README.md`)
 - **Window Manager**: `.config/amethyst/amethyst.yml` (Amethyst; `screen-padding-*` is tied to the external monitor's logical width — see `docs/window-manager.md`)
 - **Claude Code**: `.config/claude/` (settings.json + commands/, symlinked to `~/.claude/`)
@@ -111,6 +112,13 @@ qmk userspace-compile   # .hex lands in .config/qmk/; works from any directory
 Do NOT add `.config/qmk/` to `link.sh` — `overlay_dir` points at the in-repo path directly, so a symlink would accomplish nothing. The CLI's own config lives in `~/Library/Application Support/qmk/qmk.ini` (platformdirs), not `~/.config/qmk/`.
 
 Karabiner's complex modifications are scoped to the built-in keyboard, so they never apply to the 7sPro; anything the 7sPro needs (Home Row Mods included) lives in the keymap. See `.config/qmk/README.md`.
+
+### ZMK (Go60 keymap)
+`.config/zmk/config/` mirrors the layout of MoErgo's `go60-zmk-config` template; only `go60.keymap` is ours. The keymap starts from the Go60 factory default and changes just the home-row tap-holds and the thumb cluster — it is deliberately NOT a copy of the 7sPro layout. See `.config/zmk/README.md` for the change list and the flashing procedure.
+
+There is no local toolchain. `.github/workflows/zmk-go60.yml` builds `go60.uf2` with nix on every change under `.config/zmk/**` and uploads it as an artifact; `ZMK_REF` in that workflow pins the `moergo-sc/zmk` tag. Do NOT start a firmware build (Podman or CI push) while the keymap is being iterated — build only when asked.
+
+The work Mac cannot flash the Go60: Defender device control blocks mounting the UF2 bootloader drive. Flashing happens on another device; the uf2 travels via Slack.
 
 ### Docs
 `docs/` holds decision records and troubleshooting notes (terminal-workflow cheatsheet, cmux-vs-tmux, herdr-vs-tmux, karabiner-vs-nix, brew-vs-nix, brew-vs-mise-bootstrap, editor-strategy, raycast-dotfiles, secure-input-hotkey-outage, terminal-scrollback, gui-app-path, window-manager) and the tooling-roadmap (planned improvements with adopt/reject status). The terminal-workflow cheatsheet is symlinked for the tmux Prefix+M popup.

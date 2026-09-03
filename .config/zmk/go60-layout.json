@@ -5,7 +5,7 @@
   "uuid": "9a2f4c18-6d3b-4e7a-8c15-2b0d7e934f61",
   "parent_uuid": "e649e6e5-6870-41c6-8580-ed551ed37c5b",
   "unlisted": false,
-  "date": 1788413267,
+  "date": 1788426938,
   "creator": "HagaSpa",
   "title": "go60 (dotfiles)",
   "notes": "Generated from .config/zmk/config/go60.keymap by mise run zmk-layout. The keymap file is the source of truth; edits made here are not carried back.\n\nTwo things cannot be expressed here and are shown approximately:\n- Space is a plain &kp SPACE. The real binding is a mod-morph that sends 英数 before Ctrl+Space (the tmux/herdr prefix).\n- The editor rejects LA(LEFT), LA(RIGHT), LC(LA(LGUI)) and LC(SPACE), so ; shows as Cmd instead of ⌘⌥⌃ (Raycast), and Nav's , / . show as bare arrows instead of Opt+←/→ (word-wise movement).",
@@ -29,108 +29,43 @@
   "layers": [
     [
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "EQUAL"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N1"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N2"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N3"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N4"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N5"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N6"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N7"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N8"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N9"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "N0"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "MINUS"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "TAB"
-          }
-        ]
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -213,20 +148,10 @@
         ]
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "BSLH"
-          }
-        ]
+        "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "ESC"
-          }
-        ]
+        "value": "&none"
       },
       {
         "value": "&hrm_lp",
@@ -333,12 +258,7 @@
         ]
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "SQT"
-          }
-        ]
+        "value": "&none"
       },
       {
         "value": "&magic"
@@ -427,12 +347,7 @@
         "value": "&none"
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "GRAVE"
-          }
-        ]
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -467,12 +382,7 @@
         ]
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "RBKT"
-          }
-        ]
+        "value": "&none"
       },
       {
         "value": "&lt_thumb",
@@ -531,43 +441,43 @@
     ],
     [
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -695,10 +605,10 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -811,7 +721,7 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -917,7 +827,10 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
+      },
+      {
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -932,10 +845,7 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -978,61 +888,61 @@
     ],
     [
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1059,7 +969,13 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1074,16 +990,10 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1118,28 +1028,28 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1166,7 +1076,13 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1181,13 +1097,7 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1210,61 +1120,61 @@
     ],
     [
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1275,7 +1185,19 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1290,19 +1212,7 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1340,25 +1250,25 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1369,7 +1279,7 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1388,13 +1298,13 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1414,7 +1324,7 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1437,43 +1347,43 @@
     ],
     [
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1508,28 +1418,28 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&kp",
@@ -1564,7 +1474,10 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
+      },
+      {
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1579,10 +1492,7 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1620,7 +1530,28 @@
         ]
       },
       {
-        "value": "&trans"
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
       },
       {
         "value": "&trans"
@@ -1635,28 +1566,7 @@
         "value": "&trans"
       },
       {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
-      },
-      {
-        "value": "&trans"
+        "value": "&none"
       },
       {
         "value": "&trans"

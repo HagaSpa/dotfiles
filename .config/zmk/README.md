@@ -15,7 +15,7 @@
 
 `Base` / `Sym` / `Num` / `Nav` / `Fn` / `Magic` / `Factory` の 7 枚。既定にあった `Keypad` は `Num` と役割が重複するので削除した。
 
-![Go60 keymap](keymap.svg)
+図で確認するときは [Layout Editor](https://my.moergo.com/go60) に `go60-layout.json` を import する (下記「Layout Editor で見る」)。
 
 ### 親指クラスタ
 
@@ -156,14 +156,23 @@ CI ができる前 (2026-09-02) は手元の Podman で同じ nix ビルドを�
 
 業務 Mac は Defender for Endpoint の device control が `block` で、ブートローダのドライブは認識されるがマウントされない (`mdatp health` の `device_control_enforcement_level`)。書き込みは別の端末 (別 Mac、Raspberry Pi、スマートフォンのファイルアプリ) で行う。`go60.uf2` は Slack などで運べばよい。恒常的に業務 Mac で書きたければ IT に vendor ID `0x239A` / product ID (右 `0x0029`) の許可を申請する。
 
-## キーマップ図
+## Layout Editor で見る
+
+[MoErgo Layout Editor](https://my.moergo.com/go60) にレイアウトを取り込むと、ブラウザ上で全レイヤーを見られる。**正はあくまで `go60.keymap`** で、Layout Editor 側は閲覧専用。あちらで編集しても手元には戻ってこない。
 
 ```bash
-mise run zmk-keymap   # go60.keymap → keymap.svg
+mise run zmk-layout   # go60.keymap → go60-layout.json
 ```
 
-`info.json` は QMK の info.json と同じ形式なので、7sPro と同じ keymap-drawer で描ける。
+1. Layout Editor の **Settings → `Local Backup and Restore` を有効化** (これがないと import のメニューが出ない)
+2. エディタ画面の左下 **Import** から `go60-layout.json` を選ぶ
 
-## Layout Editor は使わない
+`keymap2layout.py` が `.keymap` から JSON を組み立てる。やっていることは 3 つ。
 
-MoErgo の [Layout Editor](https://my.moergo.com/go60) でも同じことはできる (hold-tap / macro / mod-morph は "Custom Defined Behaviors" の欄に devicetree を書く)。使わないのは、正がクラウド側になって `.keymap` と二重管理になるため。7sPro で VIA を使わないのと同じ判断。参照用に既存のレイアウトを眺めるだけなら可。
+- `keymap` ブロックの各レイヤーを 60 個の binding オブジェクトに変換し、`LAYER_*` をレイヤー番号へ、`KEYS_*` をキー位置の数値列へ展開する
+- 独自に定義した behavior / macro (`hrm_*` `mt_hyper` `lt_thumb` `spc_ime` `tmux_prefix`) を `custom_defined_behaviors` に丸ごと入れる。`magic` や `bt_0`〜`bt_3`、`rgb_ug_status_macro` は Layout Editor が自前で定義するので**除外しないと二重定義になる**
+- `&cirque_*_listener` を `inputListeners` に写す
+
+**JSON 形式は MoErgo 側で変わりうる。** 公式が「[将来 import できる保証はない](https://docs.moergo.com/layout-editor-guide/advanced-usage-export-import/)」と明記しているので、import が壊れたら `keymap2layout.py` を直す。生成物なので捨てて作り直せばよく、キーマップ本体には影響しない。形式を調べ直すときは、Layout Editor から適当なレイアウトを JSON で export して構造を突き合わせる。
+
+以前は keymap-drawer で `keymap.svg` を描いていたが、Layout Editor で足りるので 2026-09-03 に削除した (`mise-tasks/zmk-keymap` と `keymap-drawer.yaml` / `keymap-notes.yaml` も同時に撤去)。

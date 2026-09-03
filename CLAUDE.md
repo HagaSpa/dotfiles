@@ -18,7 +18,7 @@ mise run setup        # claude / tpm / yazi-plugins / karabiner, independent tas
 mise run karabiner    # full re-run of one step incl. deps (bun install + build)
 mise run qmk          # QMK toolchain + firmware clone (not part of setup — see QMK section)
 mise run qmk-keymap   # redraw .config/qmk/keymap.svg from keymap.c
-mise run zmk-keymap   # redraw .config/zmk/keymap.svg from go60.keymap
+mise run zmk-layout   # regenerate .config/zmk/go60-layout.json for the MoErgo Layout Editor
 mise run atuin-clean  # tidy the atuin history DB (run by hand — see atuin section)
 ```
 
@@ -114,7 +114,9 @@ Do NOT add `.config/qmk/` to `link.sh` — `overlay_dir` points at the in-repo p
 Karabiner's complex modifications are scoped to the built-in keyboard, so they never apply to the 7sPro; anything the 7sPro needs (Home Row Mods included) lives in the keymap. See `.config/qmk/README.md`.
 
 ### ZMK (Go60 keymap)
-`.config/zmk/config/` mirrors the layout of MoErgo's `go60-zmk-config` template; only `go60.keymap` is ours. The keymap starts from the Go60 factory default and changes just the home-row tap-holds and the thumb cluster — it is deliberately NOT a copy of the 7sPro layout. See `.config/zmk/README.md` for the change list and the flashing procedure.
+`.config/zmk/config/` mirrors the layout of MoErgo's `go60-zmk-config` template; only `go60.keymap` is ours. It is a layer-driven design of its own — every layer entry sits on the thumb cluster, the home row carries symmetric mods, and symbols / digits / F keys / arrows live on the Sym / Num / Fn / Nav layers. It is deliberately NOT aligned with the 7sPro or the built-in keyboard. See `.config/zmk/README.md`.
+
+To read the keymap in a browser, `mise run zmk-layout` regenerates `go60-layout.json` and you import that into the [MoErgo Layout Editor](https://my.moergo.com/go60) (Settings → `Local Backup and Restore` must be on). `go60.keymap` stays the source of truth — the Layout Editor is view-only, and edits made there do not come back. The JSON format is undocumented and MoErgo warns it may change, so if import breaks, fix `keymap2layout.py` rather than moving the source of truth. The keymap-drawer SVG was dropped on 2026-09-03 in favour of this.
 
 There is no local toolchain. `.github/workflows/zmk-go60.yml` builds `go60.uf2` with nix on every change under `.config/zmk/**` and uploads it as an artifact; `ZMK_REF` in that workflow pins the `moergo-sc/zmk` tag. Do NOT start a firmware build (Podman or CI push) while the keymap is being iterated — build only when asked.
 

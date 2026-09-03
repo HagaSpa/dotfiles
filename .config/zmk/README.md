@@ -4,54 +4,128 @@
 
 ## 方針
 
-**Go60 の既定レイアウトを土台にして、7sPro (`../qmk/`) から持ち込むのはホームローの tap-hold と親指クラスタだけ。** 記号・両端のキー・Keypad / Magic レイヤは既定のまま。7sPro に完全に揃えることは目的にしない (2026-09-02 に決定)。
+**Go60 の親指クラスタとレイヤーをフルに使う独自設計。** 7sPro (`../qmk/`) や MacBook 内蔵 (Karabiner) に揃えることは目的にしない (2026-09-03 に決定。それ以前は「ホームローの tap-hold だけは揃える」方針だった)。
 
-## キーマップ
+判断の軸は 2 つ。
+
+- **記号・数字・F キー・矢印はレイヤーで打つ。** ホームポジションから指を動かさない
+- **数字行と両端列は Base に残す。** レイヤーが体に入るまでの退路であり、万一の保険。使わなくなっても消さない
+
+## レイヤー
+
+`Base` / `Sym` / `Num` / `Nav` / `Fn` / `Magic` / `Factory` の 7 枚。既定にあった `Keypad` は `Num` と役割が重複するので削除した。
 
 ![Go60 keymap](keymap.svg)
 
-### 既定から変えた所
+### 親指クラスタ
 
-| 場所 | 既定 | 変更後 |
+親指の到達性は T1 (手に近い) > T2 > T3 (中央へ伸ばす) の順。**tap を持つキーを手前に、`&mo` 単独を T3 に**置いた。
+
+| | 左 | 右 |
 |---|---|---|
-| S / D / F / `;` | 文字のみ | タップは文字のまま。ホールドで S = `FN`、D = `NAV`、F = Shift (右手の文字用。左手の文字は右 T3 の Shift で打つ)、`;` = ⌘⌥⌃ (Raycast 用) |
-| 左親指 T1 (親指が休む位置) | SymbolNav レイヤ | タップで 英数 (`LANG2`)、ホールドで Ctrl |
-| 右 R5 人差し指列 (Enter の真上) | Cmd | タップで かな (`LANG1`)、ホールドで Cmd |
-| 左親指 T2 | Shift | Esc |
-| 左親指 T3 | Ctrl | Tab (Ctrl は T1 に移ったので空いた) |
-| 右親指 T3 | Opt | 右 Shift (左手の文字を大文字にする用。Opt は右 T1 の Enter ホールドに残る) |
-| Space | Space | Ctrl を押さえたまま押すと 英数 を先送りしてから Ctrl+Space (`spc_ime` + `tmux_prefix`) |
+| T1 | tap `Esc` / hold **Num** | `Space` (`spc_ime`) |
+| T2 | tap `Tab` | tap `Enter` / hold **Sym** |
+| T3 | **Nav** (`&mo` 単独) | **Fn** (`&mo` 単独) |
 
-SymbolNav レイヤは入口の左 T1 を使ったので削除した。Keypad (`/` の右) と Magic (`Z` の左。BT 切替・RGB・ブートローダ・Factory) は既定のまま。
+`Space` に hold を載せていないのは、最頻出キーから tap-hold の判定を外すため。
 
-### tap-hold の写し方
+**レイヤー入口を親指に置いたので `hold-trigger-key-positions` が要らない。** 親指と他の 4 指は独立に動くので、レイヤー中は左右 10 指すべてが使える。ホームローの tap-hold にある「入口と同じ手の文字が打てない」制約がここにはない。
 
-7sPro の QMK 設定と ZMK の対応。値は 7sPro と同じ。
+### R5 行 (親指を畳んで押す)
 
-| QMK (7sPro) | ZMK |
+| 位置 | 割当 |
 |---|---|
-| `CHORDAL_HOLD` | `hold-trigger-key-positions` (右手の全キー。D だけ左 R5 の BS も含めて NAV + BS = Del を同手で許す) |
-| `PERMISSIVE_HOLD` | `flavor = "balanced"` |
-| `FLOW_TAP_TERM 150` | `require-prior-idle-ms = <150>` (ホームローのみ。親指には付けない) |
-| `TAPPING_TERM 180` | `tapping-term-ms = <180>` |
-| Cmd の `HOLD_ON_OTHER_KEY_PRESS` | `flavor = "hold-preferred"` |
+| `L_C3R5` / `R_C3R5` | 英数 (`LANG2`) / かな (`LANG1`) |
+| `L_C2R5` | `BSpc` |
+| `R_C2R5` | `Cmd` (`&kp RGUI` 単独) |
+| `L_C4R5` / `R_C4R5` | 親指が届かないので使わない (既定のキーを残置) |
 
-キー位置番号は `keymap` の並び順そのもの: 0〜47 が上 4 行 (各行 左 6 → 右 6)、48〜50 が左 R5、51〜53 が右 R5、54〜56 が L_T1〜T3、57〜59 が R_T3〜T1。
+IME 切替を Cmd から分離したことで、**Cmd が単独キーになった**。以前は かな との tap-hold で `hold-preferred` を要したが、その調整ごと不要になっている。
 
-Ctrl+Space の先送りは mod-morph。mod-morph はトリガーの Ctrl をレポートからマスクするので、マクロ側は `&kp LC(SPACE)` の implicit modifier で Ctrl を付け直す (implicit はマスクを通る。`app/src/hid.c` の `SET_MODIFIERS`)。
+### ホームロー (HRM)
 
-### NAV レイヤ (D ホールド)
+```
+左  A=Cmd  S=Opt  D=Ctrl  F=Shift
+右  J=Shift  K=Ctrl  L=Opt  ;=⌘⌥⌃
+```
+
+左右対称なので修飾は常に逆手で押せる。`;` の ⌘⌥⌃ は Raycast 用で、Secure Input 固着時にもホットキーが生きるよう Cmd を含める。Raycast のホットキーは左右どちらの手の文字も使うので、`;` だけは位置制限を付けない。
+
+### Sym (右親指 `R_T2` ホールド / 左手)
+
+```
+      C5   C4   C3   C2   C1
+行2    ~    -    (    )    ^
+行3    '    =    [    ]    &
+行4    \    !    {    }    *
+親指            L_T2 = <   L_T3 = >
+```
+
+**`C3` 列が開き括弧、`C2` 列が閉じ括弧で、3 種類が縦に整列する。** `()` `[]` `{}` がどれも同じ運指になる。開きを中指 (左)・閉じを人差し指 (右) にしたのは、`(` → `)` の動きを読み順と揃えるため。
+
+**右手は全部 `&trans`。** shift で出る記号は Base の右手 HRM で合成する。
+
+| 記号 | 打ち方 |
+|---|---|
+| `_` `+` `\|` | `J` (Shift) + `-` `=` `\` |
+| `:` `?` | `J` (Shift) + `;` `/` (Base が透過) |
+| `$ @ # %` | `J` (Shift) + 数字行 (行 1 が透過) |
+
+### Num (左親指 `L_T1` ホールド / 右手)
+
+```
+   C1   C2   C3   C4   C5
+    -    7    8    9    -
+    -    4    5    6    0
+    -    1    2    3    -
+```
+
+### Sym と Num は同時にホールドできる
+
+Sym の右手と Num の左手、および互いの入口 (`L_T1` / `R_T2`) を `&trans` にしてある。両親指をホールドすると **左手に記号・右手に数字が同時に立つ**ので、`x = 1 + 2` のような式を指を離さずに打ち切れる。ZMK はレイヤーが重なった位置で `&trans` を透過させるため、レイヤー番号の順序に関係なく成立する。
+
+### Nav (左親指 `L_T3` ホールド / 右手)
 
 | 入力 | 出力 |
 |---|---|
-| D + h / j / k / l | ← / ↓ / ↑ / → |
-| D + , / . | Opt + ← / → |
-| D + u / n | PgUp / PgDn |
-| D + BS (左 R5) | Del |
+| `h` `j` `k` `l` | ← ↓ ↑ → |
+| `u` / `n` | PgUp / PgDn |
+| `,` / `.` | Opt+← / Opt+→ |
+| `BSpc` (`L_C2R5`) | Del |
 
-### FN レイヤ (S ホールド)
+矢印は vim の hjkl に合わせてある (miryoku 系の十字配置は採らない)。
 
-数字行が F1〜F10、`-` が F11、`\` が F12。
+### Fn (右親指 `R_T3` ホールド / 左手)
+
+```
+     C5    C4   C3   C2
+    F12    F7   F8   F9
+    F11    F4   F5   F6
+    F10    F1   F2   F3
+```
+
+Num / Sym と同じ 789/456/123 の並び。**旧 FN レイヤ (S ホールド) は数字行に F1〜F12 を並べていたが、F1〜F5 は左手にあって `hold-trigger-key-positions` に弾かれ、実際には打てなかった。** 入口を右親指に移したことでこの穴も塞がっている。
+
+### tap-hold のパラメータ
+
+| behavior | 対象 | tapping-term | 位置制限 |
+|---|---|---|---|
+| `hrm_l` / `hrm_r` | 人差し指・中指・薬指の HRM | 180ms | 逆手 + 親指 |
+| `hrm_lp` | 左小指 (`A` = Cmd) | 220ms | 逆手 + 親指 |
+| `mt_hyper` | `;` の ⌘⌥⌃ | 180ms | なし |
+| `lt_thumb` | 親指のレイヤー入口 | 180ms | なし |
+
+共通して `flavor = "balanced"` (QMK の `PERMISSIVE_HOLD` 相当)、`quick-tap-ms = <200>`、HRM には `require-prior-idle-ms = <150>`。
+
+**`hold-trigger-on-release` は左右対称 HRM に必須。** これがないと `hold-trigger-key-positions` を持つ HRM は 2 つ同時に押せず、2 つ目が tap に落ちる (= `Cmd+Shift+P` が打てない)。判定を「次のキーを離すまで」遅らせることで修飾を重ねられる。小指だけ 220ms と長いのは、ローマ字入力で `a` が頻出で誤爆しやすいため。
+
+キー位置番号は `keymap` の並び順そのもの: 0〜47 が上 4 行 (各行 左 6 → 右 6)、48〜50 が左 R5、51〜53 が右 R5、54〜56 が L_T1〜T3、57〜59 が R_T3〜T1。`KEYS_L` / `KEYS_R` / `KEYS_T` がこれに対応する。
+
+### Ctrl+Space (tmux prefix)
+
+Space (`R_T1`) は mod-morph で、Ctrl を押しながらだと 英数 を先送りしてから Ctrl+Space を送る。**Ctrl が `D` / `K` の HRM に移っても動く** — `KEYS_T` に右親指 (57〜59) が入っているので、`D` ホールド + 右親指 Space が位置制限を通過する。
+
+mod-morph はトリガーの Ctrl をレポートからマスクするので、マクロ側は `&kp LC(SPACE)` の implicit modifier で Ctrl を付け直す (implicit はマスクを通る。`app/src/hid.c` の `SET_MODIFIERS`)。
 
 ## Build
 

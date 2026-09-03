@@ -190,12 +190,12 @@
 
         layer_Sym {
             bindings = <
-&trans     &trans     &trans     &trans     &trans      &trans                        &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp TILDE  &kp MINUS   &kp LPAR   &kp RPAR   &kp CARET                        &trans  &trans  &trans  &trans  &trans  &trans
-&trans    &kp SQT  &kp EQUAL   &kp LBKT   &kp RBKT    &kp AMPS                        &trans  &trans  &trans  &trans  &trans  &trans
-&trans   &kp BSLH   &kp EXCL   &kp LBRC   &kp RBRC   &kp ASTRK                        &trans  &trans  &trans  &trans  &trans  &trans
-                                 &trans     &trans      &trans                        &trans  &trans  &trans
-                                         &trans  &kp LESS_THAN  &kp GREATER_THAN      &trans  &trans  &trans
+&trans      &trans   &trans     &trans     &trans      &trans                        &trans      &trans      &trans     &trans      &trans  &trans
+&trans   &kp TILDE   &kp AT   &kp HASH   &kp DLLR   &kp PRCNT                     &kp CARET    &kp LPAR    &kp RPAR  &kp MINUS   &kp QMARK  &trans
+&trans   &kp GRAVE  &kp SQT    &kp DQT   &kp SEMI   &kp COLON                      &kp AMPS    &kp LBRC    &kp RBRC  &kp EQUAL    &kp PLUS  &trans
+&trans    &kp PIPE  &kp BSLH  &kp COMMA   &kp DOT   &kp FSLH                      &kp ASTRK    &kp LBKT    &kp RBKT   &kp EXCL   &kp UNDER  &trans
+                             &trans     &trans      &trans                        &trans      &trans      &trans
+                                     &trans  &kp LESS_THAN  &kp GREATER_THAN      &trans      &trans      &trans
             >;
         };
 

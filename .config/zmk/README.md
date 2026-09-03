@@ -2,6 +2,9 @@
 
 [MoErgo Go60](https://www.moergo.com/pages/go60-support) のキーマップ。ファームウェアは ZMK (MoErgo のフォーク [moergo-sc/zmk](https://github.com/moergo-sc/zmk))。`config/` は公式テンプレート [moergo-keyboards/go60-zmk-config](https://github.com/moergo-keyboards/go60-zmk-config) の `config/` と同じ構成で、`go60.keymap` だけがこのリポジトリの独自物。`default.nix` / `info.json` はテンプレートから持ってきたもの (MIT)。
 
+
+https://my.moergo.com/go60/#/layout/user/265797e0-312e-4442-9814-d6a61e5f2c90
+
 ## 方針
 
 **Go60 の親指クラスタとレイヤーをフルに使う独自設計。** 7sPro (`../qmk/`) や MacBook 内蔵 (Karabiner) に揃えることは目的にしない (2026-09-03 に決定。それ以前は「ホームローの tap-hold だけは揃える」方針だった)。

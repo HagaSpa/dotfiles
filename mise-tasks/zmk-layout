@@ -1,0 +1,11 @@
+#!/bin/bash
+#MISE description="Generate the Go60 layout JSON for the MoErgo Layout Editor"
+set -euo pipefail
+
+ZMK_DIR="$PWD/.config/zmk"
+
+python3 "$ZMK_DIR/keymap2layout.py" \
+  "$ZMK_DIR/config/go60.keymap" \
+  "$ZMK_DIR/go60-layout.json"
+
+echo "wrote .config/zmk/go60-layout.json"

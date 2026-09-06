@@ -150,6 +150,21 @@ Space (`R_T1`) は mod-morph で、Ctrl を押しながらだと 英数 を先�
 
 mod-morph はトリガーの Ctrl をレポートからマスクするので、マクロ側は `&kp LC(SPACE)` の implicit modifier で Ctrl を付け直す (implicit はマスクを通る。`app/src/hid.c` の `SET_MODIFIERS`)。
 
+## トラックパッド
+
+左右の Cirque パッドは `&cirque_lh_listener` / `&cirque_rh_listener` の `input-processors` で挙動を決める。**右がポインタ、左がスクロール** (テンプレートの既定を踏襲)。
+
+| | 役割 | スケール |
+|---|---|---|
+| 右 | ポインタ移動 | `&zip_xy_scaler 9 1` (9 倍) |
+| 左 | 縦横スクロール + タップで右クリック | `&zip_scroll_scaler 1 8` (1/8) |
+
+`zip_*_scaler` の 2 引数は `<乗数 除数>` で、比だけが効く。速くするなら乗数、遅くするなら除数を動かす。
+
+⚠️ **スクロールを縮めるのは `zip_xy_scaler` ではなく `zip_scroll_scaler`。** processor は devicetree の並び順に適用され (`app/src/pointing/input_listener.c`)、`zip_xy_to_scroll_mapper` を通った後のイベントは `REL_X` / `REL_Y` ではなく `REL_WHEEL` / `REL_HWHEEL` になっている。`zip_xy_scaler` は `codes = <INPUT_REL_X INPUT_REL_Y>` にしか反応せず、一致しなければ値を触らず素通りさせる (`app/src/pointing/input_processor_scaler.c`)。テンプレートは mapper の後ろに `&zip_xy_scaler 1 8` を置いていて、**1/8 が丸ごと空振りしてスクロールが等倍のままだった** (2026-09-07 に修正)。
+
+Factory レイヤーだけ左パッドがポインタに変わるのはテンプレートのまま。レイヤー別の子ノードは `input-processors` を丸ごと差し替えるので、そこでは scroll mapper ごと外れる。
+
 ## Build
 
 ローカルにツールチェーンは入れない。`.config/zmk/**` を変えて push すると `.github/workflows/zmk-go60.yml` が nix でビルドし、artifact `go60.uf2` を出す。Actions の該当 run から落とす (`gh run download` でもよい)。

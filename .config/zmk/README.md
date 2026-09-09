@@ -158,14 +158,16 @@ mod-morph はトリガーの Ctrl をレポートからマスクするので、�
 
 左右の Cirque パッドは `&cirque_lh_listener` / `&cirque_rh_listener` の `input-processors` で挙動を決める。**右がポインタ、左がスクロール** (テンプレートの既定を踏襲)。
 
-| | 役割 | スケール |
+| | 役割 | input-processors |
 |---|---|---|
-| 右 | ポインタ移動 | `&zip_xy_scaler 9 1` (9 倍) |
-| 左 | 縦横スクロール + タップで右クリック | `&zip_scroll_scaler 1 8` (1/8) |
+| 右 | ポインタ移動 | `&zip_xy_scaler 6 1` (6 倍) |
+| 左 | 縦横スクロール + タップで右クリック | `&zip_scroll_scaler 1 8` (1/8)、`&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT` (縦を反転) |
 
 `zip_*_scaler` の 2 引数は `<乗数 除数>` で、比だけが効く。速くするなら乗数、遅くするなら除数を動かす。
 
 ⚠️ **スクロールを縮めるのは `zip_xy_scaler` ではなく `zip_scroll_scaler`。** processor は devicetree の並び順に適用され (`app/src/pointing/input_listener.c`)、`zip_xy_to_scroll_mapper` を通った後のイベントは `REL_X` / `REL_Y` ではなく `REL_WHEEL` / `REL_HWHEEL` になっている。`zip_xy_scaler` は `codes = <INPUT_REL_X INPUT_REL_Y>` にしか反応せず、一致しなければ値を触らず素通りさせる (`app/src/pointing/input_processor_scaler.c`)。テンプレートは mapper の後ろに `&zip_xy_scaler 1 8` を置いていて、**1/8 が丸ごと空振りしてスクロールが等倍のままだった** (2026-09-07 に修正)。
+
+⚠️ **同じ罠が transform にもある。** `zip_xy_transform` の `x-codes` / `y-codes` は `REL_X` / `REL_Y`、`zip_scroll_transform` は `REL_HWHEEL` / `REL_WHEEL` (`app/dts/input/processors/transform.dtsi`)。左パッドの反転は mapper の後ろに置くので後者を使う。フラグは `INPUT_TRANSFORM_XY_SWAP` / `X_INVERT` / `Y_INVERT` の 3 つ (`dt-bindings/zmk/input_transform.h`)。macOS のナチュラルスクロールに合わせて `Y_INVERT` だけ立てている。
 
 Factory レイヤーだけ左パッドがポインタに変わるのはテンプレートのまま。レイヤー別の子ノードは `input-processors` を丸ごと差し替えるので、そこでは scroll mapper ごと外れる。
 

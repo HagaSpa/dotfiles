@@ -5,7 +5,7 @@
   "uuid": "9a2f4c18-6d3b-4e7a-8c15-2b0d7e934f61",
   "parent_uuid": "e649e6e5-6870-41c6-8580-ed551ed37c5b",
   "unlisted": false,
-  "date": 1788926247,
+  "date": 1788927006,
   "creator": "HagaSpa",
   "title": "go60 (dotfiles)",
   "notes": "Generated from .config/zmk/config/go60.keymap by mise run zmk-layout. The keymap file is the source of truth; edits made here are not carried back.\n\nTwo things cannot be expressed here and are shown approximately:\n- Space is a plain &kp SPACE. The real binding is a mod-morph that sends 英数 before Ctrl+Space (the tmux/herdr prefix).\n- The editor rejects LA(LEFT), LA(RIGHT), LC(LA(LGUI)) and LC(SPACE), so ; shows as Cmd instead of ⌘⌥⌃ (Raycast), and Nav's , / . show as bare arrows instead of Opt+←/→ (word-wise movement).",
@@ -2399,7 +2399,7 @@
         {
           "code": "&zip_xy_scaler",
           "params": [
-            9,
+            6,
             1
           ]
         }
@@ -2418,6 +2418,12 @@
           "params": [
             1,
             8
+          ]
+        },
+        {
+          "code": "&zip_scroll_transform",
+          "params": [
+            "INPUT_TRANSFORM_Y_INVERT"
           ]
         },
         {

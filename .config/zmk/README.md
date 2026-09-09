@@ -125,9 +125,11 @@ Num / Sym と同じ 789/456/123 の並び。**旧 FN レイヤ (S ホールド) 
 | `mt_hyper` | `;` の ⌘⌥⌃ | 180ms | なし |
 | `lt_thumb` | 親指のレイヤー入口 | 180ms | なし |
 
-共通して `flavor = "balanced"` (QMK の `PERMISSIVE_HOLD` 相当)、`quick-tap-ms = <200>`、HRM には `require-prior-idle-ms = <150>`。
+共通して `flavor = "balanced"` (QMK の `PERMISSIVE_HOLD` 相当)、`quick-tap-ms = <200>`。`require-prior-idle-ms` は HRM が `<250>`、`mt_hyper` が `<150>`。
 
 **`hold-trigger-on-release` は左右対称 HRM に必須。** これがないと `hold-trigger-key-positions` を持つ HRM は 2 つ同時に押せず、2 つ目が tap に落ちる (= `Cmd+Shift+P` が打てない)。判定を「次のキーを離すまで」遅らせることで修飾を重ねられる。小指だけ 220ms と長いのは、ローマ字入力で `a` が頻出で誤爆しやすいため。
+
+**`require-prior-idle-ms` が 250ms と長いのは日本語入力のため。** ローマ字は子音と母音で手が交互になるので `hold-trigger-key-positions` の保護が効かず、`ka` → Ctrl+A、`fu` → Shift+U のように反対の手の母音と組んで誤爆する (macOS の日本語入力は未確定文字列に Ctrl 修飾キーが届くとローマ字バッファをそのまま吐き出す)。**`tapping-term-ms` はこの経路に効かない** — `balanced` は次のキーが押されて離された時点でホールドを確定し、term の満了を待たないため。
 
 キー位置番号は `keymap` の並び順そのもの: 0〜47 が上 4 行 (各行 左 6 → 右 6)、48〜50 が左 R5、51〜53 が右 R5、54〜56 が L_T1〜T3、57〜59 が R_T3〜T1。`KEYS_L` / `KEYS_R` / `KEYS_T` がこれに対応する。
 

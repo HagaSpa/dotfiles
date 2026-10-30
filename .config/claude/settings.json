@@ -63,11 +63,10 @@
       "~/Desktop"
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
-    "atlassian",
-    "serena"
+    "atlassian"
   ],
   "hooks": {
     "Notification": [
@@ -99,7 +98,7 @@
     "code-review@claude-plugins-official": false,
     "Notion@claude-plugins-official": false,
     "context7@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": false,
     "github@claude-plugins-official": false,
     "figma@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
@@ -108,8 +107,9 @@
     "claude-md-management@claude-plugins-official": false,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "crit@crit": true,
-    "clangd-lsp@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": false,
+    "gopls-lsp@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "crit": {
@@ -121,7 +121,17 @@
   },
   "language": "Japanese",
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    }
+  },
   "tui": "default",
+  "switchModelsOnFlag": false,
   "skipAutoPermissionPrompt": true,
-  "showThinkingSummary": true
+  "showThinkingSummary": true,
+  "skillOverrides": {
+    "find-skills": "off",
+    "commit-and-push": "off"
+  }
 }

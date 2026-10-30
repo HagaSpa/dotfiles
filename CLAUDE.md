@@ -146,7 +146,7 @@ gh pr merge <PR番号> --squash --delete-branch
 ### Branches
 One branch per PR, named `<type>/<short-description>` with the same types as commits (lowercase, hyphens only). Never commit to main directly.
 
-**Merged branches are not kept locally.** `--delete-branch` removes the remote one, which leaves the local branch marked `[gone]` in `git branch -vv` — that marker is the "already merged" signal. Clean them up with `/clean_gone` (deletes `[gone]` branches and their worktrees).
+**Merged branches are not kept locally.** `--delete-branch` removes the remote one, which leaves the local branch marked `[gone]` in `git branch -vv` — that marker is the "already merged" signal.
 
 Squash merges rewrite history, so the branch tip is never an ancestor of main and `git branch -d` refuses. Before force-deleting, confirm the PRs really merged instead of reaching for `-D` blindly:
 ```bash

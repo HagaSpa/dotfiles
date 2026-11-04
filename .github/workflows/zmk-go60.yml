@@ -51,7 +51,7 @@ jobs:
         cp combined/go60.uf2 go60.uf2
 
     - name: Upload go60.uf2
-      uses: actions/upload-artifact@v7.0.1
+      uses: actions/upload-artifact@v7.0.2
       with:
         name: go60.uf2
         path: go60.uf2
